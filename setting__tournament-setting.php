@@ -50,7 +50,7 @@
     <section>
       <div class="container px-4">
         <div class="py-3">
-          <a href="account.html">
+          <a href="account.php">
             <i class="bi bi-chevron-left fs-5 me-2"></i>
             <span>Tournament Settings</span>
           </a>
@@ -75,6 +75,16 @@
                     $tournament_thumbnail = $user_pp_file_path;
                 }
               }
+
+              $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
+
+              if (!empty($item['banner'])) {
+                $tournamen_banner_path = 'tournament_banner/' . $item['banner'];
+                
+                if (file_exists($tournamen_banner_path)) {
+                    $tournamen_banner = $tournamen_banner_path;
+                }
+              }
             ?>
               <div
               class="tournament__item bg-dark rounded-3 overflow-hidden w-100"
@@ -82,7 +92,7 @@
               <div
                 class="position-relative p-3 pt-5 bg-secondary bg-opacity-50"
                 style="
-                  background-image: url('assets/img/home__tournement-bg-header.png');
+                  background-image: url('<?php echo $tournamen_banner; ?>');
                   background-size: cover;
                 "
               >
@@ -135,7 +145,7 @@
 
               <div class="p-3">
                 <a
-                  href="manage-tournament.html"
+                  href="manage-tournament.php?id=<?php echo $item['id']; ?>"
                   class="btn btn-primary rounded-pill w-100"
                   >Manage</a
                 >

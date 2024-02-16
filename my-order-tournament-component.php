@@ -45,6 +45,11 @@ foreach ($results as $tour) {
         }
       }
 
+    $finish = false;
+    if($tour['date_to'] < date("Y-m-d H:i:s") ){
+        $finish = true;
+    }
+
 ?>
 
 <div class="list-tournament__item d-flex flex-column gap-2 mt-3">
@@ -105,15 +110,16 @@ foreach ($results as $tour) {
         </div>
     </div>
 
-    <?php if($tour['status'] == 'Active' && $status != 'participant') { ?>
+    <?php if($tour['status'] == 'Active' && $status != 'participant' && !$finish) { ?>
     <div class="p-3">
-        <button
-        class="btn btn-primary btn-sm py-2 rounded-pill w-100"
-        >
-        Manage
-        </button>
+        <a
+            href="manage-tournament.php?id=<?php echo $tour['id'] ?>"
+            class="btn btn-primary btn-sm py-2 rounded-pill w-100"
+            >
+            Manage
+        </a>
     </div>
-    <?php } elseif($tour['status'] == 'Active' && $status != 'participant'){ ?>
+    <?php } elseif($tour['status'] == 'Active' && $finish && $status != 'participant'){ ?>
     <div class="p-3">
         <a
         href="my-order-tournament-result.php?id=<?php echo $tour['id'] ?>"

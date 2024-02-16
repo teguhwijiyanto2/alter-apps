@@ -36,6 +36,9 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
     'result_image' => $fileNameFix_1
   ]);
 
+	DB::query("UPDATE tournament SET status='Finished' WHERE id = '".$_POST['tid']."'");
+
+
   echo("
   <script language='javascript'>
   alert('Success upload result..')

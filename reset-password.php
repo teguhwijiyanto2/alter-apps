@@ -30,7 +30,7 @@
     <section>
       <div class="container px-4">
         <div class="py-3">
-          <a href="login.html">
+          <a href="login.php">
             <i class="bi bi-x-lg fs-5 me-2"></i>
             <span>Make New Passowrd</span>
           </a>
