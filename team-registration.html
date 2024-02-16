@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/theme.css" />
+    <script src="js/script.js"></script>
+    <title>Register Your Team - Alter</title>
+  </head>
+
+  <body>
+    <section>
+      <div class="container px-4">
+        <div class="py-3">
+          <a href="tournament.html">
+            <i class="bi bi-x-lg fs-5 me-2"></i>
+            <span>Register Your Team</span>
+          </a>
+        </div>
+
+        <!-- Add Friend Teams Start -->
+        <div class="bg-dark rounded-3 mt-3">
+          <h4 class="p-3">Add Formed Teams</h4>
+          <div aria-label="Teams" class="">
+            <div
+              class="d-flex flex-row align-items-center gap-3 p-3 bg-secondary bg-opacity-50"
+            >
+              <img
+                src="https://placehold.co/400x300.png"
+                class="rounded-2 ratio-1x1"
+                height="56"
+                width="56"
+              />
+              <div class="flex-fill">
+                <h5 class="lh-1">Rockin Team</h5>
+                <span class="text-secondary">last match 10/11/23</span>
+              </div>
+              <i class="bi bi-plus-circle-fill fs-1"></i>
+            </div>
+            <div class="p-3">
+              <h6>Team Member:</h6>
+              <div class="text-secondary">@username1</div>
+              <div class="text-secondary">@username2</div>
+              <div class="text-secondary">@username3</div>
+            </div>
+          </div>
+          <div aria-label="Teams" class="">
+            <div
+              class="d-flex flex-row align-items-center gap-3 p-3 bg-secondary bg-opacity-50"
+            >
+              <img
+                src="https://placehold.co/400x300.png"
+                class="rounded-2 ratio-1x1"
+                height="56"
+                width="56"
+              />
+              <div class="flex-fill">
+                <h5 class="lh-1">Rockin Team</h5>
+                <span class="text-secondary">last match 10/11/23</span>
+              </div>
+              <i class="bi bi-plus-circle-fill fs-1"></i>
+            </div>
+            <div class="p-3">
+              <h6>Team Member:</h6>
+              <div class="text-secondary">@username1</div>
+              <div class="text-secondary">@username2</div>
+              <div class="text-secondary">@username3</div>
+            </div>
+          </div>
+        </div>
+        <!-- Add Friend Teams End -->
+
+        <!-- Divider Start -->
+        <div class="d-flex flex-row align-items-center w-100 my-4 gap-3">
+          <div class="w-100 bg-white" style="height: 1px"></div>
+          <div class="text-white"><small>or</small></div>
+          <div class="w-100 bg-white" style="height: 1px"></div>
+        </div>
+        <!-- Divider End -->
+
+        <!-- Add New Team Start -->
+        <form action="registration-overview__paid.html">
+          <div class="p-3 bg-dark rounded-3 mt-3">
+            <h4>Add New Team</h4>
+            <div class="d-flex flex-row align-items-center gap-2 mt-4">
+              <input type="file" id="logo" aria-label="Team Logo" hidden />
+              <label
+                for="logo"
+                class="d-flex flex-row align-items-center gap-2"
+              >
+                <span
+                  class="bg-secondary d-inline-block text-center d-flex flex-row align-items-center justify-content-center rounded-2"
+                  style="height: 48px; width: 48px"
+                  ><i class="bi bi-plus-lg fs-3"></i
+                ></span>
+                <span class="text-secondary">Add team logo</span>
+              </label>
+            </div>
+            <div
+              class="border-top border-bottom pt-3 pb-4 my-4 border-secondary border-opacity-50"
+            >
+              <label for="" class="fs-5">Team Name</label>
+              <div class="form__group-input mt-2">
+                <input type="text" name="" placeholder="Alter Team" />
+                <i class="bi bi-check-circle-fill fs-3 text-success"></i>
+              </div>
+            </div>
+            <div class="mt-1">
+              <h5>Add Member</h5>
+              <div class="mt-2">
+                <div
+                  class="d-flex flex-row align-items-center justify-content-between"
+                >
+                  <label for="" class="text-secondary">1st Member</label>
+                  <i class="bi bi-x-lg fs-4"></i>
+                </div>
+                <div class="form__group-input mt-2">
+                  <input type="text" name="" placeholder="Altermember1" />
+                </div>
+                <div class="form__group-input mt-2">
+                  <input type="text" name="" placeholder="1385912039" />
+                </div>
+              </div>
+              <div class="mt-2">
+                <div
+                  class="d-flex flex-row align-items-center justify-content-between"
+                >
+                  <label for="" class="text-secondary">2nd Member</label>
+                  <i class="bi bi-x-lg fs-4"></i>
+                </div>
+                <div class="form__group-input mt-2">
+                  <input type="text" name="" placeholder="Username" />
+                </div>
+                <div class="form__group-input mt-2">
+                  <input type="text" name="" placeholder="Player ID" />
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-row align-items-center gap-2 mt-3">
+              <i class="bi bi-plus-circle-fill fs-3 text-secondary"></i>
+              <span class="text-secondary">Add more</span>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-outline-light rounded-pill my-4 w-100"
+          >
+            Submit
+          </button>
+        </form>
+        <!-- Add New Team End -->
+      </div>
+    </section>
+  </body>
+</html>

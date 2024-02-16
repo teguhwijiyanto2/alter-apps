@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/theme.css" />
+    <script src="js/script.js"></script>
+    <title>Tournament - Alter</title>
+  </head>
+
+  <body>
+    <div class="position-relative container">
+      <div class="w-100 pt-4">
+        <!-- Top Bar Start -->
+        <div class="d-flex flex-row align-items-center w-100 gap-1">
+          <div
+            class="d-flex flex-fill flex-row align-items-center border border-secondary rounded-pill px-3 py-1 gap-3"
+          >
+            <i class="bi bi-search fs-4 text-secondary"></i>
+            <input
+              placeholder="Search for tournaments"
+              class="bg-transparent border-0 w-100 text-light"
+            />
+          </div>
+          <img src="assets//icon/ic__bubble-chat.svg" height="36" width="36" />
+          <img src="assets//icon/ic__bell.svg" height="36" width="36" />
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Banner Carousel Start -->
+        <div
+          id="carouselExampleIndicators"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-indicators" style="bottom: -40px">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+          <div class="carousel-inner mt-4">
+            <div class="carousel-item active">
+              <img
+                src="https://placehold.co/600x400.png"
+                class="d-block w-100 rounded-4 p-1"
+                alt="..."
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="https://placehold.co/600x400.png"
+                class="d-block w-100 rounded-4 p-1"
+                alt="..."
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="https://placehold.co/600x400.png"
+                class="d-block w-100 rounded-4 p-1"
+                alt="..."
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <!-- Banner Carousel End -->
+
+        <!-- Create Tournament Start -->
+        <section id="create-tournament__section">
+          <div
+            class="py-5 mt-5 px-4"
+            style="
+              background-image: url('assets/img/tour__bg-create.png');
+              background-size: cover;
+              background-repeat: no-repeat;
+            "
+          >
+            <div class="d-flex flex-row align-items-center gap-3">
+              <img
+                src="assets/img/tour__planet.png"
+                alt=""
+                height="50"
+                width="50"
+              />
+              <span class="fs-2 fw-semibold lh-1"
+                >Design Your Ultimate Tournament!</span
+              >
+            </div>
+            <p class="my-5">
+              Take control! Build and lead your own gaming tournament. Set the
+              rules, shape the competition, and be the ultimate champion-maker.
+            </p>
+            <a
+              href="create-tournament.html"
+              class="btn btn-primary rounded-pill w-100 mt-3"
+            >
+              Create Tournament
+            </a>
+          </div>
+        </section>
+        <!-- Create Tournament End -->
+
+        <!-- Tournament By Games Start -->
+        <section id="tournament-by-games__section" class="mt-5">
+          <div
+            class="d-flex flex-row align-items-center justify-content-between"
+          >
+            <h4>Tournaments by Games</h4>
+            <a href="tournament-by-games.html" class="text-decoration-none">
+              <i class="bi bi-chevron-right fs-4"></i>
+            </a>
+          </div>
+
+          <div class="row g-3 pt-2">
+            <div class="col-4">
+              <img
+                src="assets/img/temp/game-1.png"
+                alt=""
+                class="w-100 h-100 ratio-1x1 object-fit-cover rounded-3"
+              />
+            </div>
+            <div class="col-4">
+              <img
+                src="assets/img/temp/game-2.png"
+                alt=""
+                class="w-100 ratio-1x1 object-fit-cover rounded-3"
+              />
+            </div>
+            <div class="col-4">
+              <img
+                src="assets/img/temp/game-4.png"
+                alt=""
+                class="w-100 ratio-1x1 object-fit-cover rounded-3"
+              />
+            </div>
+          </div>
+        </section>
+        <!-- Tournament By Games Games End -->
+
+        <!-- Trending Tournament Start -->
+        <section id="quick-match__section" class="mt-5">
+          <div
+            class="d-flex flex-row align-items-center justify-content-between"
+          >
+            <h4>Trending Tournament</h4>
+            <a href="tournament-trending.html" class="text-decoration-none">
+              <i class="bi bi-chevron-right fs-4"></i>
+            </a>
+          </div>
+
+          <div class="d-flex flex-column gap-2 mt-3">
+            <div class="bg-dark rounded-3 overflow-hidden w-100">
+              <div
+                class="position-relative p-3 pt-5 bg-secondary bg-opacity-50"
+                style="
+                  background-image: url('assets/img/home__tournement-bg-header.png');
+                  background-size: cover;
+                "
+              >
+                <div
+                  class="position-absolute top-0 end-0 px-3 py-1 bg__green"
+                  style="border-bottom-left-radius: 8px"
+                >
+                  <span><small>Open</small></span>
+                </div>
+                <div class="d-flex flex-row align-items-center gap-3 mt-4">
+                  <img
+                    src="https://placehold.co/400x300.png"
+                    class="rounded-2 ratio-1x1"
+                    height="56"
+                    width="56"
+                  />
+                  <div>
+                    <h5 class="lh-1">Fun Match with Genesis</h5>
+                    <span>League of Legends</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-3 d-flex flex-column gap-2">
+                <div class="d-flex flex-row align-items-center gap-2">
+                  <img
+                    src="assets/img/home__tournament-trophy.png"
+                    height="24"
+                    width="24"
+                  />
+                  <span class="fw-light">Reward</span>
+                </div>
+                <div class="d-flex flex-row align-items-center gap-2">
+                  <img
+                    src="assets/img/home__tournament-users.png"
+                    height="24"
+                    width="24"
+                  />
+                  <span class="fw-light">2/2 Team</span>
+                </div>
+                <div class="d-flex flex-row align-items-center gap-2">
+                  <img
+                    src="assets/img/home__tournament-calendar-date.png"
+                    height="24"
+                    width="24"
+                  />
+                  <span class="fw-light">01 Nov 2023 - 07 Nov 2023</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Trending Tournament End -->
+
+        <!-- Leaderboard Start -->
+        <section id="leaderboard__section" class="mt-5">
+          <div
+            class="d-flex flex-row align-items-center justify-content-between"
+          >
+            <h4>Leaderboard</h4>
+            <a href="leaderboard.html" class="text-decoration-none">
+              <i class="bi bi-chevron-right fs-4"></i>
+            </a>
+          </div>
+
+          <div class="pt-2">
+            <div class="bg-dark rounded-3">
+              <a href="profile-other.html">
+                <div
+                  class="d-flex flex-row align-items-center gap-2 p-3 border-bottom border-secondary border-opacity-50"
+                >
+                  <div
+                    class="bg__yellow rounded-circle d-flex align-items-center justify-content-center"
+                    style="height: 40px; width: 40px"
+                  >
+                    1
+                  </div>
+                  <img
+                    src="https://placehold.co/150x150.png"
+                    alt=""
+                    class="rounded-2 object-fit-cover ratio-1x1"
+                    height="36"
+                    width="36"
+                  />
+
+                  <div class="fs-6 flex-fill">
+                    <span> John </span>
+                    <img
+                      src="assets/icon/ic__star-gold.png"
+                      alt=""
+                      class="object-fit-contain"
+                      height="24"
+                      width="24"
+                    />
+                  </div>
+                  <span>2000 pts</span>
+                </div>
+              </a>
+              <a href="profile-other.html">
+                <div
+                  class="d-flex flex-row align-items-center gap-2 p-3 border-bottom border-secondary border-opacity-50"
+                >
+                  <div
+                    class="bg__light-gray rounded-circle d-flex align-items-center justify-content-center"
+                    style="height: 40px; width: 40px"
+                  >
+                    2
+                  </div>
+                  <img
+                    src="https://placehold.co/150x150.png"
+                    alt=""
+                    class="rounded-2 object-fit-cover ratio-1x1"
+                    height="36"
+                    width="36"
+                  />
+
+                  <div class="fs-6 flex-fill">
+                    <span> Dragonx </span>
+                    <img
+                      src="assets/icon/ic__star-gold.png"
+                      alt=""
+                      class="object-fit-contain"
+                      height="24"
+                      width="24"
+                    />
+                  </div>
+                  <span>2000 pts</span>
+                </div>
+              </a>
+              <a href="profile-other.html">
+                <div
+                  class="d-flex flex-row align-items-center gap-2 p-3 border-bottom border-secondary border-opacity-50"
+                >
+                  <div
+                    class="bg__orange rounded-circle d-flex align-items-center justify-content-center"
+                    style="height: 40px; width: 40px"
+                  >
+                    3
+                  </div>
+                  <img
+                    src="https://placehold.co/150x150.png"
+                    alt=""
+                    class="rounded-2 object-fit-cover ratio-1x1"
+                    height="36"
+                    width="36"
+                  />
+
+                  <div class="fs-6 flex-fill">
+                    <span> Sena </span>
+                    <img
+                      src="assets/icon/ic__star-gold.png"
+                      alt=""
+                      class="object-fit-contain"
+                      height="24"
+                      width="24"
+                    />
+                  </div>
+                  <span>2000 pts</span>
+                </div>
+              </a>
+              <a href="profile-other.html">
+                <div
+                  class="d-flex flex-row align-items-center gap-2 p-3 border-bottom border-secondary border-opacity-50"
+                >
+                  <div
+                    class="bg__dark-gray rounded-circle d-flex align-items-center justify-content-center"
+                    style="height: 40px; width: 40px"
+                  >
+                    4
+                  </div>
+                  <img
+                    src="https://placehold.co/150x150.png"
+                    alt=""
+                    class="rounded-2 object-fit-cover ratio-1x1"
+                    height="36"
+                    width="36"
+                  />
+
+                  <div class="fs-6 flex-fill">
+                    <span> Sena </span>
+                    <img
+                      src="assets/icon/ic__star-gold.png"
+                      alt=""
+                      class="object-fit-contain"
+                      height="24"
+                      width="24"
+                    />
+                  </div>
+                  <span>2000 pts</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+        <!-- Connect End -->
+      </div>
+    </div>
+
+    <!-- Floating Bottom Plus Button Start  -->
+    <div class="button__bottom max-w-sm">
+      <a
+        href="#"
+        class="btn btn-primary float-end rounded-circle d-flex align-items-center justify-content-center p-0 overflow-hidden me-3"
+        style="height: 56px; width: 56px"
+      >
+        <i class="bi bi-plus text-dark fw-old" style="font-size: 3rem"></i>
+      </a>
+    </div>
+    <!-- Floating Boottom Plus Button End  -->
+
+    <!-- Navbar Start -->
+    <div style="height: 120px"></div>
+    <nav
+      class="navbar fixed-bottom max-w-sm navbar-expand-lg bg-dark shadow p-0"
+    >
+      <div class="container">
+        <div class="flex-grow-1" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto d-flex flex-row">
+            <li class="nav-item w-100 text-center">
+              <a
+                class="nav-link py-2 text-secondary"
+                aria-current="page"
+                href="home.html"
+              >
+                <img src="assets/icon/ic__nav-home.svg" class="mb-1" />
+                <div>Home</div>
+              </a>
+            </li>
+            <li class="nav-item w-100 text-center">
+              <a
+                class="nav-link py-2 text-secondary active"
+                aria-current="page"
+                href="tournament.html"
+              >
+                <img src="assets/icon/ic__nav-tournament.svg" class="mb-1" />
+                <div>Tournament</div>
+              </a>
+            </li>
+            <li class="nav-item w-100 text-center">
+              <a
+                class="nav-link py-2 text-secondary"
+                aria-current="page"
+                href="timeline.html"
+              >
+                <img src="assets/icon/ic__nav-timeline.svg" class="mb-1" />
+                <div>Timeline</div>
+              </a>
+            </li>
+            <li class="nav-item w-100 text-center">
+              <a
+                class="nav-link py-2 text-secondary"
+                aria-current="page"
+                href="shophub.html"
+              >
+                <img src="assets/icon/ic__nav-shophub.svg" class="mb-1" />
+                <div>ShopHub</div>
+              </a>
+            </li>
+            <li class="nav-item w-100 text-center">
+              <a
+                class="nav-link py-2 text-secondary"
+                aria-current="page"
+                href="account.html"
+              >
+                <img src="assets/icon/ic__nav-profile.svg" class="mb-1" />
+                <div>Account</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar End -->
+  </body>
+</html>
