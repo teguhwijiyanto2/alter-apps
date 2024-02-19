@@ -98,7 +98,7 @@ foreach ($results_A as $row_A) {
 				?>			
           </a>
 		  
-          <a href="play-request.php" class="position-relative">
+          <a href="notification.php" class="position-relative">
             <img src="assets//icon/ic__bell.svg" height="36" width="36" />
 				<?php
 				$unread_notif = DB::queryFirstField("SELECT count(*) FROM matchmaking_availability where approver_id=%i AND is_read=0", $_SESSION["session_usr_id"]);

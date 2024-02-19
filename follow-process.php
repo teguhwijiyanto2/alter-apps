@@ -20,6 +20,13 @@ CREATE TABLE IF NOT EXISTS `followers` (
 	  'follower_id' => $_SESSION["session_usr_id"]
 	]);
 
+	DB::insert('notification', [
+		'category' => 'follow',
+		'notif_for' => $_GET["fid"],
+		'notif_from' => $_SESSION["session_usr_id"],
+		'title' => $_SESSION["session_usr_name"]. " started following you.",
+	  ]);
+
 /*
 	echo("
 	<script language='javascript'>

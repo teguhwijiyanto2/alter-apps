@@ -15,12 +15,14 @@ $results = DB::query($query);
 
 foreach ($results as $play) {
 
-    $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i OR id=%i", $play['requestor_id'], $play['approver_id']);
+    $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i", $play['approver_id']);
 
     $status = 'host';
 
     if($play['approver_id'] == $id) {
         $status = 'participant';
+        $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i", $play['requestor_id']);
+
     }
 
     $user_profile_images = 'https://placehold.co/48x48.png';

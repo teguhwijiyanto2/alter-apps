@@ -24,6 +24,18 @@ require_once 'db.class.php';
 		  'liked_by' => $_SESSION["session_usr_id"],
 		]);
 
+		$post =  DB::queryFirstRow("SELECT * FROM posts WHERE id=%s ", $id);
+
+		if($post['posted_by'] != $_SESSION["session_usr_id"]) {
+			DB::insert('notification', [
+				'category' => 'post-like',
+				'notif_for' => $post['posted_by'],
+				'notif_from' => $_SESSION["session_usr_id"],
+				'title' => 'liked your post.',
+				'data' => $post['id']
+			  ]);
+		}
+
 		$return = [
 			'liked' => true,
 			'count' => $liked_count + 1

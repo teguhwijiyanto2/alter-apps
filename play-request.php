@@ -89,7 +89,7 @@ foreach ($results_A as $row_A) {
             </span>
           </a>
 		  
-          <a href="play-request.php" class="position-relative">
+          <a href="notification.php" class="position-relative">
             <img src="assets//icon/ic__bell.svg" height="36" width="36" />
             <span
               class="position-absolute translate-middle badge rounded-pill bg-primary"

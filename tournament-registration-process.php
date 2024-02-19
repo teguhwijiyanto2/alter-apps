@@ -76,7 +76,22 @@ if(strlen($fileNameCleaned_1) > 3) {
 		  'team_player_email' => '-',
 		  'team_player_username' => $_POST['players_username'][$x]
 		]);
-	} // for($x=1;$x<=$_POST['xplayers_per_team'];$x++) {
+	} 
+
+    $tour =  DB::queryFirstRow("SELECT * FROM `tournament` WHERE tournament_code = %s ", $_POST['tournament_codex']);
+
+	DB::insert('notification', [
+		'category' => 'tournament-join',
+		'notif_for' => $tour["creator_user_id"],
+		'notif_from' => $_SESSION["session_usr_id"],
+		'title' => $_POST['team_name']. " joining your tournament.",
+        'data' => $_POST['tournament_codex']
+	  ]);
+
+	  exit;
+	
+	
+	// for($x=1;$x<=$_POST['xplayers_per_team'];$x++) {
 
 } // else { // Team player tournament
 

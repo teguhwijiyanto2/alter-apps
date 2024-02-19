@@ -218,7 +218,7 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
         class="rounded-circle bg-dark bg-opacity-50 d-flex align-items-center justify-content-center"
         style="height: 36px; width: 36px"
       >
-          <a href="play-request.php" class="position-relative">
+          <a href="notification.php" class="position-relative">
             <img src='assets//icon/ic__bell.svg' height='36' width='36' />
 				<?php
 				$unread_notif = DB::queryFirstField("SELECT count(*) FROM matchmaking_availability where approver_id=%i AND is_read=0", $_SESSION["session_usr_id"]);
