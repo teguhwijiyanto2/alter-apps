@@ -73,6 +73,20 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
               <?php 
               
               foreach($results as $result) {
+                $user_profile_images = 'https://placehold.co/150x150.png';
+
+                if (!empty($result['user_pp_file'])) {
+                  $user_pp_file_path = 'user_pp_files/' . $result['user_pp_file'];
+                  
+                  if (file_exists($user_pp_file_path)) {
+                      $user_profile_images = $user_pp_file_path;
+                  }
+                }
+
+                $name_parts = explode(" ", $result['name']);
+
+                $first_name = $name_parts[0];
+
                 $notificationTime = strtotime($result['created_date']);
 
                 $currentTime = time();
@@ -95,61 +109,170 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
                 // print_r($result);
               ?>
               <?php if($result['category'] == 'post-like'){?>
-                  <a href="">
+                  <a href="user_profile.php">
                     <div
                       class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
                     >
                       <img
-                        src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
+                        src="<?= $user_profile_images?>"
                         alt=""
                         width="32"
                         height="32"
                         class="rounded-circle object-fit-cover"
                       />
                       <div class="flex__1 fs-7">
-                        <b><?= $result['name'] ?></b>
+                        <b><?= ucfirst($first_name) ?></b>
+                        <span> <?= $result['title'] ?></span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                      </div>
+                    </div>
+                  </a>
+              <?php }if($result['category'] == 'post-comment'){?>
+                  <a href="user_profile.php">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <b><?= ucfirst($first_name) ?></b>
                         <span> <?= $result['title'] ?></span>
                         <span class="text-secondary"><?= $timeAgo ?></span>
                       </div>
                     </div>
                   </a>
               <?php } if($result['category'] == 'play-order'){ ?>
-                  <a href="">
+                  <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
                     <div
                       class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
                     >
                       <img
-                        src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
+                        src="<?= $user_profile_images?>"
                         alt=""
                         width="32"
                         height="32"
                         class="rounded-circle object-fit-cover"
                       />
                       <div class="flex__1 fs-7">
-                        <span>Incoming order from <b><?= ucfirst($result['name']) ?></b></span>
+                        <span>Incoming order from <b><?= ucfirst($first_name) ?></b></span>
                         <span class="text-secondary"><?= $timeAgo ?></span>
                       </div>
                     </div>
                   </a>
-              <?php } if($result['category'] == 'follow'){ ?>
-                  <a href="">
+              <?php } if($result['category'] == 'cancel-order'){ ?>
+                  <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
                     <div
                       class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
                     >
                       <img
-                        src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
+                        src="<?= $user_profile_images?>"
                         alt=""
                         width="32"
                         height="32"
                         class="rounded-circle object-fit-cover"
                       />
                       <div class="flex__1 fs-7">
-                        <span><b><?= ucfirst($result['name']) ?></b> started following you.</span>
+                        <span><b><?= ucfirst($first_name) ?></b> Cancelled your order.</span>
                         <span class="text-secondary"><?= $timeAgo ?></span>
                       </div>
-                      <a href="follow-process.php?fid=<?= $result['notif_from'] ?>" class="btn btn-primary btn-sm py-1 px-4 rounded-3">
-                        Follow
-                      </a>
+                    </div>
+                  </a>
+              <?php } if($result['category'] == 'accepted-order'){ ?>
+                  <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <span><b><?= ucfirst($first_name) ?></b> Accepted your order.</span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                      </div>
+                    </div>
+                  </a>
+              <?php } if($result['category'] == 'tournament-join'){
+	                $tour = DB::queryFirstRow("SELECT * FROM tournament where tournament_code=%s ",$result['data']);
+
+                  $tournament_thumbnail = 'https://placehold.co/400x300.png';
+
+                  if (!empty($tour['thumbnail'])) {
+                    $user_pp_file_path = 'tournament_thumbnail/' . $tour['thumbnail'];
+                    
+                    if (file_exists($user_pp_file_path)) {
+                        $tournament_thumbnail = $user_pp_file_path;
+                    }
+                  }
+
+                ?>
+                  <a href="tournament-detail.php?tid=<?= $tour['id']?>">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <b><?= ucfirst($first_name) ?></b>
+                        <span>are joining your tournament. </span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                        <div class="text-secondary fw-semibold mt-1">
+                          <?= $tour['name'] ?>
+                        </div>
+                      </div>
+                      <img
+                        src="<?= $tournament_thumbnail ?>"
+                        alt=""
+                        width="58"
+                        height="58"
+                        class="object-fit-cover rounded-3"
+                      />
+                    </div>
+                  </a>
+              <?php } if($result['category'] == 'follow'){
+                $followed = false;
+	              $follow_query = DB::queryFirstField("SELECT count(*) FROM followers where user_id=%i AND follower_id=%i", $id, $result['notif_from']);
+                if($follow_query){
+                  $followed = true;
+                }
+                ?>
+                  <a href="">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <span><b><?= ucfirst($first_name) ?></b> started following you.</span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                        <?php if($followed) { ?>
+                        <a href="follow-process.php?fid=<?= $result['notif_from'] ?>" class="btn btn-primary btn-sm py-1 px-4 rounded-3">
+                          Follow
+                        </a>
+                        <?php }else{ ?>
+                          <a href="#" class="btn btn-primary btn-sm py-1 px-4 rounded-3 disabled">
+                          Followed
+                          </a>
+                        <?php } ?>
+                      </div>
                     </div>
                   </a>
               <?php }} ?>
@@ -166,116 +289,101 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
             <h5 class="text-white pt-4">New</h5>
             <div aria-label="List New" class="">
               <!-- Incoming order -->
-              <a href="notif-order-details.html">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <span>Incoming order from</span>
-                    <b>Johnee. </b>
-                    <span class="text-secondary">1 hr</span>
-                  </div>
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
+              <?php 
+              
+              foreach($results as $result) {
+                $user_profile_images = 'https://placehold.co/150x150.png';
+
+                if (!empty($result['user_pp_file'])) {
+                  $user_pp_file_path = 'user_pp_files/' . $result['user_pp_file'];
+                  
+                  if (file_exists($user_pp_file_path)) {
+                      $user_profile_images = $user_pp_file_path;
+                  }
+                }
+
+                $name_parts = explode(" ", $result['name']);
+
+                $first_name = $name_parts[0];
+
+                $notificationTime = strtotime($result['created_date']);
+
+                $currentTime = time();
+
+                $timeDiff = $currentTime - $notificationTime;
+                $timeAgo = '';
+
+                if ($timeDiff < 3600) {
+                    $minutes = round($timeDiff / 60);
+                    $timeAgo = "$minutes Min";
+                }
+                elseif ($timeDiff < 86400) {
+                    $hours = round($timeDiff / 3600);
+                    $timeAgo = "$hours Hr";
+                }
+                else {
+                    $days = round($timeDiff / 86400);
+                    $timeAgo = "$days Day";
+                }
+                // print_r($result);
+                
+                if($result['category'] == 'play-order'){ ?>
+                  <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <span>Incoming order from <b><?= ucfirst($first_name) ?></b></span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                      </div>
+                    </div>
+                  </a>
+              <?php } if($result['category'] == 'cancel-order'){ ?>
+                  <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <span><b><?= ucfirst($first_name) ?></b> Cancelled your order.</span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                      </div>
+                    </div>
+                  </a>
+              <?php } if($result['category'] == 'accepted-order'){ ?>
+                  <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <span><b><?= ucfirst($first_name) ?></b> Accepted your order.</span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                      </div>
+                    </div>
+                  </a>
+              <?php }} ?>
             </div>
           </div>
-          <div>
-            <h5 class="text-white pt-4">Today</h5>
-            <div>
-              <!-- Cancelled order -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/F1FECC/000000?text=J"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee. </b>
-                    <span>cancelled their order. </span>
-                    <span class="text-secondary">4 hr</span>
-                  </div>
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div>
-            <h5 class="text-white pt-4">Last 7 days</h5>
-            <div>
-              <!-- Cancelled order -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/F1FECC/000000?text=J"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee. </b>
-                    <span>cancelled their order. </span>
-                    <span class="text-secondary">4 hr</span>
-                  </div>
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-              <!-- Cancelled order -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/F1FECC/000000?text=J"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee. </b>
-                    <span>cancelled their order. </span>
-                    <span class="text-secondary">4 hr</span>
-                  </div>
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-              <!-- Cancelled order -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/F1FECC/000000?text=J"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee. </b>
-                    <span>cancelled their order. </span>
-                    <span class="text-secondary">4 hr</span>
-                  </div>
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-            </div>
           </div>
         </section>
         <!-- Tab Content Play Order End -->
@@ -288,185 +396,87 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
             <h5 class="text-white pt-4">New</h5>
             <div aria-label="List">
               <!-- A player joining your tournament -->
-              <a href="notif-tournament-details.html">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee</b>
-                    <span>are joining your tournament. </span>
-                    <span class="text-secondary">1 hr</span>
-                    <div class="text-secondary fw-semibold mt-1">
-                      Fun Match with Genesis
+              <?php 
+              
+              foreach($results as $result) {
+                $user_profile_images = 'https://placehold.co/150x150.png';
+
+                if (!empty($result['user_pp_file'])) {
+                  $user_pp_file_path = 'user_pp_files/' . $result['user_pp_file'];
+                  
+                  if (file_exists($user_pp_file_path)) {
+                      $user_profile_images = $user_pp_file_path;
+                  }
+                }
+
+                $name_parts = explode(" ", $result['name']);
+
+                $first_name = $name_parts[0];
+
+                $notificationTime = strtotime($result['created_date']);
+
+                $currentTime = time();
+
+                $timeDiff = $currentTime - $notificationTime;
+                $timeAgo = '';
+
+                if ($timeDiff < 3600) {
+                    $minutes = round($timeDiff / 60);
+                    $timeAgo = "$minutes Min";
+                }
+                elseif ($timeDiff < 86400) {
+                    $hours = round($timeDiff / 3600);
+                    $timeAgo = "$hours Hr";
+                }
+                else {
+                    $days = round($timeDiff / 86400);
+                    $timeAgo = "$days Day";
+                }
+                // print_r($result);
+              ?>
+              <?php if($result['category'] == 'tournament-join'){
+	                $tour = DB::queryFirstRow("SELECT * FROM tournament where tournament_code=%s ",$result['data']);
+
+                  $tournament_thumbnail = 'https://placehold.co/400x300.png';
+
+                  if (!empty($tour['thumbnail'])) {
+                    $user_pp_file_path = 'tournament_thumbnail/' . $tour['thumbnail'];
+                    
+                    if (file_exists($user_pp_file_path)) {
+                        $tournament_thumbnail = $user_pp_file_path;
+                    }
+                  }
+
+                ?>
+                  <a href="tournament-detail.php?tid=<?= $tour['id']?>">
+                    <div
+                      class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
+                    >
+                      <img
+                        src="<?= $user_profile_images?>"
+                        alt=""
+                        width="32"
+                        height="32"
+                        class="rounded-circle object-fit-cover"
+                      />
+                      <div class="flex__1 fs-7">
+                        <b><?= ucfirst($first_name) ?></b>
+                        <span>are joining your tournament. </span>
+                        <span class="text-secondary"><?= $timeAgo ?></span>
+                        <div class="text-secondary fw-semibold mt-1">
+                          <?= $tour['name'] ?>
+                        </div>
+                      </div>
+                      <img
+                        src="<?= $tournament_thumbnail ?>"
+                        alt=""
+                        width="58"
+                        height="58"
+                        class="object-fit-cover rounded-3"
+                      />
                     </div>
-                  </div>
-                  <img
-                    src="https://placehold.co/100x100.png"
-                    alt=""
-                    width="58"
-                    height="58"
-                    class="object-fit-cover rounded-3"
-                  />
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-              <!-- A team joining your tournament -->
-              <a href="notif-tournament-details.html">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <div class="position-relative px-3">
-                    <img
-                      src="assets/ilustration/ilus__notif-stack-user.png"
-                      alt=""
-                      width="24"
-                      height="24"
-                      class="rounded-circle object-fit-cover position-absolute start-0"
-                      style="bottom: -5px"
-                    />
-                    <img
-                      src="https://placehold.co/50x50/DD20CC/FFFFFF?text=J"
-                      alt=""
-                      width="24"
-                      height="24"
-                      class="rounded-circle object-fit-cover position-absolute end-0"
-                      style="top: -5px"
-                    />
-                  </div>
-                  <div class="flex__1 fs-7">
-                    <span>A team is participating in your tournament. </span>
-                    <span class="text-secondary">1 hr</span>
-                    <div class="text-secondary fw-semibold mt-1">
-                      Fun Match with Genesis
-                    </div>
-                  </div>
-                  <img
-                    src="https://placehold.co/100x100.png"
-                    alt=""
-                    width="58"
-                    height="58"
-                    class="object-fit-cover rounded-3"
-                  />
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="">
-            <h5 class="text-white pt-4">Today</h5>
-            <div aria-label="List">
-              <!-- A player withdraw your tournament -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee</b>
-                    <span>withdraw from your tournament. </span>
-                    <span class="text-secondary">1 hr</span>
-                    <div class="text-secondary fw-semibold mt-1">
-                      Fun Match with Genesis
-                    </div>
-                  </div>
-                  <img
-                    src="https://placehold.co/100x100.png"
-                    alt=""
-                    width="58"
-                    height="58"
-                    class="object-fit-cover rounded-3"
-                  />
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="">
-            <h5 class="text-white pt-4">Last 7 days</h5>
-            <div aria-label="List">
-              <!-- A player joining your tournament -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <img
-                    src="https://placehold.co/50x50/FF00CC/FFFFFF?text=H"
-                    alt=""
-                    width="32"
-                    height="32"
-                    class="rounded-circle object-fit-cover"
-                  />
-                  <div class="flex__1 fs-7">
-                    <b>Johnee</b>
-                    <span>are joining your tournament. </span>
-                    <span class="text-secondary">1 hr</span>
-                    <div class="text-secondary fw-semibold mt-1">
-                      Fun Match with Genesis
-                    </div>
-                  </div>
-                  <img
-                    src="https://placehold.co/100x100.png"
-                    alt=""
-                    width="58"
-                    height="58"
-                    class="object-fit-cover rounded-3"
-                  />
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
-              <!-- A team joining your tournament -->
-              <a href="">
-                <div
-                  class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
-                >
-                  <div class="position-relative px-3">
-                    <img
-                      src="assets/ilustration/ilus__notif-stack-user.png"
-                      alt=""
-                      width="24"
-                      height="24"
-                      class="rounded-circle object-fit-cover position-absolute start-0"
-                      style="bottom: -5px"
-                    />
-                    <img
-                      src="https://placehold.co/50x50/DD20CC/FFFFFF?text=J"
-                      alt=""
-                      width="24"
-                      height="24"
-                      class="rounded-circle object-fit-cover position-absolute end-0"
-                      style="top: -5px"
-                    />
-                  </div>
-                  <div class="flex__1 fs-7">
-                    <span>A team is participating in your tournament. </span>
-                    <span class="text-secondary">1 hr</span>
-                    <div class="text-secondary fw-semibold mt-1">
-                      Fun Match with Genesis
-                    </div>
-                  </div>
-                  <img
-                    src="https://placehold.co/100x100.png"
-                    alt=""
-                    width="58"
-                    height="58"
-                    class="object-fit-cover rounded-3"
-                  />
-                  <i class="bi bi-chevron-right fs-5"></i>
-                </div>
-              </a>
+                  </a>
+                  <?php }}?>
             </div>
           </div>
         </section>

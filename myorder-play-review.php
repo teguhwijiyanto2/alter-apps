@@ -22,7 +22,7 @@ if($match['date_time'] < date("Y-m-d H:i:s") ){
   $allow_review = true;
 }
 
-print_r($allow_review);
+// print_r($allow_review);
 
   
 $date = date("Y-m-d",strtotime($match['date_time']));
@@ -151,7 +151,7 @@ $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmakin
           <!-- Schedule End -->
 
           <!-- Review Start -->
-          <?php if($allow_review && !$review) { ?>
+          <?php if($allow_review && !$review && $match['request_status'] != 'Rejected') { ?>
           <div class="bg-dark rounded-3 p-3 mt-3">
             <h5>Review</h5>
             <div
