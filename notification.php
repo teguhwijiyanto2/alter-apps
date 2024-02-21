@@ -5,7 +5,7 @@ require_once 'db.class.php';
 $id = $_SESSION["session_usr_id"];
 
 
-$results = DB::query("SELECT * FROM notification JOIN users ON notification.notif_from = users.id WHERE notif_for = %i ORDER BY created_date DESC", $id);
+$results = DB::query("SELECT * FROM notifications JOIN users ON notifications.notif_from = users.id WHERE notif_for = %i ORDER BY created_date DESC", $id);
 
 // print_r($results);
 ?>
@@ -244,12 +244,12 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
                   </a>
               <?php } if($result['category'] == 'follow'){
                 $followed = false;
-	              $follow_query = DB::queryFirstField("SELECT count(*) FROM followers where user_id=%i AND follower_id=%i", $id, $result['notif_from']);
+	              $follow_query = DB::queryFirstField("SELECT count(*) FROM followers where user_id=%i AND follower_id=%i", $result['notif_from'], $id);
+
                 if($follow_query){
                   $followed = true;
                 }
                 ?>
-                  <a href="">
                     <div
                       class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
                     >
@@ -263,18 +263,13 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
                       <div class="flex__1 fs-7">
                         <span><b><?= ucfirst($first_name) ?></b> started following you.</span>
                         <span class="text-secondary"><?= $timeAgo ?></span>
-                        <?php if($followed) { ?>
-                        <a href="follow-process.php?fid=<?= $result['notif_from'] ?>" class="btn btn-primary btn-sm py-1 px-4 rounded-3">
+                        <?php if(!$followed) { ?>
+                        <span onclick="follow(<?= $result['notif_from'] ?>)" id="btn_follow" class="btn btn-primary btn-sm py-1 px-4 rounded-3">
                           Follow
-                        </a>
-                        <?php }else{ ?>
-                          <a href="#" class="btn btn-primary btn-sm py-1 px-4 rounded-3 disabled">
-                          Followed
-                          </a>
+                        </span>
                         <?php } ?>
                       </div>
                     </div>
-                  </a>
               <?php }} ?>
             </div>
           </div>
@@ -497,6 +492,16 @@ $results = DB::query("SELECT * FROM notification JOIN users ON notification.noti
           $(`#${tabId}`).addClass("d-block");
         });
       });
+      function follow(id) {
+        $.ajax({
+              url: "follow-process.php?fid="+id,
+              type: 'GET',
+              cache: false,
+              success: function(data) {
+                  $("#btn_follow").hide()
+              }
+          });
+      }
     </script>
   </body>
 </html>

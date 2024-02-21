@@ -4,12 +4,18 @@ date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 $id = $_GET['id'];
 
-$match = DB::queryFirstRow("SELECT matchmaking_availability.*, users.name, users.user_pp_file FROM `matchmaking_availability` JOIN users ON matchmaking_availability.requestor_id = users.id WHERE matchmaking_availability.id = %i", $id);
+$match = DB::queryFirstRow("SELECT *  FROM `matchmaking_availability` WHERE matchmaking_availability.id = %i", $id);
+
+$user = DB::queryFirstRow("SELECT *  FROM `users` WHERE id = %i", $match['requestor_id']);
+
+if($match['requestor_id'] == $_SESSION['session_usr_id']) {
+  $user = DB::queryFirstRow("SELECT *  FROM `users` WHERE id = %i", $match['approver_id']);
+}
 
 $user_profile_images = 'https://placehold.co/48x48.png';
 
-    if (!empty($match['user_pp_file'])) {
-      $user_pp_file_path = 'user_pp_files/' . $match['user_pp_file'];
+    if (!empty($user['user_pp_file'])) {
+      $user_pp_file_path = 'user_pp_files/' . $user['user_pp_file'];
       
       if (file_exists($user_pp_file_path)) {
           $user_profile_images = $user_pp_file_path;
@@ -99,13 +105,15 @@ $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmakin
           <div class="p-3 bg-dark rounded-3">
             <h5>Play With</h5>
             <div class="d-flex flex-row align-items-center gap-2 my-4">
+            <a href="profile.php?user_id_profile=<?php echo $match['requestor_id']  ?>">
               <img
                 src="<?php echo $user_profile_images ?>"
                 width="48"
                 height="48"
                 class="object-fit-cover rounded-circle"
               />
-              <div><?php echo $match['name'] ?></div>
+            </a>
+              <div><?php echo $user['name'] ?></div>
             </div>
             <div>
               <div

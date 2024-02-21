@@ -54,12 +54,14 @@ foreach ($results as $play) {
         <?php echo ucfirst($status); ?>
     </div>
     <div class="d-flex flex-row align-items-center gap-2 p-3">
-        <img
-        src="<?php echo $user_profile_images ?>"
-        width="48"
-        height="48"
-        class="rounded-2 object-fit-cover"
-        />
+        <a href="profile.php?user_id_profile=<?php echo ($status == 'host') ? $play['approver_id'] : $play['requestor_id']  ?>">
+            <img
+            src="<?php echo $user_profile_images ?>"
+            width="48"
+            height="48"
+            class="rounded-2 object-fit-cover"
+            />
+        </a>
         <div class="text-secondary">
         <?php echo ($status == 'host') ? 'With' : 'From' ?><span class="text-light"> <?php echo $user_profile['name'] ?></span>
         </div>
