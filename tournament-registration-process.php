@@ -80,7 +80,7 @@ if(strlen($fileNameCleaned_1) > 3) {
 
     $tour =  DB::queryFirstRow("SELECT * FROM `tournament` WHERE tournament_code = %s ", $_POST['tournament_codex']);
 
-	DB::insert('notification', [
+	DB::insert('notifications', [
 		'category' => 'tournament-join',
 		'notif_for' => $tour["creator_user_id"],
 		'notif_from' => $_SESSION["session_usr_id"],

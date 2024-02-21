@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 
 	$play =  DB::queryFirstRow("SELECT * FROM `matchmaking_availability` WHERE requestor_id = %i AND approver_id = %i ORDER BY date_time DESC LIMIT 1", $_SESSION["session_usr_id"], $_POST['user_id_profile'] );
 
-	DB::insert('notification', [
+	DB::insert('notifications', [
 		'category' => 'play-order',
 		'notif_for' => $_POST['user_id_profile'],
 		'notif_from' => $_SESSION["session_usr_id"],

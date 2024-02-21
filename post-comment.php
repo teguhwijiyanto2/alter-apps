@@ -17,7 +17,7 @@ require_once 'db.class.php';
 
 		$comment = explode(" ", $_POST['comment_post']);
 
-		DB::insert('notification', [
+		DB::insert('notifications', [
 			'category' => 'post-comment',
 			'notif_for' => $post['posted_by'],
 			'notif_from' => $_SESSION["session_usr_id"],

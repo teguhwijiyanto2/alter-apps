@@ -27,7 +27,7 @@ require_once 'db.class.php';
 		$post =  DB::queryFirstRow("SELECT * FROM posts WHERE id=%s ", $id);
 
 		if($post['posted_by'] != $_SESSION["session_usr_id"]) {
-			DB::insert('notification', [
+			DB::insert('notifications', [
 				'category' => 'post-like',
 				'notif_for' => $post['posted_by'],
 				'notif_from' => $_SESSION["session_usr_id"],

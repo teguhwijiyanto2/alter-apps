@@ -19,7 +19,7 @@ if($_POST['review_allow']){
 
     $play =  DB::queryFirstRow("SELECT * FROM `matchmaking_availability` WHERE id = %i ", $_POST['id']);
 
-    DB::insert('notification', [
+    DB::insert('notifications', [
 		'category' => 'accepted-order',
 		'notif_for' => $play["id"],
 		'notif_from' => $_SESSION["session_usr_id"],

@@ -123,34 +123,38 @@ require_once 'db.class.php';
           <!-- Dropdown -->
           <div class="d-flex flex-row align-items-center gap-2">
             <div class="dropdown mt-3" data-bs-theme="dark">
-              <button
-                class="btn btn-secondary btn-sm py-1 px-3 dropdown-toggle"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                All Status
-              </button>
-              <ul class="dropdown-menu bg-dark">
-                <li><a class="dropdown-item" href="#">All Status</a></li>
-                <li><a class="dropdown-item" href="#">Finished</a></li>
-                <li><a class="dropdown-item" href="#">Unsuccessful</a></li>
-              </ul>
+            <button
+              class="btn btn-secondary btn-sm py-1 px-3 dropdown-toggle"
+              type="button"
+              id='btn-filter-shop'
+              data-bs-toggle="dropdown"
+              value="All Status"
+              aria-expanded="false"
+            >
+              Upcoming
+            </button>
+            <ul class="dropdown-menu bg-dark">
+              <li onclick="filterStatusShophub('All Status')"><span class="dropdown-item"  >All Status</span></li>
+              <li onclick="filterStatusShophub('Success')"> <span class="dropdown-item" >Success</span></li>
+              <li onclick="filterStatusShophub('Failed')"> <span class="dropdown-item" >Failed</span></li>
+            </ul>
             </div>
 
             <div class="dropdown mt-3" data-bs-theme="dark">
               <button
                 class="btn btn-secondary btn-sm py-1 px-3 dropdown-toggle"
                 type="button"
+                id='btn-date-shop'
+                value="All"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 All Date
               </button>
               <ul class="dropdown-menu bg-dark">
-                <li><a class="dropdown-item" href="#">All Date</a></li>
-                <li><a class="dropdown-item" href="#">Last 30 Days</a></li>
-                <li><a class="dropdown-item" href="#">Last 90 Days</a></li>
+                <li><span class="dropdown-item" onclick="filterDateShophub('All')">All Date</span></li>
+                <li><span class="dropdown-item" onclick="filterDateShophub('30')">Last 30 Days</span></li>
+                <li><span class="dropdown-item" onclick="filterDateShophub('90')">Last 90 Days</span></li>
               </ul>
             </div>
           </div>
@@ -166,103 +170,16 @@ require_once 'db.class.php';
             </button>
             <input
               type="text"
+              id="searchShop"
               class="form-control bg-black text-light"
+              oninput="filterSearchShophub()"
               placeholder="Search for transactions"
             />
           </div>
 
           <!-- List -->
-          <div class="list-play__wrapper d-flex flex-column gap-3 mt-3">
-            <div class="list-play__item bg-dark rounded-3 overflow-hidden">
-              <div class="opacity-100">
-                <div
-                  class="float-end bg__violet py-1 px-3 fs-8"
-                  style="border-bottom-left-radius: 10px"
-                >
-                  Successful
-                </div>
-                <div class="d-flex flex-row align-items-center gap-2 p-3">
-                  <img
-                    src="assets/img/shopbuy__genshin-voucher.png"
-                    width="48"
-                    height="48"
-                    class="rounded-2 object-fit-contain"
-                  />
-                  <div>
-                    <div>1x Blessing of the...</div>
-                    <div class="text-secondary fs-8">Genshin Impact</div>
-                  </div>
-                </div>
-                <div class="px-3">
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-between text-secondary"
-                  >
-                    <span>Total Paid</span>
-                    <span class="text-light fs-5">Rp 50.000</span>
-                  </div>
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-between text-secondary"
-                  >
-                    <span>Payment Method</span>
-                    <span class="text-light fs-5">Alter Wallet</span>
-                  </div>
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-between text-secondary"
-                  >
-                    <span>Purchase ID</span>
-                    <span class="text-light fs-5">123971934810</span>
-                  </div>
-                </div>
-              </div>
-              <div class="p-3 d-flex flex-row align-items-center gap-3 mt-2">
-                <button class="btn btn-primary btn-sm rounded-pill w-100 py-2">
-                  Repurchase
-                </button>
-              </div>
-            </div>
-            <div class="list-play__item bg-dark rounded-3 overflow-hidden">
-              <div class="opacity-100">
-                <div
-                  class="float-end bg__violet py-1 px-3 fs-8"
-                  style="border-bottom-left-radius: 10px"
-                >
-                  Unsuccessful
-                </div>
-                <div class="d-flex flex-row align-items-center gap-2 p-3">
-                  <img
-                    src="assets/img/shopbuy__genshin-voucher.png"
-                    width="48"
-                    height="48"
-                    class="rounded-2 object-fit-contain"
-                  />
-                  <div>
-                    <div>1x Blessing of the...</div>
-                    <div class="text-secondary fs-8">Genshin Impact</div>
-                  </div>
-                </div>
-                <div class="px-3">
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-between text-secondary"
-                  >
-                    <span>Total Paid</span>
-                    <span class="text-light fs-5">Rp 50.000</span>
-                  </div>
-                  <div
-                    class="d-flex flex-row align-items-center justify-content-between text-secondary"
-                  >
-                    <span>Payment Method</span>
-                    <span class="text-light fs-5">Alter Wallet</span>
-                  </div>
-                </div>
-              </div>
-              <div class="p-3 d-flex flex-row align-items-center gap-3 mt-2">
-                <button
-                  class="btn btn-outline-light btn-sm rounded-pill w-100 py-2"
-                >
-                  Try Again
-                </button>
-              </div>
-            </div>
+          <div class="list-play__wrapper d-flex flex-column gap-3 mt-3" id="shophubBox">
+            
           </div>
         </section>
         <!-- Tab Content ShopHub End -->
@@ -287,6 +204,7 @@ require_once 'db.class.php';
       $(document).ready(function () {
         showPlayOrder('Upcoming')
         showTourOrder('Upcoming')
+        showShophubOrder('All Status', 'All', '')
       });
 
       function showPlayOrder(category) {
@@ -312,6 +230,44 @@ require_once 'db.class.php';
                   $('#tourBox').html(data);
               }
           });
+      }
+      function showShophubOrder(category,date,search) {
+       
+        $.ajax({
+              url: "my-order-shophub-component.php",
+              type: 'POST',
+              cache: false,
+              data: {  'categ': category, 'date': date, 'search': search},
+              success: function(data) {
+                  $('#shophubBox').html(data);
+              }
+          });
+      }
+
+      function filterStatusShophub(categ) {
+        $('#btn-filter-shop').text(categ);
+        $('#btn-filter-shop').val(categ);
+        var ct = $('#btn-filter-shop').val();
+        var dt = $('#btn-date-shop').val();
+        var sc = $('#searchShop').val();
+        showShophubOrder(ct, dt, sc)
+
+      }
+      function filterDateShophub(date) {
+        $('#btn-date-shop').text(date);
+        $('#btn-date-shop').val(date);
+        var ct = $('#btn-filter-shop').val();
+        var dt = $('#btn-date-shop').val();
+        var sc = $('#searchShop').val();
+        showShophubOrder(ct, dt, sc)
+
+      }
+      function filterSearchShophub() {
+        var ct = $('#btn-filter-shop').val();
+        var dt = $('#btn-date-shop').val();
+        var sc = $('#searchShop').val();
+        showShophubOrder(ct, dt, sc)
+
       }
 
     </script>
