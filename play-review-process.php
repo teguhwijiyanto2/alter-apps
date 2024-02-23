@@ -21,7 +21,7 @@ if($_POST['review_allow']){
 
     DB::insert('notifications', [
 		'category' => 'accepted-order',
-		'notif_for' => $play["id"],
+		'notif_for' => $play["requestor_id"],
 		'notif_from' => $_SESSION["session_usr_id"],
 		'title' => $_SESSION["session_usr_name"]. " accepted your order.",
         'data' => $_POST['id']

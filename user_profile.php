@@ -221,7 +221,7 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
           <a href="notification.php" class="position-relative">
             <img src='assets//icon/ic__bell.svg' height='36' width='36' />
 				<?php
-				$unread_notif = DB::queryFirstField("SELECT count(*) FROM notifications where notif_for=%i", $_SESSION["session_usr_id"]);
+				$unread_notif = DB::queryFirstField("SELECT count(*) FROM notifications where notif_for=%i AND subtitle IS NULL", $_SESSION["session_usr_id"]);
 				if($unread_notif > 0) {
 					echo "
 					<span

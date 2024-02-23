@@ -25,6 +25,11 @@ foreach ($results as $play) {
 
     }
 
+    if($play['date_time'] < date("Y-m-d H:i:s") ){
+	    DB::query("UPDATE matchmaking_availability SET request_status='Review' WHERE id = '".$play['id']."'");
+        $play['request_status'] = 'Review';
+      }
+
     $user_profile_images = 'https://placehold.co/48x48.png';
 
     if (!empty($user_profile['user_pp_file'])) {
@@ -46,7 +51,7 @@ foreach ($results as $play) {
 ?>
 
 <div class="list-play__item bg-dark rounded-3 overflow-hidden">
-    <div class=" <?php echo ($play['request_status'] == 'Finished') ? 'opacity-25' : 'opacity-100' ?> ">
+    <div class=" <?php echo ($play['request_status'] == 'Finished' || $play['request_status'] == 'Review') ? 'opacity-25' : 'opacity-100' ?> ">
     <div
         class="float-end  <?php echo ($status == 'host') ? 'bg__violet' : 'bg-secondary' ?> py-1 px-3 fs-8"
         style="border-bottom-left-radius: 10px"
@@ -89,11 +94,12 @@ foreach ($results as $play) {
     </div>
     <?php if($play['request_status'] == '-' && $status != 'host') { ?>
     <div class="p-3 d-flex flex-row align-items-center gap-3 mt-2">
-        <button
+        <a
+            href="play-request-reject.php?pid=<?php echo $play['id'] ?>"
             class="btn btn-outline-light btn-sm rounded-pill w-100 py-2"
         >
             Decline
-        </button>
+        </a>
         <a
             href="myorder-play-review.php?id=<?php echo $play['id'] ?>&view=0"
             class="btn btn-primary btn-sm rounded-pill w-100 py-2"
@@ -110,7 +116,7 @@ foreach ($results as $play) {
             See Details
         </a>
     </div>
-    <?php } if($play['request_status'] == 'Accepted' && $allow_review && $status != 'host') { ?>
+    <?php } if($play['request_status'] == 'Review' && $allow_review && $status != 'host') { ?>
     <div class="px-3 pb-3 d-flex flex-row align-items-center gap-3">
         <a
             href="myorder-play-review.php?id=<?php echo $play['id'] ?>&view=0"

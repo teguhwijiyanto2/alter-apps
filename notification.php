@@ -5,7 +5,7 @@ require_once 'db.class.php';
 $id = $_SESSION["session_usr_id"];
 
 
-$results = DB::query("SELECT * FROM notifications JOIN users ON notifications.notif_from = users.id WHERE notif_for = %i ORDER BY created_date DESC", $id);
+$results = DB::query("SELECT notifications.*, users.*, notifications.id AS notif_id FROM notifications JOIN users ON notifications.notif_from = users.id WHERE notif_for = %i ORDER BY created_date DESC", $id);
 
 // print_r($results);
 ?>
@@ -73,6 +73,8 @@ $results = DB::query("SELECT * FROM notifications JOIN users ON notifications.no
               <?php 
               
               foreach($results as $result) {
+                DB::query("UPDATE notifications SET subtitle='read' WHERE id = %i", $result['notif_id']);
+
                 $user_profile_images = 'https://placehold.co/150x150.png';
 
                 if (!empty($result['user_pp_file'])) {
@@ -146,7 +148,9 @@ $results = DB::query("SELECT * FROM notifications JOIN users ON notifications.no
                       </div>
                     </div>
                   </a>
-              <?php } if($result['category'] == 'play-order'){ ?>
+              <?php } if($result['category'] == 'play-order'){
+                $match = DB::queryFirstRow("SELECT * FROM matchmaking_availability WHERE id=%i", $result['data']);
+              ?>
                   <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
                     <div
                       class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
@@ -161,6 +165,14 @@ $results = DB::query("SELECT * FROM notifications JOIN users ON notifications.no
                       <div class="flex__1 fs-7">
                         <span>Incoming order from <b><?= ucfirst($first_name) ?></b></span>
                         <span class="text-secondary"><?= $timeAgo ?></span>
+                        <?php if($match['request_status'] == '-'){ ?>
+                        <a href="play-request-reject.php?pid=<?php echo $result['data'] ?>" class="btn btn-danger btn-sm py-1 px-2 rounded-3 fs-5">
+                          <i class="bi bi-x text-secondary cursor-pointer"></i>
+                        </a>
+                        <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=0" id="btn_follow" class="btn btn-success btn-sm py-1 px-2 rounded-3 fs-5">
+                          <i class="bi bi-check text-secondary cursor-pointer"></i>
+                        </a>
+                        <?php } ?>
                       </div>
                     </div>
                   </a>
@@ -322,7 +334,10 @@ $results = DB::query("SELECT * FROM notifications JOIN users ON notifications.no
                 }
                 // print_r($result);
                 
-                if($result['category'] == 'play-order'){ ?>
+                if($result['category'] == 'play-order'){ 
+                  $match = DB::queryFirstRow("SELECT * FROM matchmaking_availability WHERE id=%i", $result['data']);
+                  
+                  ?>
                   <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=1">
                     <div
                       class="d-flex flex-row align-items-center gap-3 border-bottom border-dark py-3"
@@ -337,6 +352,14 @@ $results = DB::query("SELECT * FROM notifications JOIN users ON notifications.no
                       <div class="flex__1 fs-7">
                         <span>Incoming order from <b><?= ucfirst($first_name) ?></b></span>
                         <span class="text-secondary"><?= $timeAgo ?></span>
+                        <?php if($match['request_status'] == '-'){ ?>
+                        <a href="play-request-reject.php?pid=<?php echo $result['data'] ?>" class="btn btn-danger btn-sm py-1 px-2 rounded-3 fs-5">
+                          <i class="bi bi-x text-secondary cursor-pointer"></i>
+                        </a>
+                        <a href="myorder-play-review.php?id=<?php echo $result['data'] ?>&view=0" id="btn_follow" class="btn btn-success btn-sm py-1 px-2 rounded-3 fs-5">
+                          <i class="bi bi-check text-secondary cursor-pointer"></i>
+                        </a>
+                        <?php } ?>
                       </div>
                     </div>
                   </a>

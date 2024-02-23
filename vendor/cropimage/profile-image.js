@@ -4,7 +4,7 @@ $(document).ready(function () {
     $('#modal-view-avatar').addClass('d-flex');
     $('#modal-view-avatar').find('img').attr('src', src);
   });
-
+  
   $('#close-view-avatar').click(function () {
     $('#modal-view-avatar').removeClass('d-flex');
   });

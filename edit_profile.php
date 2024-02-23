@@ -108,7 +108,7 @@
                     class="bg-dark m-3 rounded-circle position-absolute top-0 end-0 d-flex align-items-center justify-content-center"
                     style="width: 35px; height: 35px"
                 >
-                    <i class="bi bi-pencil-fill text-secondary"></i>
+                    <i class="bi bi-pencil-fill text-secondary cursor-pointer" id="pencil-banner" role="button"></i>
                 </div>
                 </div>
 
@@ -210,7 +210,7 @@
                         class="bg-dark rounded-circle position-absolute top-0 end-0 d-flex align-items-center justify-content-center"
                         style="width: 35px; height: 35px"
                     >
-                        <i class="bi bi-pencil-fill text-secondary"></i>
+                        <i class="bi bi-pencil-fill text-secondary" id="pencil-avatar-circle" role="button"></i>
                     </div>
                     </div>
 
@@ -346,6 +346,17 @@
         //     $(window).off("beforeunload");
         //     });
         // });
+        $(document).ready(function() {
+    // Menangani klik pada ikon pensil
+            $('#pencil-avatar-circle').on('click', function() {
+                // Inisiasi klik pada elemen avatar
+                $('#avatar-circle').click();
+            });
+            $('#pencil-banner').on('click', function() {
+                // Inisiasi klik pada elemen avatar
+                $('#banner-profile').click();
+            });
+        });
         </script>
     </body>
 </html>

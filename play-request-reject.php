@@ -24,6 +24,16 @@ $results_1 = DB::query("UPDATE matchmaking_availability set request_status='Reje
 
 $results_2 = DB::queryFirstRow("SELECT * from matchmaking_availability where id=%i", $_GET["pid"]);
 
+
+DB::insert('notifications', [
+    'category' => 'cancel-order',
+    'notif_for' => $results_2["requestor_id"],
+    'notif_from' => $_SESSION["session_usr_id"],
+    'title' => $_SESSION["session_usr_name"]. " Reject your order.",
+    'data' => $_GET["pid"]
+  ]);
+
+
 /*
 CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -222,7 +232,7 @@ try {
 
 */
 
-	echo "<script>window.location.href='play-request.php'</script>";
+	echo "<script>window.location.href='myorder.php'</script>";
 	
 /*
 
