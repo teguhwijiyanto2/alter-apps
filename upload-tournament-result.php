@@ -3,7 +3,6 @@ session_start();
 date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 
-print_r($_POST);
 
 $errors_1 = []; // Store errors here
 $fileName_1 = $_FILES['img-tournament']['name'];
@@ -32,7 +31,9 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
 
   DB::insert('tournament_result', [
     'tournament_id' => $_POST['tid'],
-    'tournament_team_id' => $_POST['team-name'],
+    'result_1' => isset($_POST['wining'][0]) ? $_POST['wining'][0] : '',
+    'result_2' => isset($_POST['wining'][1]) ? $_POST['wining'][1] : '',
+    'result_3' => isset($_POST['wining'][2]) ? $_POST['wining'][2] : '',
     'result_image' => $fileNameFix_1
   ]);
 

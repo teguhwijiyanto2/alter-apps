@@ -50,6 +50,9 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
 
         <form action="upload-tournament-result.php" method="post" enctype="multipart/form-data">
           <input type="hidden" name="tid" value="<?php echo $_GET['id'] ?>">
+          <div id="winingBox">
+
+          </div>
           <!-- Summary Start -->
           <div class="p-3 bg-dark rounded-3">
             <h5>Winning Team</h5>
@@ -63,6 +66,8 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
             <label
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="team1"
+              id="winingPointer<?= $team['id'] ?>"
+              onclick="winingCheck('<?= $team['id']?>')"
             >
               <img
                 src="https://placehold.co/150x150.png"
@@ -80,13 +85,7 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
                   ?>
                 </div>
               </div>
-              <input
-                type="radio"
-                class="me-4"
-                name="team-name"
-                value="<?php echo $team['id']; ?>"
-                autocomplete="off"
-              />
+              <h1 class="fs-3" id="trops<?= $team['id'] ?>"></h1>
             </label>
             <?php } ?>
           </div>
@@ -128,6 +127,8 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
     </section>
 
     <script>
+
+      let wining = 1;
       $(document).ready(function () {
         $("#img-tournament").on("change", function (e) {
           var input = e.target;
@@ -143,6 +144,16 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
           reader.readAsDataURL(input.files[0]);
         });
       });
+
+      function winingCheck(id) {
+        if(wining <= 3) {
+          $("#trops"+id).text(wining)
+          $("#winingPointer"+id).prop("onclick", null).off("click");
+          $('#winingBox').append("<input type='hidden' name='wining[]' value='"+id+"'>");
+          wining++
+        }
+        
+      }
     </script>
   </body>
 </html>
