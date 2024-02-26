@@ -59,15 +59,124 @@ Sedangkan di request body seperti ini : 2023-08-09T12:00:00Z
 */
 
 
-$StringToSign = "
+//$StringToSign = "inquiry\n00000005\n201803070001\n6017\n807400010001\n2018-09-17T18:27:00+0700";
+
+/*
+$StringToSign = "inquiry
+\n
+00000005
+\n
+201803070001
+\n
+6017
+\n
+807400010001
+\n
+2018-09-17T18:27:00+0700";
+*/
+
+
+
+
+
+/*
+$StringToSign = "";
+$StringToSign .= "inquiry";
+$StringToSign .= "\n";
+$StringToSign .= "00000005"; //bankId
+$StringToSign .= "\n";
+$StringToSign .= "201803070001"; //bankRefNo
+$StringToSign .= "\n";
+$StringToSign .= "6017"; //bankChannel
+$StringToSign .= "\n";
+$StringToSign .= "807400010001"; //custId
+$StringToSign .= "\n";
+$StringToSign .= "2018-09-17T18:27:00+0700"; //dateTrx
+*/
+
+/*
+{
+ "bankChannel" : "6017",
+ "bankId" : "00000010",
+ "bankRefNo" : "202401100001",
+ "custAccNo" : "1111111111",
+ "custId" : "081234000001",
+ "dateTrx" : "2024-01-10T11:40:00Z",
+ "payeeCode" : "10002",
+ "productCode" : "1006"
+}
+*/
+
+/*
+$StringToSign = "";
+$StringToSign .= "inquiry";
+$StringToSign .= "\n";
+$StringToSign .= "00000010";
+$StringToSign .= "\n";
+$StringToSign .= "202401100001";
+$StringToSign .= "\n";
+$StringToSign .= "6017";
+$StringToSign .= "\n";
+$StringToSign .= "081234000001";
+$StringToSign .= "\n";
+$StringToSign .= "2024-01-10T11:40:00Z";
+// Ja0uXSPM5fto1tVQMGVyNk9SltaYJ57w3Yz3dAH+fsY=
+*/
+
+/*
+inquiry
+00000010
+202401100001
+6017
+081234000001
+2024-01-10T11:40:00Z
+*/
+
+
+$StringToSign = "";
+$StringToSign .= "inquiry";
+$StringToSign .= "\n";
+$StringToSign .= "00000005";
+$StringToSign .= "\n";
+$StringToSign .= "201803070001";
+$StringToSign .= "\n";
+$StringToSign .= "6017";
+$StringToSign .= "\n";
+$StringToSign .= "807400010001";
+$StringToSign .= "\n";
+$StringToSign .= "2018-09-17T18:27:00+0700";
+
+//echo $StringToSign;
+
+
+
+echo "inquiry<br>00000005<br>201803070001<br>6017<br>807400010001<br>2018-09-17T18:27:00+0700";
+
+echo "<br><br>";
+
+echo base64_encode(hash_hmac('sha256', $StringToSign, '3lN1j3/tpRwmgcQFoq9/pyzgP77aRY7MBFhEIfiXQZ4=', true));
+//dSUGChtOGJzELDp5w9Ilwg6k7tFN+M6P8gjNssxSWgw=
+
+/*
 inquiry
 00000005
 201803070001
 6017
 807400010001
 2018-09-17T18:27:00+0700
-";
 
-echo base64_encode(hash_hmac('sha256', '$StringToSign', 'h04n7eoPm9gAI/xLdLRoS8I4bL5uNWbdwa5e9VFZxHo='));
+
+{
+ "bankChannel" : "6017",
+ "bankId" : "00000005",
+ "bankRefNo" : "201803070001",
+ "custAccNo" : "1111111111",
+ "custId" : "807400010001",
+ "dateTrx" : "2018-09-17T18:27:00Z",
+ "payeeCode" : "10002",
+ "productCode" : "1006"
+}
+
+*/
 
 ?>

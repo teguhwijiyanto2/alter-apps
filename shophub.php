@@ -1,3 +1,82 @@
+<?php
+session_start();
+date_default_timezone_set('Asia/Jakarta');
+require_once 'db.class.php';
+
+
+
+$array_games = array();
+$results_A = DB::query("SELECT * FROM games order by id asc");
+foreach ($results_A as $row_A) {
+	$array_games[$row_A['game_name_id']] = "".$row_A['name']."";
+} // foreach ($results_A as $row_A) {
+//echo $array_users_username[$row_A['id']];
+
+$array_product_category_name = array("1"=>"Mobile Prepaid","2"=>"Mobile Data","3"=>"Top Up Game","4"=>"eWallet","5"=>"Voucher");
+
+
+
+
+$url = 'https://bgtest.e2pay.co.id/bg/restful/prepaidProduct';
+$data = array(
+    "bankChannel" => "6017",
+    "bankId" => "00000010"
+);
+$encodedData = json_encode($data);
+$curl = curl_init($url);
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // only for localhost nih, krn gak ada SSLnya!
+$data_string = urlencode(json_encode($data));
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','date:2023-11-15T11:40:00+0700','authorization:HiNRluaEgjL1wRzpcRGGRr4R+ra42KL5tTIRRNlzljU='));
+curl_setopt($curl, CURLOPT_POST, true);
+curl_setopt($curl, CURLOPT_POSTFIELDS, $encodedData);
+$result_prepaidProduct = curl_exec($curl);
+// Check the return value of curl_exec(), too
+if ($result_prepaidProduct === false) {
+	throw new Exception(curl_error($curl), curl_errno($curl));
+}
+// Check HTTP return code, too; might be something else than 200
+$httpReturnCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+curl_close($curl);
+//echo $result_prepaidProduct;
+
+
+
+$json_decoded = json_decode($result_prepaidProduct, true);
+$data_responses = $json_decoded["data"];
+
+foreach ($data_responses as $index => $data_response) {
+	//echo "$index => $data_response<br>";
+	//echo "<br>";
+	foreach ($data_response as $key => $val) {
+		//echo "$key => $val<br>";
+		// Parsing process here :
+		
+		/* sample 1 data return:
+			productCode => 1201
+			nominal => 108000
+			payeeCode => 10002
+			name => Paket Data
+			description => Paket Data
+			type => 2
+			clientPrice => 108000.00
+		*/
+		// ALTER cuma jalanin Mobile Prepaid, Paket Data, Game, eWallet, & eVoucher (type 1,2,3,4,5) !
+		/* namingnya :
+			Mobile Prepaid --> Mobile Prepaid
+			Paket Data --> Mobile Data
+			Game --> Top Up Game
+			eWallet --> eWallet
+			eVoucher --> Voucher
+		*/		
+		
+	} // foreach ($data_response as $key => $val) {
+} // foreach ($data_responses as $index => $data_response) {
+
+	
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,6 +108,7 @@
   <body>
     <div class="container">
       <div class="w-100 pt-4">
+	  
         <!-- Top Bar Start -->
         <div class="d-flex flex-row align-items-center w-100 gap-1">
           <div
@@ -36,39 +116,18 @@
           >
             <i class="bi bi-search fs-4 text-secondary"></i>
             <input
-              placeholder="Search for shop items"
+              placeholder="Search for games or friends"
               class="bg-transparent border-0 w-100 text-light"
             />
           </div>
-		  
-          <a href="chat-list.php" class="position-relative">
+          <a href="chat.php">
             <img
               src="assets//icon/ic__bubble-chat.svg"
               height="36"
               width="36"
             />
-            <span
-              class="position-absolute translate-middle badge rounded-pill bg-primary"
-              style="top: 4px; left: 30px"
-            >
-              3
-              <span class="visually-hidden">unread messages</span>
-            </span>
           </a>
-		  
-          <a href="notification.php" class="position-relative">
-            <img src="assets//icon/ic__bell.svg" height="36" width="36" />
-			<!--
-            <span
-              class="position-absolute translate-middle badge rounded-pill bg-primary"
-              style="top: 4px; left: 30px"
-            >
-              3
-              <span class="visually-hidden">cart item</span>
-            </span>
-			-->
-          </a>
-		  
+          <img src="assets//icon/ic__bell.svg" height="36" width="36" />
         </div>
         <!-- Top Bar End -->
 
@@ -103,21 +162,21 @@
           <div class="carousel-inner mt-4">
             <div class="carousel-item active">
               <img
-                src="banner_files/shophub/Banner-App-09.jpg"
+                src="https://placehold.co/600x400.png"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
               <img
-                src="banner_files/shophub/Banner-App-10.jpg"
+                src="https://placehold.co/600x400.png"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
               <img
-                src="banner_files/shophub/Banner-App-12.jpg"
+                src="https://placehold.co/600x400.png"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
@@ -145,6 +204,7 @@
         <!-- Banner Carousel End -->
 
         <!-- Shop By Games Start -->
+		<!--
         <section id="shop-games__section" class="mt-5">
           <div
             class="d-flex flex-row align-items-center justify-content-between"
@@ -179,27 +239,18 @@
             </div>
           </div>
         </section>
+		-->
         <!-- Shop By Games End -->
 
         <!-- Shop by Category Start -->
         <section id="shop-category__section" class="mt-5">
           <div class="mt-5">
-            <div
-              class="d-flex flex-row align-items-center justify-content-between"
-            >
-              <h4>Shop by Category</h4>
-              <a
-                href="shophub__more-category.php"
-                class="text-decoration-none"
-              >
-                <i class="bi bi-chevron-right fs-4"></i>
-              </a>
-            </div>
-
+            <h4>Shop by Category</h4>
             <div class="row mt-2 g-3">
+
               <div class="col-6">
                 <a
-                  href="#"
+                  href="shophub-by-category.php?cat=1"
                   class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
                   style="min-height: 96px"
                 >
@@ -209,12 +260,13 @@
                     height="46"
                     width="46"
                   />
-                  <span class="fs-5">Top Up Game</span>
+                  <span class="fs-5">Mobile Prepaid</span>
                 </a>
               </div>
+			  
               <div class="col-6">
                 <a
-                  href="#"
+                  href="shophub-by-category.php?cat=2"
                   class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
                   style="min-height: 96px"
                 >
@@ -224,12 +276,13 @@
                     height="46"
                     width="46"
                   />
-                  <span class="fs-5">Voucher & Game Key</span>
+                  <span class="fs-5">Mobile Data</span>
                 </a>
               </div>
+
               <div class="col-6">
                 <a
-                  href="#"
+                  href="shophub-by-category.php?cat=3"
                   class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
                   style="min-height: 96px"
                 >
@@ -239,12 +292,29 @@
                     height="46"
                     width="46"
                   />
-                  <span class="fs-5">Account</span>
+                  <span class="fs-5">Top Up Game</span>
                 </a>
-              </div>
+              </div>			  
+			  
               <div class="col-6">
                 <a
-                  href="#"
+                  href="shophub-by-category.php?cat=4"
+                  class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
+                  style="min-height: 96px"
+                >
+                  <img
+                    src="assets/icon/ic__shop-user.png"
+                    alt="Top Up"
+                    height="46"
+                    width="46"
+                  />
+                  <span class="fs-5">eWallet</span>
+                </a>
+              </div>
+			  
+              <div class="col-6">
+                <a
+                  href="shophub-by-category.php?cat=5"
                   class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
                   style="min-height: 96px"
                 >
@@ -254,39 +324,10 @@
                     height="46"
                     width="46"
                   />
-                  <span class="fs-5">Game Coin</span>
+                  <span class="fs-5">Voucher</span>
                 </a>
-              </div>
-              <div class="col-6">
-                <a
-                  href="#"
-                  class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
-                  style="min-height: 96px"
-                >
-                  <img
-                    src="assets/icon/ic__shop-shield.png"
-                    alt="Top Up"
-                    height="46"
-                    width="46"
-                  />
-                  <span class="fs-5">Items</span>
-                </a>
-              </div>
-              <div class="col-6">
-                <a
-                  href="#"
-                  class="bg-dark rounded-3 p-3 d-flex flex-row align-items-center gap-3"
-                  style="min-height: 96px"
-                >
-                  <img
-                    src="assets/icon/ic__shop-mobile.png"
-                    alt="Top Up"
-                    height="46"
-                    width="46"
-                  />
-                  <span class="fs-5">Mobile Data</span>
-                </a>
-              </div>
+              </div>		  
+			  
             </div>
           </div>
         </section>
@@ -300,7 +341,7 @@
         class="d-flex px-3 flex-row align-items-center justify-content-between"
       >
         <h4>Popular</h4>
-        <a href="shophub__popular.php" class="text-decoration-none">
+        <a href="#" class="text-decoration-none">
           <i class="bi bi-chevron-right fs-4"></i>
         </a>
       </div>
@@ -321,7 +362,7 @@
           style="white-space: nowrap"
         >
           <a
-            href="shophub__product-details.php"
+            href="purchase-details.php"
             class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
             style="width: 200px"
           >
