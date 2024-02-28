@@ -960,7 +960,7 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
               <a
                 class="nav-link py-2 text-secondary"
                 aria-current="page"
-                href="#"
+                href="shophub.php"
               >
                 <img src="assets/icon/ic__nav-shophub.svg" class="mb-1" />
                 <div>ShopHub</div>

@@ -9,6 +9,8 @@ require_once 'db.class.php';
 	$unix_timestamp = date_create()->format('Uv');
 	$rand = mt_rand(100000, 999999);
 	$str_rand = "".$rand."".$unix_timestamp."".$_SESSION["session_usr_id"]."";
+	
+
 
 if(isset($_FILES['input_banner']['name']) && strlen($_FILES['input_banner']['name']) > 3) {
 	
@@ -39,17 +41,15 @@ if(isset($_FILES['input_banner']['name']) && strlen($_FILES['input_banner']['nam
       }
 } // if(isset($_FILES['input_banner']['name']) && strlen($_FILES['input_banner']['name']) > 3) {
 
-if(isset($_POST["page:edit-profile"])) {
-  echo("
-		<script language='javascript'>
-		window.location.href='edit_profile.php';
-		</script>
-		");
-} else {
-  echo("
+
+
+
+		echo("
 		<script language='javascript'>
 		window.location.href='user_profile.php';
 		</script>
 		");
-}
+
+
+
 ?>

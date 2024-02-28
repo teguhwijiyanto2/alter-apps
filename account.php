@@ -91,7 +91,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
           <div class="w-100 bg-dark rounded-3 px-2 py-3">
             <div class="row">
               <div class="col-4">
-                <a href="#" class="text-center">
+                <a href="wallet.php" class="text-center">
                   <div>
                     <img src="assets/icon/ic__profile_wallet.png" />
                   </div>
@@ -295,7 +295,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
               <a
                 class="nav-link py-2 text-secondary"
                 aria-current="page"
-                href="#"
+                href="shophub.php"
               >
                 <img src="assets/icon/ic__nav-shophub.svg" class="mb-1" />
                 <div>ShopHub</div>

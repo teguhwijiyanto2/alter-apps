@@ -162,7 +162,8 @@ foreach ($results_2 as $row_2) {
 } // foreach ($results_2 as $row_2) {
 	
 ?>	  
-		  		  
+		  
+		  
 		  
 <!--
 			 Success Purchase

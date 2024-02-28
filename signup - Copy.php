@@ -141,7 +141,7 @@
         <input type="submit" class="btn btn-primary rounded-pill w-100 my-5" value="Sign Up">
       </form>
       <a
-        href="login.php"
+        href="login.php?s=email"
         class="text-primary text-decoration-none text-center mb-4"
         ><small
           >Already a member? <span class="fw-semibold">LOGIN</span></small

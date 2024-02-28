@@ -8,21 +8,14 @@ require_once 'db.class.php';
 /*** Start Processing Submitted Form Above ***/
 if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
 
+/*		
+			$merchantid = "EP000514";	// Change to your merchant ID
+			$vkey = "c26fbcf925f4d4102908c742f4d0dbe0";	// Change to your verify key
+*/		
 
-	$merchantid = "EP000514";	// Change to your merchant ID
-	$vkey = "c26fbcf925f4d4102908c742f4d0dbe0";	// Change to your verify key
+			$merchantid = "EP000270";	// PROD
+			$vkey = "b3a34cb9f6d51812fba0112b282df01a";	// PROD
 
-/*
-	$merchantid = "EP000270";	// PROD
-	$vkey = "b3a34cb9f6d51812fba0112b282df01a";	// PROD
-*/
-
- 
-/*
-MerchantID        : EP000270
-Verify Key            : b3a34cb9f6d51812fba0112b282df01a
-Secret key            : 6f3497d17e1f07f6aade1aed37f957e0
-*/
 	
  // Put your own code/process HERE. (Eg: Insert data to DB)
  /*
@@ -81,7 +74,6 @@ $_POST['total_amount'],
 $_POST['team_codex']
 );
 	
-	
 		$params = array(
 			'status'          => true,	// Set True to proceed with Razer
 			'mpsmerchantid'   => $merchantid,
@@ -101,9 +93,9 @@ $_POST['team_codex']
 			'mpstimerbox'	  => "#counter",
 			
 			
-			'mpscancelurl'	  => "https://dev2.alterspace.gg/cancel_order.php",
-			//'mpsreturnurl'    => "https://dev2.alterspace.gg/razer_return.php",
-			'mpsreturnurl'    => "https://dev2.alterspace.gg/tournament-registration-pay-success.php?sid=".$_POST['session_usr_id']."",
+			'mpscancelurl'	  => "https://beta.alterspace.gg/cancel_order.php",
+			//'mpsreturnurl'    => "https://beta.alterspace.gg/razer_return.php",
+			'mpsreturnurl'    => "https://beta.alterspace.gg/tournament-registration-pay-success.php?sid=".$_POST['session_usr_id']."",
 			
 			/*
 			'mpscancelurl'	  => "http://localhost:8001/cancel_order.php",

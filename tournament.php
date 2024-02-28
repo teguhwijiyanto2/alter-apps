@@ -278,7 +278,7 @@ foreach ($results_A as $row_A) {
 		$results_2 = DB::query("select * from tournament order by id desc limit 0,1");
 		foreach ($results_2 as $row_2) {
 			
-    $num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s", $row_2['tournament_code']);
+    $num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s AND payment_status='Paid'", $row_2['tournament_code']);
 
     $tournamen_thumbnail = 'https://placehold.co/400x300.png';
 
@@ -311,7 +311,7 @@ foreach ($results_A as $row_A) {
             </a>
           </div>
 
-          <div class='d-flex flex-column gap-2 mt-3' onclick=\"window.location.href='tournament-detail.php?tid=".$row_2['id']."';\">
+          <div class='d-flex flex-column gap-2 mt-3' onclick=\"window.location.href='tournament-detail.php?tid=".$row_2['id']."';\" style='cursor:pointer;'>
             <div class='bg-dark rounded-3 overflow-hidden w-100'>
               <div
                 class='position-relative bg-secondary bg-opacity-50'
@@ -326,12 +326,33 @@ foreach ($results_A as $row_A) {
                 background: rgba(0, 0, 0, 0.5);
                 background-size: cover;
                 \">
-                  <div
-                    class='position-absolute top-0 end-0 px-3 py-1 bg__green'
-                    style='border-bottom-left-radius: 8px'
-                  >
-                    <span><small>Open</small></span>
-                  </div>
+			";				  
+							  			
+				if($row_2['date_from'] <= date('Y-m-d')) { 
+				
+					echo "
+								<div
+								  class='position-absolute top-0 end-0 px-3 py-1 bg__green'
+								  style='border-bottom-left-radius: 8px; background-color: red;'
+								>
+								  <span><small>Closed</small></span>
+								</div>
+					";					
+					
+				}
+				else {
+					
+					echo "
+								<div
+								  class='position-absolute top-0 end-0 px-3 py-1 bg__green'
+								  style='border-bottom-left-radius: 8px'
+								>
+								  <span><small>Open</small></span>
+								</div>
+					";				
+				}						
+								
+			echo "	
                   <div class='d-flex flex-row align-items-center gap-3 mt-4'>
                     <img
                       src='".$tournamen_thumbnail."'
@@ -398,7 +419,7 @@ foreach ($results_A as $row_A) {
           <?php
           $x2=0;
           //$results_9 = DB::query("SELECT * FROM tournament_teams where tournament_code=%s order by id asc", $results_B['tournament_code']);
-          $results_9 = DB::query("SELECT * FROM tournament_teams order by id desc limit 0,5");
+          $results_9 = DB::query("SELECT * FROM tournament_teams WHERE payment_status='Paid' order by id desc limit 0,5");
           //$results_9 = DB::query("SELECT * FROM tournament_teams where team_logo is not null order by id asc");
 
           foreach ($results_9 as $row_9) {

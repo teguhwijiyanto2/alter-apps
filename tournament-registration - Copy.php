@@ -171,24 +171,11 @@ CREATE TABLE IF NOT EXISTS `tournament` (
         <!-- Divider End -->
 
         <!-- Add New Team Start -->
+        <form action="tournament-registration-process.php" method="POST" enctype="multipart/form-data">
 		
-		<?php 
-		/*
-		if($results_B['registration_type']=="Free") {
-			echo "<form action='tournament-registration-process.php' method='POST' enctype='multipart/form-data'>";
-		}
-		if($results_B['registration_type']=="Paid") {
-			echo "<form action='tournament-registration-paid-process.php' method='POST' enctype='multipart/form-data'>";
-		}
-		*/
-		?>
-		
-		<form action='tournament-registration-process.php' method='POST' enctype='multipart/form-data'>
 		<input type='hidden' name='tournament_idx' value='<?php echo $_POST['tournament_idx']; ?>'>
 		<input type='hidden' name='tournament_codex' value='<?php echo $_POST['tournament_codex']; ?>'>
 		<input type='hidden' name='xplayers_per_team' value='<?php echo $_POST['xplayers_per_team']; ?>'>		
-		<input type='hidden' name='xregistration_type' value='<?php echo $results_B['registration_type']; ?>'>
-		<input type='hidden' name='xparticipant_fee' value='<?php echo $results_B['participant_fee']; ?>'>
 		
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h4>Add New Team</h4>
@@ -262,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `tournament` (
                   <input type='text' name='players_username[$x]' placeholder='Username #".$x."' />
                 </div>
                 <div class='form__group-input mt-2'>
-                  <input type='text' name='players_id[$x]' placeholder='Player ID #".$x."' />
+                  <input type='text' name='players_email[$x]' placeholder='Player ID #".$x."' />
                 </div>
               </div>
 			  ";

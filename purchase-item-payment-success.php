@@ -4,7 +4,20 @@ date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 
  
-$_SESSION["session_usr_id"] = $_GET['sid'];
+//$_SESSION["session_usr_id"] = $_GET['sid'];
+
+
+	$results_check = DB::queryFirstRow("SELECT * FROM users where id=%i", $_GET['sid']);
+	
+	$_SESSION["session_usr_id"]=$results_check['id'];
+	$_SESSION["session_usr_email"]=$results_check['email'];
+	$_SESSION["session_usr_phone"]=$results_check['phone'];
+	$_SESSION["session_usr_name"]=$results_check['name'];
+	$_SESSION["session_usr_username"]=$results_check['username'];
+	$_SESSION["session_usr_gender"]=$results_check['gender'];
+	$_SESSION["session_usr_birthdate"]=$results_check['birthdate'];
+	
+
 
 
 $array_users_name = array();
@@ -82,14 +95,29 @@ $StringToSign2 = "checkPurchase<br>00000010<br>8888<br><br>999<br>2024-01-25T12:
 //echo "<br><br>";
 
 //echo base64_encode(hash_hmac('sha256', $StringToSign, '3lN1j3/tpRwmgcQFoq9/pyzgP77aRY7MBFhEIfiXQZ4=', true));
-$signature = base64_encode(hash_hmac('sha256', $StringToSign, '3lN1j3/tpRwmgcQFoq9/pyzgP77aRY7MBFhEIfiXQZ4=', true));
+//$signature = base64_encode(hash_hmac('sha256', $StringToSign, '3lN1j3/tpRwmgcQFoq9/pyzgP77aRY7MBFhEIfiXQZ4=', true));
+$signature = base64_encode(hash_hmac('sha256', $StringToSign, 'jgfUN+5CXlVolflG/oXc094dL0M+KcZe2QrOUXNNlvg=', true)); // SecretKey PRODUCTION : jgfUN+5CXlVolflG/oXc094dL0M+KcZe2QrOUXNNlvg=
+
 //echo "<br><br>";	
 //echo $signature;
 //echo "<br><br>";	
 	
 	// $url = 'https://bgtest.e2pay.co.id/bg/restful/purchase/game';
-	$url = 'https://bgtest.e2pay.co.id/bg/restful/purchase/mobile_prepaid';
+	//$url = 'https://bgtest.e2pay.co.id/bg/restful/purchase/mobile_prepaid';
 	// $url = 'https://bgtest.e2pay.co.id/bg/restful/checkPurchase/mobile_prepaid';
+
+/*	
+1 Mobile Prepaid /bg/restful/purchase/mobile_prepaid POST
+2 eWallet (Closed Amount) /bg/restful/purchase/ewallet POST
+3 Data Plan /bg/restful/purchase/paket_data POST
+4 Game Voucher /bg/restful/purchase/game POST
+5 eVoucher /bg/restful/purchase/evoucher POST
+*/
+	
+	
+	
+	//$url = 'https://bg.e2pay.co.id/bg/restful/purchase/mobile_prepaid'; // URL Biller PRODUCTION
+	$url = 'https://bg.e2pay.co.id/bg/restful/purchase/game'; // URL Biller PRODUCTION
 
 	$data = array(
 	 "bankChannel" => "6017",
@@ -99,7 +127,8 @@ $signature = base64_encode(hash_hmac('sha256', $StringToSign, '3lN1j3/tpRwmgcQFo
 	 "custId" => "081234000001", // "081234000001",
 	 "dateTrx" => "2024-01-25T12:00:00Z",
 	 "payeeCode" => "".$results_purchase_item['payee_code']."",  // "10027", // 
-	 "productCode" => "".$results_purchase_item['product_code']."" // "2001", // 
+	 "productCode" => "".$results_purchase_item['product_code']."", // "2001", // 
+	 "serverId" => "12345"
 	);	
 	// "bankRefNo" => "20240125".$_SESSION["session_usr_id"]."".$_GET["id1"]."".$_GET["id2"]."", // "202401220007"; // "".$your_orderid."";
 
@@ -345,26 +374,24 @@ if $httpReturnCode = 200 :
         </form>
       </div>
 	  	  
-		<!-- Summary Start -->
+		<!-- Checker -->
 		<div class="p-3 bg-dark rounded-3 mt-5">
 			<?php echo json_encode(json_decode($encodedData), JSON_PRETTY_PRINT); ?>  
 		</div>
 		
-		<!-- Summary Start -->
 		<div class="p-3 bg-dark rounded-3 mt-5">
 			<?php echo $StringToSign; ?>  
 		</div>
 
-		<!-- Summary Start -->
 		<div class="p-3 bg-dark rounded-3 mt-5">
 			<?php echo $signature; ?>  
 		</div>
 		
-		<!-- Summary Start -->
 		<div class="p-3 bg-dark rounded-3 mt-5">
 			<?php echo json_encode(json_decode($result_prepaidProduct), JSON_PRETTY_PRINT); ?>
 		</div>
-  
+
+		
     </section>
   </body>
 </html>

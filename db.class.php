@@ -32,18 +32,26 @@
 
 class DB {
   // initial connection altj5227_dev_alter_apps_db
-   
 
-  public static $dbName = 'alter_apps_db'; 
-  public static $user = 'root';
-  public static $password = 'root';
-  public static $host = 'localhost';
-  public static $port = 8889;
+  //public static $dbName = 'aws_alter_apps_db';
+  public static $dbName = 'aws_alter_apps_merged_db';
+  public static $user = 'admin';
+  public static $password = '[bkAP69(62x?';
+  public static $host = 'alter-database.ctsqe8ysedga.ap-southeast-3.rds.amazonaws.com';
+  public static $port = 3306;
   public static $encoding = 'latin1';
- 
-
- /*
- public static $dbName = 'alter_apps_db';
+  
+  /*
+  public static $dbName = 'altj5227_dev2_teguh_development'; // altj5227_dev2
+  public static $user = 'altj5227_t36uh';
+  public static $password = 't36uht36uh';
+  public static $host = 'localhost';
+  public static $port = null;
+  public static $encoding = 'latin1';
+  */
+  
+  /*
+  public static $dbName = 'alter_apps_db';
   public static $user = 'root';
   public static $password = 'usbw';
   public static $host = 'localhost';

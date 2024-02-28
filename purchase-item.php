@@ -71,17 +71,22 @@ foreach ($results_A as $row_A) {
     <script src="js/script.js"></script>
     <title>Purchase Item - Alter</title>
 	
+	<!--
 	<script 
 	src="https://pg-uat.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
-	
+	-->
+
+	<script 
+	src="https://pg.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
+		
 	<script>
 	$(document).ready( function(){		
 		$('#selector').change(function(){
 			var cur = $(this).val();
 			$(".cur_span").text(cur);
 			$("#currency").val(cur);
-			$("input[name='total_amount']").val("51000");
-			$("span.price_span").text(" 51000");
+			$("input[name='total_amount']").val("10000");
+			$("span.price_span").text(" 10000");
 			
 			$(".idr").show();
 			
@@ -135,8 +140,8 @@ foreach ($results_A as $row_A) {
 
 <input type="hidden" name="xpayment_method" id="xpayment_method" value="" />
 <input type="hidden" name="currency" id="currency" value="IDR" />
-<!--<input type="hidden" name="total_amount" value="<?php //echo $_POST['clientPrice_1']; ?>" />-->
-<input type="hidden" name="total_amount" value="10000" />
+<input type="hidden" name="total_amount" value="<?php echo $_POST['clientPrice_1']; ?>" />
+<!--<input type="hidden" name="total_amount" value="10000" />-->
 </div>
 
 					
@@ -144,7 +149,7 @@ foreach ($results_A as $row_A) {
     <section>
       <div class="container px-4">
         <div class="py-3">
-          <a href="registration-overview__paid.html">
+          <a href="shophub.php">
             <i class="bi bi-x-lg fs-5 me-2"></i>
             <span>Payment Page</span>
           </a>
@@ -156,56 +161,65 @@ foreach ($results_A as $row_A) {
               class="d-flex flex-row align-items-center justify-content-between"
             >
               <h4>Payment Method</h4>
+			  <!--
               <span id="open_popup" class="text-primary cursor__pointer"
                 >See all</span
               >
+			  -->
             </div>
             <div aria-label="Payment Method Card" class="">
 			
-			  <!--
-              <label
-                aria-label="alter-wallet"
-                class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="option1"
-              >
-                <img
-                  src="assets/icon/ic__wallet.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-                <div class="flex-fill">
-                  <h5 class="mb-0">Alter Wallet</h5>
-                  <span class="text-secondary">Rp. 500.000</span>
-                </div>
-                <input
-                  type="radio"
-                  class="me-4"
-                  name="options"
-                  id="option1"
-                  autocomplete="off"
-                  checked
-                />
-              </label>
-			  
+
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="option2"
+                for="payment_options_e2Pay_PERMATA_VA"
               >
                 <img
-                  src="assets/icon/ic__pay-gopay.png"
+                  src="assets/icon/ic__pay-permata.png"
                   class="rounded-2 ratio-1x1"
                   height="56"
                   width="56"
                 />
-                <div class="flex-fill">
-                  <h5 class="mb-0">GoPay</h5>
-                </div>
-				<input type="radio" name="payment_options" id="payment_options" value="e2Pay_GOPAY" class="me-4" autocomplete="off" required 
-					onclick="document.getElementById('xpayment_method').value = this.value;">
-              </label>			  
-			  -->
+				<div class="flex-fill">
+					<h5 class="mb-0">PERMATA (VA)</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_PERMATA_VA" value="e2Pay_PERMATA_VA" class="me-4" required/>			  
+			  </label>
+
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_ALFAMART"
+              >
+                <img
+                  src="assets/icon/ic__pay-alfamart.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">ALFAMART</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_ALFAMART" value="payment_options_e2Pay_ALFAMART" class="me-4" required/>			  
+			  </label>
+
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_BNI_VA"
+              >
+                <img
+                  src="assets/icon/ic__pay-bni.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">BNI (VA)</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_BNI_VA" value="e2Pay_BNI_VA" class="me-4" required/>			  
+			  </label>
 			  
               <label
                 aria-label="other-pay"
@@ -224,7 +238,63 @@ foreach ($results_A as $row_A) {
 				<input type="radio" name="payment_options" id="payment_options1" value="e2Pay_DANA" class="me-4" autocomplete="off" required 
 					onclick="document.getElementById('xpayment_method').value = this.value;">
               </label>			  	  
+			  		
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_CIMB_VA"
+              >
+                <img
+                  src="assets/icon/ic__pay-niaga.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">CIMB NIAGA (VA)</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_CIMB_VA" value="e2Pay_CIMB_VA" class="me-4" required/>			  
+			  </label>	
+
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_BRI_VA"
+              >
+                <img
+                  src="assets/icon/ic__pay-bri.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">BRI (VA)</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_BRI_VA" value="e2Pay_BRI_VA" class="me-4" required/>			  
+			  </label>
+			  
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_MANDIRI_VA"
+              >
+                <img
+                  src="assets/icon/ic__pay-mandiri.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">MANDIRI (VA)</h5>
+				</div>
+				<span class="idr">
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_MANDIRI_VA" value="e2Pay_MANDIRI_VA" class="me-4" required/>			  
+				</span>
+			  </label>				  
+			  
 			  			  
+			  
+			  <!--					
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -258,79 +328,7 @@ foreach ($results_A as $row_A) {
 					<h5 class="mb-0">BCA (VA)</h5>
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_BCA_VA" value="e2Pay_BCA_VA" class="me-4" required/>			  
-			  </label>
-			  					
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_CIMB_VA"
-              >
-                <img
-                  src="assets/icon/ic__pay-niaga.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">CIMB NIAGA (VA)</h5>
-				</div>
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_CIMB_VA" value="e2Pay_CIMB_VA" class="me-4" required/>			  
-			  </label>			  
-			  					
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_PERMATA_VA"
-              >
-                <img
-                  src="assets/icon/ic__pay-permata.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">PERMATA (VA)</h5>
-				</div>
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_PERMATA_VA" value="e2Pay_PERMATA_VA" class="me-4" required/>			  
-			  </label>				  
-
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_BNI_VA"
-              >
-                <img
-                  src="assets/icon/ic__pay-bni.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">BNI (VA)</h5>
-				</div>
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_BNI_VA" value="e2Pay_BNI_VA" class="me-4" required/>			  
-			  </label>
-			  
-			  <!--
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_MANDIRI_VA"
-              >
-                <img
-                  src="assets/icon/ic__pay-bca.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">MANDIRI (VA)</h5>
-				</div>
-				<span class="idr">
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_MANDIRI_VA" value="e2Pay_MANDIRI_VA" class="me-4" required/>			  
-				</span>
-			  </label>			  
-			  									
+			  </label>			
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"

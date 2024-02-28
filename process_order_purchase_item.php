@@ -8,14 +8,14 @@ require_once 'db.class.php';
 if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
 
 
-		
+/*		
 			$merchantid = "EP000514";	// Change to your merchant ID
 			$vkey = "c26fbcf925f4d4102908c742f4d0dbe0";	// Change to your verify key
-		
-/*
+*/		
+
 			$merchantid = "EP000270";	// PROD
 			$vkey = "b3a34cb9f6d51812fba0112b282df01a";	// PROD
-*/
+
 
 
 		$rand = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -63,9 +63,9 @@ if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
 			'mpstimer'	      => isset($_POST['razertimer']) ?(int)$_POST['razertimer'] : '',
 			'mpstimerbox'	  => "#counter",
 					
-			'mpscancelurl'	  => "https://dev2.alterspace.gg/purchase-item-payment-fail.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
-			//'mpsreturnurl'    => "https://dev2.alterspace.gg/razer_return.php",
-			'mpsreturnurl'    => "https://dev2.alterspace.gg/purchase-item-payment-success.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
+			'mpscancelurl'	  => "https://beta.alterspace.gg/purchase-item-payment-fail.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
+			//'mpsreturnurl'    => "https://beta.alterspace.gg/razer_return.php",
+			'mpsreturnurl'    => "https://beta.alterspace.gg/purchase-item-payment-success.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
 			// id1 --> str_rand ; id2 --> order_id
 			
 			/*

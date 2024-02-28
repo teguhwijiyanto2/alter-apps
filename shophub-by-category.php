@@ -16,19 +16,28 @@ $array_product_category_name = array("1"=>"Mobile Prepaid","2"=>"Mobile Data","3
 
 
 
-$url = 'https://bgtest.e2pay.co.id/bg/restful/prepaidProduct';
+// $url = 'https://bgtest.e2pay.co.id/bg/restful/prepaidProduct';
+
+$url = 'https://bg.e2pay.co.id/bg/restful/prepaidProduct'; // URL Biller PRODUCTION
+
 $data = array(
     "bankChannel" => "6017",
     "bankId" => "00000010",
 	"type" => "".$_GET['cat'].""
 );
+/*
+$data = array(
+    "bankChannel" => "6017",
+    "bankId" => "00000010"
+);
+*/
 $encodedData = json_encode($data);
 $curl = curl_init($url);
 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // only for localhost nih, krn gak ada SSLnya!
 $data_string = urlencode(json_encode($data));
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','date:2023-11-15T11:40:00+0700','authorization:HiNRluaEgjL1wRzpcRGGRr4R+ra42KL5tTIRRNlzljU='));
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json','date:2024-02-22T11:40:00+0700','authorization:/7doaUqu6pshoAmYkSKvV3z6cnCP+CT5G5PEzawdGWU='));
 curl_setopt($curl, CURLOPT_POST, true);
 curl_setopt($curl, CURLOPT_POSTFIELDS, $encodedData);
 $result_prepaidProduct = curl_exec($curl);
@@ -106,8 +115,11 @@ $data_responses = $json_decoded["data"];
             <h4>Shop > <?php echo $array_product_category_name[$_GET['cat']]; ?></h4>
             <div class="row mt-2 g-3">
 
+
+
 <?php
 $item_no = 0;
+
 
 foreach ($data_responses as $index => $data_response) {
 
@@ -158,7 +170,8 @@ foreach ($data_responses as $index => $data_response) {
 			  </form>
 			  </div>
 	";		
-			
+
+		
 } // foreach ($data_responses as $index => $data_response) {
 ?>
 			  

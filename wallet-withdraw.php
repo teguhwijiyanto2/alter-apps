@@ -51,7 +51,7 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
     <section>
       <div class="container px-4">
         <div class="py-3">
-          <a href="#">
+          <a href="wallet.php">
             <i class="bi bi-x-lg fs-5 me-2"></i>
             <span>Withdraw Balance</span>
           </a>

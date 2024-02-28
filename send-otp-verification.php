@@ -62,7 +62,7 @@ try {
 
 	$default_pswd = 'user123';
 	
-	$ts = DB::insert('users', [
+	DB::insert('users', [
 	  'email' => $_POST['email'],
 	  'phone' => $_POST['phone'],
 	  'password' => md5($_POST['password']),

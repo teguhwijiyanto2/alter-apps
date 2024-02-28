@@ -42,7 +42,7 @@ else { // Team player tournament
 	$fileNameFix_1 = $team_code . "." . $fileNameCleaned_1;
 if(strlen($fileNameCleaned_1) > 3) {	
     $uploadPath_1 = "team_logo/" . $fileNameFix_1; 
-      if (empty($errors_1)) {
+      if (empty($errors_1)) {		  
         $didUpload_1 = move_uploaded_file($fileTmpName_1, $uploadPath_1);
         if ($didUpload_1) {
           //echo "The file " . basename($fileName_1) . " has been uploaded";
@@ -88,7 +88,7 @@ if(strlen($fileNameCleaned_1) > 3) {
         'data' => $_POST['tournament_codex']
 	  ]);
 
-	  exit;
+	  // exit; --> Do Not EXIT here! script redirect dibawah jadi nggak executed
 	
 	
 	// for($x=1;$x<=$_POST['xplayers_per_team'];$x++) {
