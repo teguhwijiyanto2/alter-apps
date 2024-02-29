@@ -4,7 +4,7 @@ session_start();
 date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 
-if($_POST['review_allow']){
+if($_POST['review_allow'] == 'Review'){
     DB::insert('matchmaking_review', [
         'matchmaking_id' => $_POST["id"],	  
         'point' => $_POST["rating"],

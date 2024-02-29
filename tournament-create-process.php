@@ -41,6 +41,10 @@ participant_fee int(11) default NULL,
 
 
 
+
+
+
+
 	$str_rand = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     $tournament_code = $_SESSION["session_usr_id"] . substr(str_shuffle($str_rand), 0, 9);
 
@@ -118,14 +122,14 @@ $participant_fee_clean = str_ireplace(".","",$participant_fee_clean2);
 	  'stage_type' => $_POST['stage_type'],
 	  'format_type' => $_POST['format_type'],
 	  'participant_type' => $_POST['participant_type'],	 
-	  'players_per_team' =>  ($_POST['participant_type'] == 'Team') ? $_POST['players_per_team'] : 0,	  	  	  
+	  'players_per_team' => $_POST['players_per_team'],	  	  	  
 	  'participant_number' => $_POST['participant_number'],		  
 	  'reward_1st' => $reward_1st_clean,		  
 	  'reward_2nd' => $reward_2nd_clean,		  
 	  'reward_3rd' => $reward_3rd_clean,		  
 	  'tournament_type' => $_POST['tournament_type'],		  
 	  'registration_type' => $_POST['registration_type'],		  
-	  'participant_fee' => $participant_fee_clean ?: 0
+	  'participant_fee' => $participant_fee_clean	  
 	]);
 	
 

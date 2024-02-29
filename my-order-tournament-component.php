@@ -5,7 +5,7 @@ require_once 'db.class.php';
 $categ = $_POST['categ'];
 $id = $_SESSION["session_usr_id"];
 
-$query = "SELECT tournament.*, tournament_team_players.team_player_id FROM `tournament` LEFT JOIN tournament_team_players ON tournament.tournament_code = tournament_team_players.tournament_code WHERE (tournament.creator_user_id = '".$id."' OR tournament_team_players.team_player_id = '".$id."')  ORDER BY date_from DESC;";
+$query = "SELECT tournament.*, tournament_team_players.team_player_id FROM `tournament` LEFT JOIN tournament_team_players ON tournament.tournament_code = tournament_team_players.tournament_code WHERE (tournament.creator_user_id = '".$id."' OR tournament_team_players.team_player_id = '".$id."') AND tournament.status != 'Finished'  ORDER BY date_from DESC;";
 
 if($categ != 'Upcoming') {
     $query = "SELECT tournament.*, tournament_team_players.team_player_id FROM `tournament` LEFT JOIN tournament_team_players ON tournament.tournament_code = tournament_team_players.tournament_code WHERE (tournament.creator_user_id = '".$id."' OR tournament_team_players.team_player_id = '".$id."')  AND tournament.status = '".$categ."' ORDER BY date_from DESC";

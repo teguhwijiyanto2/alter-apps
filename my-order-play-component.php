@@ -8,7 +8,7 @@ $id = $_SESSION["session_usr_id"];
 $query = "SELECT * FROM `matchmaking_availability` WHERE requestor_id ='".$id."' OR approver_id = '".$id."' ORDER BY date_time DESC;";
 
 if($categ != 'Upcoming') {
-    $query = "SELECT * FROM `matchmaking_availability` WHERE (requestor_id ='".$id."' OR approver_id = '".$id."') AND request_status = '".$categ."' ORDER BY date_time DESC";
+    $query = "SELECT * FROM `matchmaking_availability` WHERE (requestor_id ='".$id."' OR approver_id = '".$id."') AND (request_status = '".$categ."' OR request_status = 'Review') ORDER BY date_time DESC";
 }
 
 $results = DB::query($query);

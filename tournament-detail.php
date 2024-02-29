@@ -30,7 +30,7 @@ foreach ($results_A as $row_A) {
 
 $results_B = DB::queryFirstRow("SELECT * FROM tournament where id=%i", $_GET['tid']);
 
-$num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s", $results_B['tournament_code']);
+$num_of_participant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s AND payment_status='Paid'", $results_B['tournament_code']);
 
 $tournamen_thumbnail = 'https://placehold.co/400x300.png';
 
@@ -119,9 +119,23 @@ $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
             aria-label="Tournament Type"
             class="d-flex flex-row align-items-center gap-2"
           >
-            <div class="bg__green px-3 py-1 rounded-3 text-center z-3">
-              <span class="fs__7">Registration Open</span>
-            </div>
+		    <?php 			
+				if($results_B['date_from'] < date('Y-m-d')) { 
+					echo "
+						<div class='bg__dark-red px-3 py-1 rounded-3 text-center z-3'>
+						  <span class='fs__7'>Registration Closed</span>
+						</div>					
+					";
+				}
+				else {
+					echo "
+						<div class='bg__red px-3 py-1 rounded-3 text-center z-3' style='background-color:green;'>
+						  <span class='fs__7'>Registration Open</span>
+						</div>
+					";				
+				}			
+			?>
+			
             <div class="bg-dark px-3 py-1 rounded-3 text-center z-3">
               <span class="fs__7"><?php echo $results_B['registration_type']; ?> Tournament </span>
             </div>
@@ -144,7 +158,7 @@ $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
                 height="24"
                 width="24"
               />
-              <span class="fw-light"> <?php echo $num_of_patricipant; ?>/<?php echo $results_B['participant_number']; ?> Team</span>
+              <span class="fw-light"> <?php echo $num_of_participant; ?>/<?php echo $results_B['participant_number']; ?> Team</span>
             </div>
             <div class="d-flex flex-row align-items-center gap-2 z-3">
               <img
@@ -154,13 +168,39 @@ $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
               />
               <span class="fw-light"><?php echo $results_B['date_from']; ?> - <?php echo $results_B['date_to']; ?></span>
             </div>
-            <a
-              href="#"
-              class="btn btn-primary w-100 rounded-pill mt-4 z-3"
-			  onclick="document.getElementById('formRegTournament').submit();"
-            >
-              Join Tournament
-            </a>
+
+			<?php 			
+				if($results_B['date_from'] <= date('Y-m-d')) { 
+				
+					if($results_B['date_to'] < date('Y-m-d')) { 					
+						echo "
+							<button class='btn btn-dark disabled w-100 rounded-pill mt-4 z-3'>
+							  <i>Tournament has been ended</i>
+							</button>				
+						";
+					}
+					else {
+						echo "
+							<button class='btn btn-dark disabled w-100 rounded-pill mt-4 z-3'>
+							  <i>Tournament already started</i>
+							</button>				
+						";						
+					}					
+					
+				}
+				else {
+					echo "
+						<a
+						  href='#'
+						  class='btn btn-primary w-100 rounded-pill mt-4 z-3'
+						  onclick=\"document.getElementById('formRegTournament').submit();\"
+						>
+						  Join Tournament
+						</a>
+					";				
+				}			
+			?>	
+			
           </div>
         </div>
         <!-- Tournament Info End -->
@@ -245,7 +285,7 @@ $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
 
 <?php
 $x=1;
-$results_9 = DB::query("SELECT * FROM tournament_teams where tournament_code=%s order by id asc", $results_B['tournament_code']);
+$results_9 = DB::query("SELECT * FROM tournament_teams where tournament_code=%s AND payment_status='Paid' order by id asc", $results_B['tournament_code']);
 foreach ($results_9 as $row_9) {
 
   $team_logo = 'https://placehold.co/150x150.png';

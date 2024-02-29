@@ -358,7 +358,7 @@ foreach ($results_A as $row_A) {
 			$results_2 = DB::query("select * from tournament order by id desc limit 0,1");
 			foreach ($results_2 as $row_2) {
 				
-				$num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s", $row_2['tournament_code']);
+				$num_of_participant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s AND payment_status='Paid'", $row_2['tournament_code']);
 
         $tournament_thumbnail = 'https://placehold.co/400x300.png';
 
@@ -371,7 +371,7 @@ foreach ($results_A as $row_A) {
         }
 
 			echo "
-				<div class='d-flex flex-col gap-2 mt-3' onclick=\"window.location.href='tournament-detail.php?tid=".$row_2['id']."';\">
+				<div class='d-flex flex-col gap-2 mt-3' onclick=\"window.location.href='tournament-detail.php?tid=".$row_2['id']."';\" style='cursor:pointer;'>
 							<div class='bg-dark rounded-3 overflow-hidden w-100'>
 							  <div
 								class='position-relative p-3 pt-5 bg-secondary bg-opacity-50'
@@ -380,12 +380,35 @@ foreach ($results_A as $row_A) {
 								  background-size: cover;
 								\"
 							  >
+
+			";				  
+							  
+			
+				if($row_2['date_from'] <= date('Y-m-d')) { 
+				
+					echo "
+								<div
+								  class='position-absolute top-0 end-0 px-3 py-1 bg__green'
+								  style='border-bottom-left-radius: 8px; background-color: red;'
+								>
+								  <span><small>Closed</small></span>
+								</div>
+					";					
+					
+				}
+				else {
+					
+					echo "
 								<div
 								  class='position-absolute top-0 end-0 px-3 py-1 bg__green'
 								  style='border-bottom-left-radius: 8px'
 								>
 								  <span><small>Open</small></span>
 								</div>
+					";				
+				}						
+								
+			echo "		
 								<div class='d-flex flex-row align-items-center gap-3 mt-4'>
 								  <img
 									src='".$tournament_thumbnail."'
@@ -415,7 +438,7 @@ foreach ($results_A as $row_A) {
 									height='24'
 									width='24'
 								  />
-								  <span class='fw-light'>".$num_of_patricipant."/".$row_2['participant_number']." Team</span>
+								  <span class='fw-light'>".$num_of_participant."/".$row_2['participant_number']." Team</span>
 								</div>
 								<div class='d-flex flex-row align-items-center gap-2'>
 								  <img

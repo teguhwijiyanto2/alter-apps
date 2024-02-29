@@ -833,14 +833,13 @@ foreach ($results_A as $row_A) {
             >
 			<span id="divNumOfPlayers" style="display:none;">			
               <span class="flex-fill">
-				  # Players per Team &nbsp; 
-            <input
-                  type="text"
-                  name="players_per_team"
-                  size="3"
-                  placeholder="5"
+				  # Players per Team &nbsp; <input
+                    type="text"
+                    name="players_per_team"
+					size="3"
+                    placeholder="5"
                   />
-            </span>
+              </span>
 
 			</span>				  
             </label>			

@@ -41,17 +41,15 @@ if(isset($_FILES['input_avatar']['name']) && strlen($_FILES['input_avatar']['nam
       }
 } // if(isset($_FILES['input_avatar']['name']) && strlen($_FILES['input_avatar']['name']) > 3) {
 
-  if(isset($_POST["page:edit-profile"])) {
-    echo("
-      <script language='javascript'>
-      window.location.href='edit_profile.php';
-      </script>
-      ");
-  } else {
-    echo("
-      <script language='javascript'>
-      window.location.href='user_profile.php';
-      </script>
-      ");
-  }
+
+
+
+		echo("
+		<script language='javascript'>
+		window.location.href='user_profile.php';
+		</script>
+		");
+
+
+
 ?>

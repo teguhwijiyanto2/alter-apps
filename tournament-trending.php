@@ -57,7 +57,7 @@ foreach ($results_A as $row_A) {
 		  $results_1 = DB::query("select * from tournament order by id desc");
 		  foreach ($results_1 as $row_1) {
 			  
-			 $num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s", $row_1['tournament_code']);			 
+			 $num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s AND payment_status='Paid'", $row_1['tournament_code']);			 
        
     $tournamen_thumbnail = 'https://placehold.co/400x300.png';
 
@@ -96,12 +96,33 @@ foreach ($results_A as $row_A) {
                 background-size: cover;
                 \">
                 <div
-                  <div
-                    class='position-absolute top-0 end-0 px-3 py-1 bg__green'
-                    style='border-bottom-left-radius: 8px'
-                  >
-                    <span><small>Open</small></span>
-                  </div>
+ 			";				  
+							  			
+				if($row_1['date_from'] <= date('Y-m-d')) { 
+				
+					echo "
+								<div
+								  class='position-absolute top-0 end-0 px-3 py-1 bg__green'
+								  style='border-bottom-left-radius: 8px; background-color: red;'
+								>
+								  <span><small>Closed</small></span>
+								</div>
+					";					
+					
+				}
+				else {
+					
+					echo "
+								<div
+								  class='position-absolute top-0 end-0 px-3 py-1 bg__green'
+								  style='border-bottom-left-radius: 8px'
+								>
+								  <span><small>Open</small></span>
+								</div>
+					";				
+				}						
+								
+			echo "	
                   <div class='d-flex flex-row align-items-center gap-3 mt-4'>
                     <img
                       src='".$tournamen_thumbnail."'

@@ -51,7 +51,7 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
         <form action="upload-tournament-result.php" method="post" enctype="multipart/form-data">
           <input type="hidden" name="tid" value="<?php echo $_GET['id'] ?>">
           <div id="winingBox">
-
+          <input type="hidden" id="wining" name="wining">
           </div>
           <!-- Summary Start -->
           <div class="p-3 bg-dark rounded-3">
@@ -85,7 +85,7 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
                   ?>
                 </div>
               </div>
-              <h1 class="fs-3" id="trops<?= $team['id'] ?>"></h1>
+              <h1 class="fs-3" id="trops<?= $team['id'] ?>" style="color:#BF40BF"></h1>
             </label>
             <?php } ?>
           </div>
@@ -145,14 +145,22 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
         });
       });
 
-      function winingCheck(id) {
-        if(wining <= 3) {
-          $("#trops"+id).text(wining)
-          $("#winingPointer"+id).prop("onclick", null).off("click");
-          $('#winingBox').append("<input type='hidden' name='wining[]' value='"+id+"'>");
-          wining++
-        }
+      var winingArray = []; 
+
+      function winingCheck(id){
         
+        var index = winingArray.indexOf(id);
+        if (index === -1 && wining <= 3) {
+          winingArray.push(id);
+          $("#trops"+id).text(wining)
+          wining++
+        } else {
+          $("#trops"+id).text('')
+          winingArray.splice(index, 1);
+          wining--
+        }
+        $('#wining').val(winingArray.join(','));
+
       }
     </script>
   </body>

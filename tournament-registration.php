@@ -93,6 +93,13 @@ CREATE TABLE IF NOT EXISTS `tournament` (
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="css/theme.css" />
     <script src="js/script.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="vendor/cropimage/add-logo-team-registration.js"></script>
     <title>Register Your Team - Alter</title>
   </head>
 
@@ -106,93 +113,117 @@ CREATE TABLE IF NOT EXISTS `tournament` (
           </a>
         </div>
 
-        <!-- Add Friend Teams Start -->
-		<!--
-        <div class="bg-dark rounded-3 mt-3">
-          <h4 class="p-3">Add Formed Teams</h4>
-          <div aria-label="Teams" class="">
-            <div
-              class="d-flex flex-row align-items-center gap-3 p-3 bg-secondary bg-opacity-50"
-            >
-              <img
-                src="https://placehold.co/400x300.png"
-                class="rounded-2 ratio-1x1"
-                height="56"
-                width="56"
-              />
-              <div class="flex-fill">
-                <h5 class="lh-1">Rockin Team</h5>
-                <span class="text-secondary">last match 10/11/23</span>
-              </div>
-              <i class="bi bi-plus-circle-fill fs-1"></i>
-            </div>
-            <div class="p-3">
-              <h6>Team Member:</h6>
-              <div class="text-secondary">@username1</div>
-              <div class="text-secondary">@username2</div>
-              <div class="text-secondary">@username3</div>
-            </div>
-          </div>
-          <div aria-label="Teams" class="">
-            <div
-              class="d-flex flex-row align-items-center gap-3 p-3 bg-secondary bg-opacity-50"
-            >
-              <img
-                src="https://placehold.co/400x300.png"
-                class="rounded-2 ratio-1x1"
-                height="56"
-                width="56"
-              />
-              <div class="flex-fill">
-                <h5 class="lh-1">Rockin Team</h5>
-                <span class="text-secondary">last match 10/11/23</span>
-              </div>
-              <i class="bi bi-plus-circle-fill fs-1"></i>
-            </div>
-            <div class="p-3">
-              <h6>Team Member:</h6>
-              <div class="text-secondary">@username1</div>
-              <div class="text-secondary">@username2</div>
-              <div class="text-secondary">@username3</div>
-            </div>
-          </div>
-        </div>
-		-->
-        <!-- Add Friend Teams End -->
-
-        <!-- Divider Start -->
-		<!--
-        <div class="d-flex flex-row align-items-center w-100 my-4 gap-3">
-          <div class="w-100 bg-white" style="height: 1px"></div>
-          <div class="text-white"><small>or</small></div>
-          <div class="w-100 bg-white" style="height: 1px"></div>
-        </div>
-		-->
-        <!-- Divider End -->
-
         <!-- Add New Team Start -->
-        <form action="tournament-registration-process.php" method="POST" enctype="multipart/form-data">
-		
+        <form action='tournament-registration-process.php' method='POST' enctype='multipart/form-data'>
 		<input type='hidden' name='tournament_idx' value='<?php echo $_POST['tournament_idx']; ?>'>
 		<input type='hidden' name='tournament_codex' value='<?php echo $_POST['tournament_codex']; ?>'>
 		<input type='hidden' name='xplayers_per_team' value='<?php echo $_POST['xplayers_per_team']; ?>'>		
+		<input type='hidden' name='xregistration_type' value='<?php echo $results_B['registration_type']; ?>'>
+		<input type='hidden' name='xparticipant_fee' value='<?php echo $results_B['participant_fee']; ?>'>
 		
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h4>Add New Team</h4>
             <div class="d-flex flex-row align-items-center gap-2 mt-4">
-              <input type="file" id="team_logo" name="team_logo" aria-label="Team Logo" hidden />
+              <!-- <input type="file" id="logo" aria-label="Team Logo" hidden /> -->
               <label
-                for="logo"
-                class="d-flex flex-row align-items-center gap-2"
+                for="img-team"
+                class="d-flex flex-row align-items-center gap-2 cursor__pointer"
               >
                 <span
                   class="bg-secondary d-inline-block text-center d-flex flex-row align-items-center justify-content-center rounded-2"
                   style="height: 48px; width: 48px"
-                  ><i class="bi bi-plus-lg fs-3"></i
-                ></span>
-                <span class="text-secondary">Add team logo</span>
+                  ><img
+                    id="img-team"
+                    class="object-fit-cover"
+                    style="width: 48px; height: 48px"
+                    src="./assets/ilustration/ilus__plus.png"
+                /></span>
+                <span class="thumb-text-team text-secondary"
+                  >Add team logo</span
+                >
               </label>
             </div>
+
+            <!-- Modal View Image Profile Start -->
+            <div
+              id="modal-view-logo"
+              style="display: none"
+              class="fixed-top max-w-sm w-100 h-100 bg-black bg-opacity-50 align-items-center justify-content-center"
+            >
+              <div class="bg-dark rounded-4">
+                <div class="text-end p-2">
+                  <i
+                    id="close-view-logo"
+                    class="bi bi-x-lg cursor__pointer"
+                  ></i>
+                </div>
+                <img
+                  class="object-fit-cover"
+                  style="width: 300px; height: 300px"
+                />
+                <div
+                  class="d-flex flex-row align-items-center justify-content-between"
+                >
+                  <label
+                    for="input-logo"
+                    class="btn btn-dark w-100 py-2 d-flex flex-row align-items-center gap-2 flex-fill"
+                    style="font-size: 10pt"
+                  >
+                    <i class="bi bi-pencil-square"></i>
+                    <div>Ubah Gambar</div>
+                  </label>
+                  <input type="file" id="input-logo" name="team_logo" hidden />
+
+                  <button
+                    type="button"
+                    id="delete-logo"
+                    class="btn btn-dark flex-fill py-2 d-flex flex-row align-items-center gap-2 text-danger"
+                    style="font-size: 10pt"
+                  >
+                    <i class="bi bi-trash-fill"></i>
+                    <div>Hapus</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Modal View Image Profile End -->
+
+            <!-- Preview Selected Image Profil Start -->
+            <div
+              id="modal-preview-input-logo"
+              style="display: none"
+              class="fixed-top max-w-sm w-100 h-100 bg-black bg-opacity-50 align-items-center justify-content-center"
+            >
+              <div class="bg-dark rounded-4">
+                <img
+                  id="preview-input-logo"
+                  class="object-fit-cover"
+                  style="width: 400px; height: 400px"
+                />
+                <div
+                  class="d-flex flex-row align-items-center justify-content-between"
+                >
+                  <button
+                    id="applyCropProfile"
+                    type="button"
+                    class="btn btn-dark py-2 d-flex flex-row align-items-center gap-2 flex-fill"
+                    style="font-size: 10pt"
+                  >
+                    <div class="mx-auto">Simpan</div>
+                  </button>
+                  <button
+                    id="cancelCropProfile"
+                    type="button"
+                    class="btn btn-dark flex-fill py-2 d-flex flex-row align-items-center gap-2 text-danger"
+                    style="font-size: 10pt"
+                  >
+                    <div class="mx-auto">Batal</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Preview Selected Image Profil End -->
+
             <div
               class="border-top border-bottom pt-3 pb-4 my-4 border-secondary border-opacity-50"
             >
@@ -249,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `tournament` (
                   <input type='text' name='players_username[$x]' placeholder='Username #".$x."' />
                 </div>
                 <div class='form__group-input mt-2'>
-                  <input type='text' name='players_email[$x]' placeholder='Player ID #".$x."' />
+                  <input type='text' name='players_id[$x]' placeholder='Player ID #".$x."' />
                 </div>
               </div>
 			  ";

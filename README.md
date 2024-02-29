@@ -1,74 +1,21 @@
-# Stage 1 Onboarding, Login, Register
+# alter-apps
 
-- [x] UI Onboarding 1-4 -> index.html
-- [x] UI Login -> login.html
-- [x] UI Sign Up -> signup.html
-- [x] UI Verify Otp -> otp-verification.html
-- [x] UI Enter Email Verification -> email-verification.html
+# Commit 
 
-# Stage 2 Homepage, Account, Profile
+# Add Subscription Page (subscriptions.php, subscriptions__payment-information.php, subscriptions__billing-address.php, subscription-proccess.php, subscription-detail.php, subscription-billing-proccess.php  )
 
-- [x] UI Homepage -> home.html
-- [x] UI Accountpage -> account.html
-- [x] UI Profile Page -> profile.html
-- [x] UI Review -> review.html
-- [x] UI Profile Other Side -> profile-other.html
+# Add Play Option Setting (setting__play-options.php, play-option-process.php )
 
-# Stage 3 Tournament
+# Fix Myorder Play, Tournament
 
-Join Tournament x Payment
+# Fix Upload Result Tournament 
 
-- [x] UI Tournament Page -> tournament.html
-- [x] UI Tournament Leaderbiard -> leaderboard.html & leaderboard\_\_no-pagination.html
-- [x] UI Tournament by Games -> tournament-by-games.html
-- [x] UI Trending Tournament -> tournament-trending.html
-- [x] UI Tournament Detail (Slot Available) -> tournament-detial\_\_available.html
-- [x] UI Tournament Detail (Slot Full) -> tournament-detial\_\_closed.html
-- [x] UI Team Registrations -> team-registration.html
-- [x] UI Registration Overview (Free) -> registration-overview\_\_free.html
-- [x] UI Registration Overview (Paid) -> registration-overview\_\_paid.html
-- [x] UI Payment Page -> payment.html
-- [x] UI Payment Method Popup -> payment.html : onclick see all
-- [x] UI Payment Confirmation -> payment-confirmation.html
+# Update UI Account.php
 
-Create Tournament
+# new DDL 
 
-- [x] UI Create Tournament 1 - 4 -> create-tournament.html
-- [x] IO Tournament Created -> tournament-created.html
+CREATE TABLE `alter_apps_db`.`matchmaking_option` ( `id` BIGINT(20) NOT NULL AUTO_INCREMENT , `user_id` BIGINT(20) NOT NULL , `game` TEXT NOT NULL , `fee` VARCHAR(50) NOT NULL , `time` VARCHAR(50) NOT NULL , `available` VARCHAR(50) NULL , `available_date` TEXT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-# Stage 4 Chat
+CREATE TABLE `alter_apps_db`.`subscription_setting` ( `id` BIGINT(20) NOT NULL AUTO_INCREMENT , `user_id` BIGINT(20) NOT NULL , `name_account` VARCHAR(255) NOT NULL , `number` VARCHAR(255) NOT NULL , `type` VARCHAR(50) NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-- [x] UI Chat -> chat.html
-- [x] UI New Chat -> chat-new.mhtml + More Pop Up
-- [x] UI Search by Username -> chat-new.html : on focus search
-- [x] UI Chat Room -> chat-room.html
-- [x] UI Chat Delete -> chat-room\_\_select.html
-
-# Stage 5 ShopHub
-
-- [x] UI ShopHub Page -> shophub.html
-- [x] UI Purchase Details -> purchase-details.html
-- [x] UI Purchase Summary -> purchase-summary.html
-- [x] UI Payment Page -> payment\_\_shophub.html
-- [x] UI Payment Method Popup -> payment\_\_shophub.html: onclick see all
-- [x] UI Payment Confirmation -> payment-confrmation\_\_shophub.html
-
-# Stage 6 Timeline
-
-- [x] UI Timeline Feed (Trends) -> timeline.html
-- [x] UI Timeline Feed (Livestream) -> timeline\_\_livestream.html
-- [x] UI Timeline - Livestream (ver 1) -> livestream.html
-
-# Stage 7 Play
-
-- [x] UI Quickmatch -> quickmatch.html
-- [x] UI Play Regist (Pay) -> play-regist\_\_paid.html : step 1
-- [x] UI Pick Schedule + Popup (Pay) -> play-regist\_\_paid.html : step 2 + press date calendar
-- [x] UI Play Summary (Pay) -> play-regist\_\_paid.html : step 3
-- [x] UI Payment Page + Payment Method Popup -> payment.html
-- [x] UI Payment Confirmation -> payment-confirmation\_\_play.html
-
-- [x] UI Play Regist (Free) -> play-regist\_\_free.html : step 1
-- [x] UI Pick Schedule + Popup (Free) -> play-regist\_\_free.html : step 2 + press date calendar
-- [x] UI Play Summary (Free) -> play-regist\_\_free.html : step 3
-- [x] UI Payment Confirmation -> payment-confirmation\_\_play.html
+CREATE TABLE `alter_apps_db`.`subscription_billing` ( `id` BIGINT(20) NOT NULL , `user_id` BIGINT(20) NOT NULL , `address` TEXT NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ) ENGINE = InnoDB;

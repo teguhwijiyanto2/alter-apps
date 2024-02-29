@@ -73,8 +73,14 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
     <script src="js/script.js"></script>
     <title>Payment - Alter</title>
 	
+	<!--
 	<script 
 	src="https://pg-uat.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
+	-->
+
+	<script 
+	src="https://pg.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
+	
 	<script>
 	$(document).ready( function(){		
 		$('#selector').change(function(){
@@ -139,7 +145,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
     <section>
       <div class="container px-4">
         <div class="py-3">
-          <a href="registration-overview__paid.html">
+          <a href="tournament.php">
             <i class="bi bi-x-lg fs-5 me-2"></i>
             <span>Payment Page</span>
           </a>
@@ -151,127 +157,14 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
               class="d-flex flex-row align-items-center justify-content-between"
             >
               <h4>Payment Method</h4>
+			  <!--
               <span id="open_popup" class="text-primary cursor__pointer"
                 >See all</span
               >
+			  -->
             </div>
             <div aria-label="Payment Method Card" class="">
 			
-			  <!--
-              <label
-                aria-label="alter-wallet"
-                class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="option1"
-              >
-                <img
-                  src="assets/icon/ic__wallet.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-                <div class="flex-fill">
-                  <h5 class="mb-0">Alter Wallet</h5>
-                  <span class="text-secondary">Rp. 500.000</span>
-                </div>
-                <input
-                  type="radio"
-                  class="me-4"
-                  name="options"
-                  id="option1"
-                  autocomplete="off"
-                  checked
-                />
-              </label>
-			  
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="option2"
-              >
-                <img
-                  src="assets/icon/ic__pay-gopay.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-                <div class="flex-fill">
-                  <h5 class="mb-0">GoPay</h5>
-                </div>
-				<input type="radio" name="payment_options" id="payment_options" value="e2Pay_GOPAY" class="me-4" autocomplete="off" required 
-					onclick="document.getElementById('xpayment_method').value = this.value;">
-              </label>			  
-			  -->
-			  
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options"
-              >
-                <img
-                  src="assets/icon/ic__pay-dana.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-                <div class="flex-fill">
-                  <h5 class="mb-0">DANA</h5>
-                </div>
-				<input type="radio" name="payment_options" id="payment_options1" value="e2Pay_DANA" class="me-4" autocomplete="off" required 
-					onclick="document.getElementById('xpayment_method').value = this.value;">
-              </label>			  	  
-			  			  
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options"
-              >
-                <img
-                  src="assets/icon/ic__pay-ovo.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-                <div class="flex-fill">
-                  <h5 class="mb-0">OVO</h5>
-                </div>
-				<input type="radio" name="payment_options" id="payment_options2" value="e2Pay_OVO" class="me-4" autocomplete="off" required 
-					onclick="document.getElementById('xpayment_method').value = this.value;">
-              </label>	
-			  					
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_BCA_VA"
-              >
-                <img
-                  src="assets/icon/ic__pay-bca.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">BCA (VA)</h5>
-				</div>
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_BCA_VA" value="e2Pay_BCA_VA" class="me-4" required/>			  
-			  </label>
-			  					
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_CIMB_VA"
-              >
-                <img
-                  src="assets/icon/ic__pay-niaga.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">CIMB NIAGA (VA)</h5>
-				</div>
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_CIMB_VA" value="e2Pay_CIMB_VA" class="me-4" required/>			  
-			  </label>			  
-			  					
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -287,7 +180,24 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 					<h5 class="mb-0">PERMATA (VA)</h5>
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_PERMATA_VA" value="e2Pay_PERMATA_VA" class="me-4" required/>			  
-			  </label>				  
+			  </label>
+
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_ALFAMART"
+              >
+                <img
+                  src="assets/icon/ic__pay-alfamart.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">ALFAMART</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_ALFAMART" value="payment_options_e2Pay_ALFAMART" class="me-4" required/>			  
+			  </label>
 
               <label
                 aria-label="other-pay"
@@ -306,14 +216,65 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_BNI_VA" value="e2Pay_BNI_VA" class="me-4" required/>			  
 			  </label>
 			  
-			  <!--
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options"
+              >
+                <img
+                  src="assets/icon/ic__pay-dana.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+                <div class="flex-fill">
+                  <h5 class="mb-0">DANA</h5>
+                </div>
+				<input type="radio" name="payment_options" id="payment_options1" value="e2Pay_DANA" class="me-4" autocomplete="off" required 
+					onclick="document.getElementById('xpayment_method').value = this.value;">
+              </label>			  	  
+			  		
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_CIMB_VA"
+              >
+                <img
+                  src="assets/icon/ic__pay-niaga.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">CIMB NIAGA (VA)</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_CIMB_VA" value="e2Pay_CIMB_VA" class="me-4" required/>			  
+			  </label>	
+
+              <label
+                aria-label="other-pay"
+                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
+                for="payment_options_e2Pay_BRI_VA"
+              >
+                <img
+                  src="assets/icon/ic__pay-bri.png"
+                  class="rounded-2 ratio-1x1"
+                  height="56"
+                  width="56"
+                />
+				<div class="flex-fill">
+					<h5 class="mb-0">BRI (VA)</h5>
+				</div>
+				<input type="radio" name="payment_options" id="payment_options_e2Pay_BRI_VA" value="e2Pay_BRI_VA" class="me-4" required/>			  
+			  </label>
+			  
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
                 for="payment_options_e2Pay_MANDIRI_VA"
               >
                 <img
-                  src="assets/icon/ic__pay-bca.png"
+                  src="assets/icon/ic__pay-mandiri.png"
                   class="rounded-2 ratio-1x1"
                   height="56"
                   width="56"
@@ -324,43 +285,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 				<span class="idr">
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_MANDIRI_VA" value="e2Pay_MANDIRI_VA" class="me-4" required/>			  
 				</span>
-			  </label>			  
-			  									
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options_e2Pay_SHOPEEPAY_JUMPAPP"
-              >
-                <img
-                  src="assets/icon/ic__pay-bca.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-				<div class="flex-fill">
-					<h5 class="mb-0">SHOPEEPAY (JUMPAPP)</h5>
-				</div>
-				<input type="radio" name="payment_options" id="payment_options_e2Pay_SHOPEEPAY_JUMPAPP" value="e2Pay_SHOPEEPAY_JUMPAPP" class="me-4" required/>			  
-			  </label>				  
-
-              <label
-                aria-label="other-pay"
-                class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
-                for="payment_options"
-              >
-                <img
-                  src="assets/icon/ic__pay-linkaja.png"
-                  class="rounded-2 ratio-1x1"
-                  height="56"
-                  width="56"
-                />
-                <div class="flex-fill">
-                  <h5 class="mb-0">LinkAja</h5>
-                </div>
-				<input type="radio" name="payment_options" id="payment_options" value="e2Pay_LINKAJA_WCO" class="me-4" autocomplete="off" required 
-					onclick="document.getElementById('xpayment_method').value = this.value;">
-              </label>			  
-			  -->
+			  </label>		
 			  
             </div>
           </div>

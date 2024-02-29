@@ -66,7 +66,7 @@
                 <i class="bi bi-chevron-right"></i>
                 </div>
             </a>
-            <a href="">
+            <a href="subscriptions.php">
                 <div
                 class="p-3 bg-dark rounded-3 d-flex flex-row align-items-center justify-content-between"
                 >

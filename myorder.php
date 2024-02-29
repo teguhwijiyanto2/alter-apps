@@ -97,7 +97,7 @@ require_once 'db.class.php';
             <button
               class="btn btn-secondary btn-sm py-1 px-3 dropdown-toggle"
               type="button"
-              id='btn-filter-tou'
+              id='btn-filter-tour'
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >

@@ -33,6 +33,16 @@ else {
 
 $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i", $_POST['user_id_profile']);
 
+$user_profile_images = 'https://placehold.co/150x150.png';
+
+  if (!empty($user_profile['user_pp_file'])) {
+    $user_pp_file_path = 'user_pp_files/' . $user_profile['user_pp_file'];
+    
+    if (file_exists($user_pp_file_path)) {
+        $user_profile_images = $user_pp_file_path;
+    }
+  }
+
 /*
 	<form action="play-info.php" method="POST" id="formPlayOpener">
 		<input type="hidden" name="chat_type" value="DM">
@@ -281,7 +291,7 @@ $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i", $_POST['use
             <h5>Play With</h5>
             <div class="d-flex flex-row align-items-center gap-3 mt-3">
               <img
-                src="https://placehold.co/150x150.png"
+                src="<?= $user_profile_images ?>"
                 alt=""
                 class="rounded-circle"
                 style="height: 50px; width: 50px"
@@ -308,7 +318,7 @@ $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i", $_POST['use
             <h5>Schedule</h5>
             <div class="d-flex flex-row align-items-center gap-3 mt-3">
               <img
-                src="https://placehold.co/150x150.png"
+                src="<?= $user_profile_images ?>"
                 alt=""
                 class="rounded-circle"
                 style="height: 50px; width: 50px"

@@ -91,7 +91,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
           <div class="w-100 bg-dark rounded-3 px-2 py-3">
             <div class="row">
               <div class="col-4">
-                <a href="#" class="text-center">
+                <a href="wallet.php" class="text-center">
                   <div>
                     <img src="assets/icon/ic__profile_wallet.png" />
                   </div>
@@ -141,6 +141,20 @@ $user_profile_images = 'https://placehold.co/150x150.png';
               </li>
               <li id="setting-item" class="mb-2">
                 <a
+                  href="setting__play-options.php"
+                  class="d-flex flex-row align-items-center gap-3 p-3 bg-dark rounded-3"
+                >
+                  <img
+                    src="assets/icon/ic__solar_gamepad-linear.png"
+                    height="24"
+                    width="24"
+                  />
+                  <div class="flex-fill">Play Options</div>
+                  <i class="bi bi-chevron-right fs-6"></i>
+                </a>
+              </li>
+              <li id="setting-item" class="mb-2">
+                <a
                   href="edit_profile.php"
                   class="d-flex flex-row align-items-center gap-3 p-3 bg-dark rounded-3"
                 >
@@ -167,7 +181,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
                   <i class="bi bi-chevron-right fs-6"></i>
                 </a>
               </li>
-              <li id="setting-item" class="mb-2">
+              <!-- <li id="setting-item" class="mb-2">
                 <a
                   href="#"
                   class="d-flex flex-row align-items-center gap-3 p-3 bg-dark rounded-3"
@@ -180,7 +194,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
                   <div class="flex-fill">Privacy</div>
                   <i class="bi bi-chevron-right fs-6"></i>
                 </a>
-              </li>
+              </li> -->
               <li id="setting-item" class="mb-2">
                 <a
                   href="notification-setting.php"
@@ -295,7 +309,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
               <a
                 class="nav-link py-2 text-secondary"
                 aria-current="page"
-                href="#"
+                href="shophub.php"
               >
                 <img src="assets/icon/ic__nav-shophub.svg" class="mb-1" />
                 <div>ShopHub</div>
