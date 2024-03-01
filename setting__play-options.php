@@ -77,49 +77,70 @@ if($option) {
         <!-- Summary Start -->
         <section>
           <form action="play-option-process.php" method="post">
-          <a href="">
             <div class="p-3 bg-dark rounded-3 mt-5">
               <div
                 class="d-flex flex-row align-items-center justify-content-between"
+                id="availableBtn"
               >
                 <div>
                   <div>Availability status</div>
-                  <div class="text__green">Available</div>
+                  <div id="textAvailable" style="color:<?= (isset($option) && $option['available'] == 'available') ? '#008000' : '#ff0000'  ?>"><?= isset($option) ? ucfirst($option['available']) : 'Available' ?></div>
+                  <input type="hidden" name="available" id="available" value="<?= isset($option) ? $option['fee'] : 'available' ?>">
                 </div>
                 <i class="bi bi-chevron-right fs-5"></i>
               </div>
             </div>
-          </a>
 
           <div class="p-3 bg-dark rounded-3 mt-3">
             <label class="form-label text-secondary">Game Services</label>
             <select
               class="game-services__multiple form-control bg-dark py-3 text-black"
               name="game[]"
+              required
               multiple="multiple"
             >
-              <option value="mobile-legend" <?= in_array("mobile-legend", $game) ? 'selected' : '' ?>>Mobile Legend</option>
-              <option value="arena-of-valon" <?= in_array("arena-of-valon", $game) ? 'selected' : '' ?>>Arena of Valor</option>
-              <option value="genshin-impact" <?= in_array("genshin-impact", $game) ? 'selected' : '' ?>>Genshin Impact</option>
+                <option value="mobile_legends" <?= in_array("mobile-legend", $game) ? 'selected' : '' ?>>Mobile Legends</option>
+                <option value="pubg" <?= in_array("pubg", $game) ? 'selected' : '' ?>>PUBG</option>
+                <option value="dota_2" <?= in_array("dota_2", $game) ? 'selected' : '' ?>>DOTA 2</option>
+                <option value="free_fire" <?= in_array("free_fire", $game) ? 'selected' : '' ?>>Free Fire</option>
+                <option value="aov" <?= in_array("aov", $game) ? 'selected' : '' ?>>AOV</option>
+                <option value="apex_legends" <?= in_array("apex_legends", $game) ? 'selected' : '' ?>>Apex Legends</option>
+                <option value="call_of_duty" <?= in_array("call_of_duty", $game) ? 'selected' : '' ?>>Call Of Duty</option>
+                <option value="cs_go" <?= in_array("cs_go", $game) ? 'selected' : '' ?>>CS Go</option>
+                <option value="point_blank" <?= in_array("point_blank", $game) ? 'selected' : '' ?>>Point Blank</option>
+                <option value="fifa" <?= in_array("fifa", $game) ? 'selected' : '' ?>>FIFA</option>
+                <option value="nba" <?= in_array("nba", $game) ? 'selected' : '' ?>>NBA</option>
+                <option value="league_of_legends" <?= in_array("league_of_legends", $game) ? 'selected' : '' ?>>League Of Legends</option>
+                <option value="valorant" <?= in_array("valorant", $game) ? 'selected' : '' ?>>Valorant</option>
+                <option value="pokemon" <?= in_array("pokemon", $game) ? 'selected' : '' ?>>Pokemon</option>
+                <option value="pes" <?= in_array("pes", $game) ? 'selected' : '' ?>>PES</option>
+                <option value="magic_chess" <?= in_array("magic_chess", $game) ? 'selected' : '' ?>>Magic Chess</option>
+                <option value="genshin_impact" <?= in_array("genshin_impact", $game) ? 'selected' : '' ?>>Genshin Impact</option>
+                <option value="overwatch" <?= in_array("overwatch", $game) ? 'selected' : '' ?>>Overwatch</option>
+                <option value="starrail" <?= in_array("starrail", $game) ? 'selected' : '' ?>>Starrail</option>
+                <option value="minecraft" <?= in_array("minecraft", $game) ? 'selected' : '' ?>>Minecraft</option>
+                <option value="fortnite" <?= in_array("fortnite", $game) ? 'selected' : '' ?>>Fortnite</option>
             </select>
           </div>
           <div id="availableBox">
-            <input type="hidden" id="tanggal-input" name="tanggal-input">
+            <input type="hidden" id="tanggal-input" name="tanggal-input" required>
           </div>
-
           <div class="p-3 bg-dark rounded-3 mt-3">
             <div class="mb-3">
               <label for="" class="form-label">Fee per play</label>
               <input
                 class="form-control bg-dark text-white py-2"
+                type="number"
                 name="fee"
+                required
+                id="feeInput"
                 value="<?= isset($option) ? $option['fee'] : '' ?>"
                 placeholder="Rp99.000"
               />
             </div>
             <div class="mb-3">
               <label for="" class="form-label">Time per period</label>
-              <select class="form-select form-control bg-dark text-white py-2" name="time">
+              <select class="form-select form-control bg-dark text-white py-2" name="time" required>
                 <option value="10" <?= (isset($option) && $option['time'] == 10) ? 'selected' : '' ?>>10 Menit</option>
                 <option value="20" <?= (isset($option) && $option['time'] == 20) ? 'selected' : '' ?>>20 Menit</option>
                 <option value="30" <?= (isset($option) && $option['time'] == 30) ? 'selected' : '' ?>>30 Menit</option>
@@ -326,6 +347,21 @@ if($option) {
           
           ?>
       ];
+
+      $("#availableBtn").click(function() {
+
+        if($("#textAvailable").text() === 'Available'){
+          $("#textAvailable").text("Not Available")
+          $("#textAvailable").css("color", "red");
+          $("#available").val("not available")
+        }else {
+          $("#textAvailable").text("Available")
+          $("#textAvailable").css("color", "green");
+          $("#available").val("available")
+
+        }
+      })
+
 
     </script>
   </body>

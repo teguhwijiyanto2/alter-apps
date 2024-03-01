@@ -210,7 +210,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
             <h6>Play With</h6>
             <div class="d-flex flex-row align-items-center gap-3 mt-3">
               <img
-                src="https://placehold.co/150x150.png"
+                src="<?= $user_profile_images ?>"
                 alt=""
                 class="rounded-circle"
                 style="height: 50px; width: 50px"

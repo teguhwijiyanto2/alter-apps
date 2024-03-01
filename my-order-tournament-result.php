@@ -49,7 +49,7 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
         </div>
 
         <form action="upload-tournament-result.php" method="post" enctype="multipart/form-data">
-          <input type="hidden" name="tid" value="<?php echo $_GET['id'] ?>">
+          <input type="hidden" name="tid" value="<?php echo $_GET['id'] ?>" required>
           <div id="winingBox">
           <input type="hidden" id="wining" name="wining">
           </div>
@@ -110,7 +110,7 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
                 <span id="name-img-preview" class="text-secondary"
                   >&nbsp; Upload picture</span
                 >
-                <input type="file" name="img-tournament" id="img-tournament" hidden />
+                <input type="file" name="img-tournament" id="img-tournament" hidden required/>
               </label>
             </div>
           </div>

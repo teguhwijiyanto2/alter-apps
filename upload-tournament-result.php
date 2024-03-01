@@ -32,9 +32,9 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
 
   DB::insert('tournament_result', [
     'tournament_id' => $_POST['tid'],
-    'result_1' => isset($wining[0]) ? $wining[0] : '',
-    'result_2' => isset($wining[1]) ? $wining[1] : '',
-    'result_3' => isset($wining[2]) ? $wining[2] : '',
+    'result_1' => isset($wining[0]) ? $wining[0] : null,
+    'result_2' => isset($wining[1]) ? $wining[1] : null,
+    'result_3' => isset($wining[2]) ? $wining[2] : null,
     'result_image' => $fileNameFix_1
   ]);
 
