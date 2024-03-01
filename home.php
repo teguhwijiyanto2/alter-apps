@@ -220,37 +220,34 @@ foreach ($results_A as $row_A) {
 
         <!-- Favorite Games Start -->
         <section id="favorite-games__section" class="mt-5">
-          <div
+          <div onclick="window.location.href='tournament-by-games.php';" style='cursor:pointer;'
             class="d-flex flex-row align-items-center justify-content-between"
           >
-            <h4>Favorites Games</h4>
+            <h4 onclick="window.location.href='tournament-by-games.php';" style='cursor:pointer;'>Favorites Games</h4>
             <a href="tournament-by-games.php" class="text-decoration-none">
               <i class="bi bi-chevron-right fs-4"></i>
             </a>
           </div>
 
           <div class="row g-3 pt-2">
-            <div class="col-4">
-              <img
-                src="assets/img/temp/mobile-legend.png"
-                alt=""
-                class="w-100 h-100 ratio-1x1 object-fit-cover rounded-3"
-              />
-            </div>
-            <div class="col-4">
-              <img
-                src="assets/img/temp/game-8.png"
-                alt=""
-                class="w-100 ratio-1x1 object-fit-cover rounded-3"
-              />
-            </div>
-            <div class="col-4">
-              <img
-                src="assets/img/temp/game-13.png"
-                alt=""
-                class="w-100 ratio-1x1 object-fit-cover rounded-3"
-              />
-            </div>
+		  
+		  <?php
+		    //$results_1 = DB::query("select distinct game_name_id from tournament order by game_name_id desc limit 0,3");
+			$results_1 = DB::query("select * from games order by id asc limit 0,3");
+			foreach ($results_1 as $row_1) {
+				echo "
+					<div class='col-4' onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'>
+					  <img onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'
+						src='assets/img/temp/".$row_1['game_name_id'].".png'
+						alt=''
+						class='w-100 h-100 ratio-1x1 object-fit-cover rounded-3'
+					  />
+					</div>
+				";				
+			} // foreach ($results_1 as $row_1) {
+			//echo $array_users_username[$row_1['id']];
+		  ?>		  
+
           </div>
         </section>
         <!-- Favorite Games End -->

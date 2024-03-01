@@ -244,10 +244,10 @@ foreach ($results_A as $row_A) {
 
         <!-- Tournament By Games Start -->
         <section id="tournament-by-games__section" class="mt-5">
-          <div
+          <div onclick=\"window.location.href='tournament-by-games.php';\" style='cursor:pointer; border:0px solid red;'
             class="d-flex flex-row align-items-center justify-content-between"
           >
-            <h4>Tournaments by Games</h4>
+            <h4 onclick="window.location.href='tournament-by-games.php';" style='cursor:pointer;'>Tournaments by Games</h4>
             <a href="tournament-by-games.php" class="text-decoration-none">
               <i class="bi bi-chevron-right fs-4"></i>
             </a>
@@ -258,8 +258,8 @@ foreach ($results_A as $row_A) {
 			$results_1 = DB::query("select * from games order by id asc limit 0,3");
 			foreach ($results_1 as $row_1) {
 				echo "
-				<div class='col-4'>
-				  <img
+				<div class='col-4' onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'>
+				  <img onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'
 					src='assets/img/temp/".$row_1['game_name_id'].".png'
 					alt=''
 					class='w-100 h-100 ratio-1x1 object-fit-cover rounded-3'
@@ -302,10 +302,10 @@ foreach ($results_A as $row_A) {
 			
 		echo "
         <section id='quick-match__section' class='mt-5'>
-          <div
+          <div onclick=\"window.location.href='tournament-trending.php';\" style='cursor:pointer; border:0px solid red;'
             class='d-flex flex-row align-items-center justify-content-between'
           >
-            <h4>Trending Tournament</h4>
+            <h4 onclick=\"window.location.href='tournament-trending.php';\" style='cursor:pointer; border:0px solid red;'>Trending Tournament</h4>
             <a href='tournament-trending.php' class='text-decoration-none'>
               <i class='bi bi-chevron-right fs-4'></i>
             </a>
