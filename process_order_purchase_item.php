@@ -33,7 +33,7 @@ if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
 		  'payee_code' => $_POST['payeeCode_1'],
 		  'product_code' => $_POST['productCode_1'],
 		  'name' => $_POST['name_1'],
-		  'description' => $_POST['description_1'],
+		  'description' => "".$_POST['type_1']." |  ".$_POST['sub_category_1']." | ".$_POST['cust_id_parameter']."",
 		  'type' => $_POST['type_1'],
 		  'nominal' => $_POST['nominal_1'],
 		  'client_price' => $_POST['clientPrice_1'],
@@ -63,10 +63,9 @@ if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
 			'mpstimer'	      => isset($_POST['razertimer']) ?(int)$_POST['razertimer'] : '',
 			'mpstimerbox'	  => "#counter",
 					
-			'mpscancelurl'	  => "https://beta.alterspace.gg/purchase-item-payment-fail.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
+			'mpscancelurl'	  => "https://beta.alterspace.gg/purchase-item-payment-fail.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."&id3=".$_POST['cust_id_parameter']."&id4=".$_POST['type_1']."",
 			//'mpsreturnurl'    => "https://beta.alterspace.gg/razer_return.php",
-			'mpsreturnurl'    => "https://beta.alterspace.gg/purchase-item-payment-success.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
-			// id1 --> str_rand ; id2 --> order_id
+			'mpsreturnurl'    => "https://beta.alterspace.gg/purchase-item-payment-success.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."&id3=".$_POST['cust_id_parameter']."&id4=".$_POST['type_1']."",  
 			
 			/*
 			'mpscancelurl'	  => "http://localhost:8001/cancel_order.php",

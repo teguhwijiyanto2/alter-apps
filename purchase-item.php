@@ -74,10 +74,10 @@ foreach ($results_A as $row_A) {
 	<!--
 	<script 
 	src="https://pg-uat.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
-	-->
+	-->		
 
 	<script 
-	src="https://pg.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
+	src="https://pg.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>	
 		
 	<script>
 	$(document).ready( function(){		
@@ -114,6 +114,20 @@ foreach ($results_A as $row_A) {
 	
   </head>
 
+
+<!--
+			  <form action='purchase-item.php' method='POST' id='formPurchase_".$row_A2['id']."'>
+				<input type='hidden' name='payeeCode_1' value='".$row_A2['payee_code']."'>
+				<input type='hidden' name='productCode_1' value='".$row_A2['product_code']."'>
+				<input type='hidden' name='name_1' value='".$row_A2['product_name']."'>
+				<input type='hidden' name='description_1' value='".$row_A2['product_description']."'>
+				<input type='hidden' name='type_1' value='".$row_A2['category']."'>
+				<input type='hidden' name='sub_category_1' value='".$row_A2['sub_category']."'>
+				<input type='hidden' name='nominal_1' value='".$row_A2['client_price']."'>
+				<input type='hidden' name='clientPrice_1' value='".$row_A2['client_price']."'>
+			  </form>
+-->
+
 <body>
 <form method="POST" action="process_order_purchase_item.php" role="molpayseamless">
 <input type='hidden' name='session_usr_id' value='<?php echo $_SESSION["session_usr_id"]; ?>'>
@@ -135,6 +149,7 @@ foreach ($results_A as $row_A) {
 <input type='hidden' name='name_1' value='<?php echo $_POST['name_1']; ?>'>
 <input type='hidden' name='description_1' value='<?php echo $_POST['description_1']; ?>'>
 <input type='hidden' name='type_1' value='<?php echo $_POST['type_1']; ?>'>
+<input type='hidden' name='sub_category_1' value='<?php echo $_POST['sub_category_1']; ?>'>
 <input type='hidden' name='nominal_1' value='<?php echo $_POST['nominal_1']; ?>'>
 <input type='hidden' name='clientPrice_1' value='<?php echo $_POST['clientPrice_1']; ?>'>
 
@@ -155,6 +170,26 @@ foreach ($results_A as $row_A) {
           </a>
         </div>
         <form action="payment-confirmation.html">
+				
+		<?php 
+		$word_input="";
+		if($_POST['type_1']==3 || $_POST['type_1']==5) { $word_input="Account ID"; }
+		else { $word_input="Phone Number"; }	
+		?>		
+				
+				
+          <!-- Promo Start -->
+          <div class="p-3 bg-dark rounded-3 mt-3">
+            <h5>Input <?php echo $word_input; ?></h5>
+            <p class="text-secondary">Please input <?php echo $_POST['sub_category_1']; ?>'s <?php echo $word_input; ?> for <?php echo $_POST['name_1']; ?></p>
+
+            <div class="form__group-input mt-4">
+              <input type="text" name="cust_id_parameter" placeholder="<?php echo $_POST['sub_category_1']; ?>'s <?php echo $word_input; ?>" />
+              <i class="bi bi-check-circle-fill fs-3 text-success"></i>
+            </div>
+          </div>
+          <!-- Promo End -->		
+		
           <!-- Payment Method Start -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <div
@@ -186,7 +221,7 @@ foreach ($results_A as $row_A) {
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_PERMATA_VA" value="e2Pay_PERMATA_VA" class="me-4" required/>			  
 			  </label>
-
+<!--
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -203,7 +238,7 @@ foreach ($results_A as $row_A) {
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_ALFAMART" value="payment_options_e2Pay_ALFAMART" class="me-4" required/>			  
 			  </label>
-
+-->
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -255,7 +290,7 @@ foreach ($results_A as $row_A) {
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_CIMB_VA" value="e2Pay_CIMB_VA" class="me-4" required/>			  
 			  </label>	
-
+<!--
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -272,7 +307,7 @@ foreach ($results_A as $row_A) {
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_BRI_VA" value="e2Pay_BRI_VA" class="me-4" required/>			  
 			  </label>
-			  
+-->			  
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"

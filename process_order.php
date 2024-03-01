@@ -33,7 +33,7 @@ if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
  //orderID ori :: 7jyiMZNRIq-e2Pay_DANA-11964604977jyiMZNRIq-18sN2DiLlcd-1633137452
  //$your_orderid = "TEST_".rand();
  $your_process_status = true;
- 
+
 	if( $your_process_status === true ) {
 		
 /*
@@ -61,8 +61,8 @@ if( isset($_POST['payment_options']) && $_POST['payment_options'] != "" ) {
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 */
 
+
 $results_UPDATE = DB::query("UPDATE tournament_teams set 
-payment_status='Paid', 
 payment_method=%s, 
 payment_amount=%i,
 payment_detail='',
@@ -73,7 +73,8 @@ $_POST['xpayment_method'],
 $_POST['total_amount'],
 $_POST['team_codex']
 );
-	
+
+
 		$params = array(
 			'status'          => true,	// Set True to proceed with Razer
 			'mpsmerchantid'   => $merchantid,
@@ -91,11 +92,10 @@ $_POST['team_codex']
 			//'mpsextra'     	  => base64_encode("1#mpd_tonton:10.00"),
 			'mpstimer'	      => isset($_POST['razertimer']) ?(int)$_POST['razertimer'] : '',
 			'mpstimerbox'	  => "#counter",
-			
-			
+						
 			'mpscancelurl'	  => "https://beta.alterspace.gg/cancel_order.php",
 			//'mpsreturnurl'    => "https://beta.alterspace.gg/razer_return.php",
-			'mpsreturnurl'    => "https://beta.alterspace.gg/tournament-registration-pay-success.php?sid=".$_POST['session_usr_id']."",
+			'mpsreturnurl'    => "https://beta.alterspace.gg/tournament-registration-pay-success.php?sid=".$_POST['session_usr_id']."&tmcode=".$_POST['team_codex']."&trncode=".$_POST['tournament_codex']."",
 			
 			/*
 			'mpscancelurl'	  => "http://localhost:8001/cancel_order.php",
@@ -103,10 +103,7 @@ $_POST['team_codex']
 			'mpsreturnurl'    => "http://localhost:8001/tournament-registration-pay-success.php?sid=".$_POST['session_usr_id']."",			
 			*/
 			
-			'mpsapiversion'   => "3.28"
-			
-			
-			
+			'mpsapiversion'   => "3.28"				
 			
 		);
 	} elseif( $your_process_status === false ) {

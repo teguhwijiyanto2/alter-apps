@@ -224,7 +224,7 @@ foreach ($results_A as $row_A) {
             class="d-flex flex-row align-items-center justify-content-between"
           >
             <h4>Favorites Games</h4>
-            <a href="#" class="text-decoration-none">
+            <a href="tournament-by-games.php" class="text-decoration-none">
               <i class="bi bi-chevron-right fs-4"></i>
             </a>
           </div>

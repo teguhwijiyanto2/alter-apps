@@ -124,6 +124,7 @@ $data_responses = $json_decoded["data"];
 						<th style='border:1px solid white;'>NAME</th>
 						<th style='border:1px solid white;'>DESCRIPTION</th>
 						<th style='border:1px solid white;'>NOMINAL</th>
+            <th style='border:1px solid white;'>CLIENT PRICE</th>
 <?php
 $item_no = 0;
 
@@ -190,6 +191,7 @@ foreach ($data_responses as $index => $data_response) {
 						<td style='border:1px solid white;'>".$data_response['name']."</td>
 						<td style='border:1px solid white;'>".$data_response['description']."</td>
 						<td style='border:1px solid white;'>".$data_response['nominal']."</td>
+            <td style='border:1px solid white;'>".$data_response['clientPrice']."</td>
 				  </tr>
 
 	";	

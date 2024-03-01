@@ -47,8 +47,8 @@ foreach ($results_A as $row_A) {
 
 
 /*
-	'mpsreturnurl'    => "https://dev2.alterspace.gg/purchase-item-payment-success.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."",
-	// id1 --> str_rand ; id2 --> order_id
+			'mpsreturnurl'    => "https://beta.alterspace.gg/purchase-item-payment-success.php?sid=".$_POST['session_usr_id']."&id1=".$str_rand."&id2=".$your_orderid."&id3=".$_POST['cust_id_parameter']."&id4=".$_POST['type_1']."", 
+			// id1 --> str_rand ; id2 --> order_id ; id3 --> cust_id_parameter (Phone Number / Game Account ID), untuk parameter custID di API purchase
 */
 
 
@@ -65,7 +65,9 @@ $results_purchase_item = DB::queryFirstRow("SELECT * FROM purchase_items where u
 
 $str_rand = $_GET["id1"];
 $your_orderid = $_GET["id2"];
-
+$users_cust_id_parameter = $_GET["id3"]; // cust_id_parameter (Phone Number / Game Account ID), untuk parameter custID di API purchase
+$cat_type = $_GET["id4"]; // type / category, ini utk menentukan endpoint API purchase mana yang dipakai (ada 5 opsi, tergantung typenya)
+ 
 /*
  	$rand = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	$str_rand = substr(str_shuffle($rand), 0, 9).rand();
@@ -85,7 +87,7 @@ $StringToSign .= "20240125".$_SESSION["session_usr_id"]."".$_GET["id1"]."".$_GET
 $StringToSign .= "\n";
 $StringToSign .= "6017";
 $StringToSign .= "\n";
-$StringToSign .= "081234000001"; // "081234000001";
+$StringToSign .= "".$users_cust_id_parameter.""; // "081234000001";
 $StringToSign .= "\n";
 $StringToSign .= "2024-01-25T12:00:00+0700";
 
@@ -116,15 +118,54 @@ $signature = base64_encode(hash_hmac('sha256', $StringToSign, 'jgfUN+5CXlVolflG/
 	
 	
 	
-	//$url = 'https://bg.e2pay.co.id/bg/restful/purchase/mobile_prepaid'; // URL Biller PRODUCTION
-	$url = 'https://bg.e2pay.co.id/bg/restful/purchase/game'; // URL Biller PRODUCTION
+
+	if($cat_type=="1") {
+		$url = 'https://bg.e2pay.co.id/bg/restful/purchase/mobile_prepaid'; // URL Biller PRODUCTION
+	}
+	if($cat_type=="2") {
+		$url = 'https://bg.e2pay.co.id/bg/restful/purchase/paket_data'; // URL Biller PRODUCTION
+	}
+	if($cat_type=="3") {
+		$url = 'https://bg.e2pay.co.id/bg/restful/purchase/game'; // URL Biller PRODUCTION
+	}
+	if($cat_type=="4") {
+		$url = 'https://bg.e2pay.co.id/bg/restful/purchase/ewallet'; // URL Biller PRODUCTION
+	}
+	if($cat_type=="5") {
+		$url = 'https://bg.e2pay.co.id/bg/restful/purchase/evoucher'; // URL Biller PRODUCTION
+	}
+
+
+
+/*
+Mobile Prepaid /bg/restful/purchase/mobile_prepaid  Type/Category : 1
+Data Plan /bg/restful/purchase/paket_data  Type/Category : 2
+Game Voucher /bg/restful/purchase/game  Type/Category : 3
+eWallet (Closed Amount) /bg/restful/purchase/ewallet  Type/Category : 4
+eVoucher /bg/restful/purchase/evoucher  Type/Category : 5
+
+
+4.3 Prepaid Product
+This POST endpoint is used to do transaction prepaid product.
+
+1 Mobile Prepaid /bg/restful/purchase/mobile_prepaid
+2 eWallet (Closed Amount) /bg/restful/purchase/ewallet
+3 Data Plan /bg/restful/purchase/paket_data
+4 Game Voucher /bg/restful/purchase/game
+5 eVoucher /bg/restful/purchase/evoucher
+
+4.3.1 Mobile Prepaid (type 1) / eWallet  (type 4) / Data Plan (type 2)
+4.3.2 Game Voucher  (type 3) / eVoucher (type 5)
+*/
+
+
 
 	$data = array(
 	 "bankChannel" => "6017",
 	 "bankId" => "00000010",
 	 "bankRefNo" => "20240125".$_SESSION["session_usr_id"]."".$_GET["id1"]."".$_GET["id2"]."", // "202401220007"; // "".$your_orderid."";
 	 "custAccNo" => "1111111111", // "1111111111",
-	 "custId" => "081234000001", // "081234000001",
+	 "custId" => "".$users_cust_id_parameter."", // "081234000001",
 	 "dateTrx" => "2024-01-25T12:00:00Z",
 	 "payeeCode" => "".$results_purchase_item['payee_code']."",  // "10027", // 
 	 "productCode" => "".$results_purchase_item['product_code']."", // "2001", // 
