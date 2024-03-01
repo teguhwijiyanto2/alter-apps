@@ -22,12 +22,6 @@ $user_profile_images = 'https://placehold.co/48x48.png';
       }
     }
 
-$allow_review = false;
-
-if($match['date_time'] < date("Y-m-d H:i:s") ){
-  $allow_review = true;
-}
-
 // print_r($allow_review);
 
   
@@ -57,6 +51,12 @@ function getDayName($dayOfWeek) {
 }
 
 $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmaking_id = %i", $match['id']);
+
+$allow_review = false;
+
+if($match['request_status'] == 'Review' && !$review ){
+  $allow_review = true;
+}
 
 ?>
 
@@ -101,7 +101,7 @@ $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmakin
         <!-- Play With Start -->
         <form method="POST" action="play-review-process.php">
           <input type="hidden" name="id" value="<?php echo $id; ?>">
-          <input type="hidden" name="review_allow" value="<?php echo $allow_review; ?>">
+          <input type="hidden" name="review_allow" value="<?php echo $match['request_status']; ?>">
           <div class="p-3 bg-dark rounded-3">
             <h5>Play With</h5>
             <div class="d-flex flex-row align-items-center gap-2 my-4">
@@ -159,7 +159,7 @@ $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmakin
           <!-- Schedule End -->
 
           <!-- Review Start -->
-          <?php if($allow_review && !$review && $match['request_status'] != 'Rejected') { ?>
+          <?php if($match['request_status'] == 'Review' && !$review && $match['request_status'] != 'Rejected') { ?>
           <div class="bg-dark rounded-3 p-3 mt-3">
             <h5>Review</h5>
             <div
@@ -183,7 +183,7 @@ $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmakin
               rows="5"
             ></textarea>
           </div>
-          <?php } elseif(!$allow_review && $review) { ?>
+          <?php } elseif($review) { ?>
             <div class="bg-dark rounded-3 p-3 mt-3">
             <h5>Review</h5>
             <div
@@ -223,7 +223,7 @@ $review = DB::queryFirstRow("SELECT * FROM `matchmaking_review` WHERE matchmakin
             </div>
           </div>
           <!-- Report End -->
-          <?php if($_GET['view'] != 1 ){ ?>
+          <?php if($_GET['view'] != 1 || $allow_review ){ ?>
           <button
             type="submit"
             class="btn btn-outline-light rounded-pill my-4 w-100"
