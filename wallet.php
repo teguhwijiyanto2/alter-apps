@@ -17,11 +17,33 @@ foreach ($results_A as $row_A) {
 
 $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $_SESSION["session_usr_id"]);
 
+/*
+SELECT 
+tournament_teams.tournament_code,
+tournament_teams.team_code,
+tournament_teams.participant_fee,
+tournament_teams.payment_status,
+tournament.creator_user_id
+ FROM tournament_teams
+ LEFT JOIN tournament ON tournament.tournament_code=tournament_teams.tournament_code
+ WHERE tournament_teams.payment_status='Paid'
+ AND tournament.creator_user_id=18
+ */
 
-$potential_income = DB::queryFirstField("select sum(total_amount) from wallet_withdraw where user_id=%i AND (is_withdraw_transferred<>'Y' OR is_withdraw_transferred IS NULL )", $_SESSION["session_usr_id"]);
-if($potential_income < 1 ) { $potential_income = 0; }
-$potential_income = 0; // HardCoded for now
-												
+$potential_income = DB::queryFirstField("
+ SELECT SUM(tournament_teams.participant_fee)
+ FROM tournament_teams
+ LEFT JOIN tournament ON tournament.tournament_code=tournament_teams.tournament_code
+ WHERE tournament_teams.payment_status='Paid'
+ AND tournament.creator_user_id=%i
+", $_SESSION["session_usr_id"]);
+
+$commission_fee = 10 / 100 * $potential_income;
+
+$potential_income = $potential_income - $commission_fee;
+
+
+
 $income = DB::queryFirstField("select sum(total_amount) from wallet_withdraw where user_id=%i AND is_withdraw_transferred='Y' AND withdraw_transfer_status='Success'", $_SESSION["session_usr_id"]);
 if($income < 1 ) { $income = 0; }
 

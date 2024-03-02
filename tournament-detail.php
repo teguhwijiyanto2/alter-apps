@@ -144,6 +144,15 @@ $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
             aria-label="Tournament Event"
             class="d-flex flex-column gap-2 mt-4"
           >
+		  
+								<div class='d-flex flex-row align-items-center gap-2'>
+								  <img
+									src='assets/img/home__tournament-fee.png'
+									height='24'
+									width='24'
+								  />
+								  <span class='fw-light'>IDR <?php echo number_format($row_1['participant_fee']); ?></span>
+								</div>				  
             <div class="d-flex flex-row align-items-center gap-2 z-3">
               <img
                 src="assets/img/home__tournament-trophy.png"
