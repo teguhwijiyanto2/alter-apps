@@ -45,7 +45,7 @@ foreach ($results as $item) {
     if($status == 'host' && $tour['status'] == 'Finished'){
         $status = 'finished';
     }
-    $num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s", $tour['tournament_code']);			 
+    $num_of_patricipant = DB::queryFirstField("SELECT count(*) FROM tournament_teams where tournament_code=%s AND payment_status = 'Paid'", $tour['tournament_code']);			 
        
     $tournamen_thumbnail = 'https://placehold.co/400x300.png';
 
@@ -105,28 +105,20 @@ foreach ($results as $item) {
         </div>
 
         <div class="p-3 d-flex flex-column gap-2">
-        <div class="d-flex flex-row align-items-center gap-2">
-            <img
-            src="assets/img/home__tournament-trophy.png"
-            height="24"
-            width="24"
-            />
-            <span class="fw-light">IDR <?php echo $tour['reward_1st'] ?></span>
+        <div class='d-flex flex-row align-items-center gap-2'>
+        <span class='fw-light'>&nbsp;<b><i class="bi bi-cash fs-4"></i>
+        </b> IDR <?=number_format($tour['participant_fee'])?></span>
+        </div>							  
+        <div class='d-flex flex-row align-items-center gap-2'>
+            <i class="bi bi-trophy fs-4"></i>
+            <span class='fw-light'>IDR <?=number_format($tour['reward_1st'])?></span>
+        </div>
+        <div class='d-flex flex-row align-items-center gap-2'>
+            <i class="bi bi-people fs-4"></i>
+            <span class='fw-light'><?= $num_of_patricipant."/".$tour['participant_number']?> Team</span>
         </div>
         <div class="d-flex flex-row align-items-center gap-2">
-            <img
-            src="assets/img/home__tournament-users.png"
-            height="24"
-            width="24"
-            />
-            <span class="fw-light"><?php echo $num_of_patricipant.'/'.$tour['participant_number'] ?> Team</span>
-        </div>
-        <div class="d-flex flex-row align-items-center gap-2">
-            <img
-            src="assets/img/home__tournament-calendar-date.png"
-            height="24"
-            width="24"
-            />
+            <i class="bi bi-calendar-date fs-4"></i>
             <span class="fw-light"><?php echo $tour['date_from']." - ".$tour['date_to'] ?></span>
         </div>
         </div>

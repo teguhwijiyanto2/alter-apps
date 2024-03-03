@@ -84,8 +84,8 @@ if($option) {
               >
                 <div>
                   <div>Availability status</div>
-                  <div id="textAvailable" style="color:<?= (isset($option) && $option['available'] == 'available') ? '#008000' : '#ff0000'  ?>"><?= isset($option) ? ucfirst($option['available']) : 'Available' ?></div>
-                  <input type="hidden" name="available" id="available" value="<?= isset($option) ? $option['fee'] : 'available' ?>">
+                  <div id="textAvailable" style="color:<?= (isset($option) && $option['available'] == 'available') ? '#008000' : '#ff0000'  ?>"><?= isset($option) ? ucfirst($option['available']) : 'Not Available' ?></div>
+                  <input type="hidden" name="available" id="available" value="<?= isset($option) ? $option['available'] : 'not available' ?>">
                 </div>
                 <i class="bi bi-chevron-right fs-5"></i>
               </div>
