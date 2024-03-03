@@ -25,6 +25,7 @@ else {
 }
 
 $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $user_id_profile);
+$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i",$user_id_profile);
 
 $user_profile_images = 'https://placehold.co/150x150.png';
 
@@ -233,9 +234,9 @@ $user_profile_images = 'https://placehold.co/150x150.png';
             >
               <div
                 class="rounded-circle"
-                style="width: 10px; height: 10px; background-color: green"
+                style="width: 10px; height: 10px; background-color: <?= ($option && $option['available'] == 'available') ? 'green' : 'gray' ?>"
               ></div>
-              <span><small>Online</small></span>
+              <span><small><?= ($option && $option['available'] == 'available') ? 'Online' : 'Offline' ?></small></span>
             </div>
             <div
               class="d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill"

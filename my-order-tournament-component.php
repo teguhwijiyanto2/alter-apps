@@ -5,21 +5,40 @@ require_once 'db.class.php';
 $categ = $_POST['categ'];
 $id = $_SESSION["session_usr_id"];
 
-$query = "SELECT DISTINCT tournament.*, tournament_team_players.team_player_id FROM `tournament` LEFT JOIN tournament_team_players ON tournament.tournament_code = tournament_team_players.tournament_code WHERE (tournament.creator_user_id = '".$id."' OR tournament_team_players.team_player_id = '".$id."') AND tournament.status != 'Finished'  ORDER BY date_from DESC;";
+$query = "SELECT 
+DISTINCT(tournament.tournament_code),tournament.date_from, tournament.status
+FROM tournament
+left join tournament_teams on (tournament_teams.tournament_code=tournament.tournament_code AND tournament_teams.registerer_user_id='".$id."')
+left join tournament_team_players on (tournament_team_players.tournament_code=tournament.tournament_code AND tournament_team_players.team_player_id='".$id."')
+where 
+tournament.creator_user_id='".$id."' OR tournament_teams.registerer_user_id='".$id."' OR tournament_team_players.team_player_id='".$id."' AND tournament.status != 'Finished'  ORDER BY date_from DESC;";
 
 if($categ != 'Upcoming') {
-    $query = "SELECT DISTINCT tournament.*, tournament_team_players.team_player_id FROM `tournament` LEFT JOIN tournament_team_players ON tournament.tournament_code = tournament_team_players.tournament_code WHERE (tournament.creator_user_id = '".$id."' OR tournament_team_players.team_player_id = '".$id."')  AND tournament.status = '".$categ."' ORDER BY date_from DESC";
+    $query = "SELECT 
+    DISTINCT(tournament.tournament_code),tournament.date_from, tournament.status
+    FROM tournament
+    left join tournament_teams on (tournament_teams.tournament_code=tournament.tournament_code AND tournament_teams.registerer_user_id='".$id."')
+    left join tournament_team_players on (tournament_team_players.tournament_code=tournament.tournament_code AND tournament_team_players.team_player_id='".$id."')
+    where 
+    (tournament.creator_user_id='".$id."' OR tournament_teams.registerer_user_id='".$id."' OR tournament_team_players.team_player_id='".$id."') AND tournament.status = '".$categ."'  ORDER BY date_from DESC;";
 }
+// print_r($query);
+
+
 $results = DB::query($query);
 
 // print_r($results);
 // exit;
 
-foreach ($results as $tour) {
+foreach ($results as $item) {
 
+    $tour = DB::queryFirstRow("SELECT * FROM tournament where tournament_code=%s", $item['tournament_code']);	
+    
     $status = 'host';
 
-    if($tour['team_player_id'] == $id) {
+    $team = DB::queryFirstRow("SELECT * FROM tournament_team_players where tournament_code=%s", $item['tournament_code']);	
+
+    if($team && $team['team_player_id'] == $id) {
         $status = 'participant';
     }
 

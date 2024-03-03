@@ -26,6 +26,9 @@ $user_profile_images = 'https://placehold.co/150x150.png';
         $user_profile_images = $user_pp_file_path;
     }
   }
+
+$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i",$_SESSION["session_usr_id"]);
+
 ?>
 
 <!DOCTYPE html>
@@ -76,9 +79,10 @@ $user_profile_images = 'https://placehold.co/150x150.png';
               >
                 <div
                   class="rounded-circle"
-                  style="width: 10px; height: 10px; background-color: green"
+                  style="width: 10px; height: 10px; background-color: <?= ($option && $option['available'] == 'available') ? 'green' : 'gray' ?>"
+
                 ></div>
-                <span>Online</span>
+                <span><small><?= ($option && $option['available'] == 'available') ? 'Online' : 'Offline' ?></small></span>
               </div>
             </div>
             <i class="bi bi-chevron-right fs-5"></i>
