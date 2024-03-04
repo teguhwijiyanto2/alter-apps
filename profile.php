@@ -33,7 +33,12 @@ if($option) {
   $arrayGame = json_decode($option['game']);
 
   for($i = 0; $i < count($arrayGame); $i++) {
-    $games .= ucfirst($arrayGame[$i]).", ";
+
+    if($i != count($arrayGame)-1) {
+      $games .= ucfirst($arrayGame[$i]).", ";
+    }else {
+      $games .= ucfirst($arrayGame[$i]);
+    }
   }
 }
 $user_profile_images = 'https://placehold.co/150x150.png';
