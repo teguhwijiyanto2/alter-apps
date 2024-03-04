@@ -3,6 +3,7 @@ session_start();
 date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 
+$wining = explode(",", $_POST['wining']);
 
 $errors_1 = []; // Store errors here
 $fileName_1 = $_FILES['img-tournament']['name'];
@@ -29,15 +30,22 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
   }
 } // if(strlen($fileNameCleaned_1) > 3) {
 
+
   DB::insert('tournament_result', [
     'tournament_id' => $_POST['tid'],
-    'result_1' => isset($_POST['wining'][0]) ? $_POST['wining'][0] : '',
-    'result_2' => isset($_POST['wining'][1]) ? $_POST['wining'][1] : '',
-    'result_3' => isset($_POST['wining'][2]) ? $_POST['wining'][2] : '',
+    'result_1' => isset($wining[0]) ? $wining[0] : null,
+    'result_2' => isset($wining[1]) ? $wining[1] : null,
+    'result_3' => isset($wining[2]) ? $wining[2] : null,
     'result_image' => $fileNameFix_1
   ]);
 
-	DB::query("UPDATE tournament SET status='Finished' WHERE id = '".$_POST['tid']."'");
+  DB::query("UPDATE tournament SET status='Finished' WHERE id = '".$_POST['tid']."'");
+
+
+if(isset($wining[0])) { DB::query("UPDATE tournament_teams set team_score = team_score + 10 where id=%i", $wining[0]); }
+if(isset($wining[1])) { DB::query("UPDATE tournament_teams set team_score = team_score + 5 where id=%i", $wining[1]); }
+if(isset($wining[2])) { DB::query("UPDATE tournament_teams set team_score = team_score + 2 where id=%i", $wining[2]); }
+
 
 
   echo("
@@ -46,5 +54,6 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
   window.location.href='myorder.php';
   </script>
   ");
+
 
 ?>

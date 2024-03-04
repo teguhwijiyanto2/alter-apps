@@ -162,21 +162,21 @@ foreach ($data_responses as $index => $data_response) {
           <div class="carousel-inner mt-4">
             <div class="carousel-item active">
               <img
-                src="https://placehold.co/600x400.png"
+                src="banner_files/shophub/Banner-App-09.jpg"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
               <img
-                src="https://placehold.co/600x400.png"
+                src="banner_files/shophub/Banner-App-10.jpg"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
               <img
-                src="https://placehold.co/600x400.png"
+                src="banner_files/shophub/Banner-App-12.jpg"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />

@@ -71,14 +71,15 @@ foreach ($results_A as $row_A) {
     <script src="js/script.js"></script>
     <title>Purchase Item - Alter</title>
 	
-	<!--
-	<script 
-	src="https://pg-uat.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
-	-->		
 
 	<script 
+	src="https://pg-uat.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
+	
+	<!--
+	<script 
 	src="https://pg.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>	
-		
+	-->		
+	
 	<script>
 	$(document).ready( function(){		
 		$('#selector').change(function(){
@@ -181,7 +182,7 @@ foreach ($results_A as $row_A) {
           <!-- Promo Start -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Input <?php echo $word_input; ?></h5>
-            <p class="text-secondary">Please input <?php echo $_POST['sub_category_1']; ?>'s <?php echo $word_input; ?> for <?php echo $_POST['name_1']; ?></p>
+            <p class="text-secondary">Please input <?php echo $_POST['sub_category_1']; ?>'s <?php echo $word_input; ?> for <b><?php echo $_POST['name_1']; ?></b></p>
 
             <div class="form__group-input mt-4">
               <input type="text" name="cust_id_parameter" placeholder="<?php echo $_POST['sub_category_1']; ?>'s <?php echo $word_input; ?>" />

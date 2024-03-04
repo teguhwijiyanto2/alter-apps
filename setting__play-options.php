@@ -84,8 +84,8 @@ if($option) {
               >
                 <div>
                   <div>Availability status</div>
-                  <div id="textAvailable" style="color:<?= (isset($option) && $option['available'] == 'available') ? '#008000' : '#ff0000'  ?>"><?= isset($option) ? ucfirst($option['available']) : 'Available' ?></div>
-                  <input type="hidden" name="available" id="available" value="<?= isset($option) ? $option['fee'] : 'available' ?>">
+                  <div id="textAvailable" style="color:<?= (isset($option) && $option['available'] == 'available') ? '#008000' : '#ff0000'  ?>"><?= isset($option) ? ucfirst($option['available']) : 'Not Available' ?></div>
+                  <input type="hidden" name="available" id="available" value="<?= isset($option) ? $option['available'] : 'not available' ?>">
                 </div>
                 <i class="bi bi-chevron-right fs-5"></i>
               </div>
@@ -130,10 +130,10 @@ if($option) {
               <label for="" class="form-label">Fee per play</label>
               <input
                 class="form-control bg-dark text-white py-2"
-                type="number"
+                type="text"
                 name="fee"
                 required
-                id="feeInput"
+                id="currency"
                 value="<?= isset($option) ? $option['fee'] : '' ?>"
                 placeholder="Rp99.000"
               />
@@ -190,7 +190,7 @@ if($option) {
         <!-- Summary End -->
 
         <button type="submit" class="btn btn-outline-light rounded-pill my-4 w-100">
-          Save
+          <?=  $option ? 'Edit' : 'Save' ?>
         </button>
         </form>
       </div>
@@ -198,6 +198,7 @@ if($option) {
 
     <script>
       $(document).ready(function () {
+        $('#currency').val(formatRupiah($('#currency').val(), 'Rp. '));
         $(".game-services__multiple").select2();
       });
       var tanggalArray = [
@@ -361,7 +362,30 @@ if($option) {
 
         }
       })
+      
+      $('#currency').keyup(function() {
+        // $('#currency').val('12312');
+        // console.log('tes')
+        $('#currency').val(formatRupiah($('#currency').val()));
 
+      })
+
+      function formatRupiah(angka){
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split   = number_string.split(','),
+        sisa     = split[0].length % 3,
+        rupiah     = split[0].substr(0, sisa),
+        ribuan     = split[0].substr(sisa).match(/\d{3}/gi);
+        
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if(ribuan){
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.');
+        }
+        
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return  rupiah;
+        }
 
     </script>
   </body>

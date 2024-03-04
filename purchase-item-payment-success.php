@@ -232,7 +232,7 @@ This POST endpoint is used to do transaction prepaid product.
 	
 	//echo $data_responses['message'];
 		
-
+/*
 		DB::insert('billing_tests', [
 		  'input_parameter' => $encodedData,
 		  'string_to_sign' => $StringToSign,
@@ -240,7 +240,7 @@ This POST endpoint is used to do transaction prepaid product.
 		  'returned_result' => $json_decoded['message'], // $json_decoded,
 		  'data_responses_message' => $json_decoded['message'],
 		]);
-		
+*/	
 		
 		/*
 	CREATE TABLE `billing_tests` (
@@ -298,7 +298,7 @@ if $httpReturnCode = 200 :
     <section>
       <div class="container px-4">
         <div class="py-3">
-          <a href="payment.html">
+          <a href="shophub.php">
             <i class="bi bi-x-lg fs-5 me-2"></i>
             <span>Payment Confirmed</span>
           </a>
@@ -328,7 +328,7 @@ if $httpReturnCode = 200 :
 					<span class='text-danger'>Something wrong with the purchasing process.</span>
 					<span class='text-danger'>We have refund & add IDR ".number_format($results_purchase_item['total_amount'])." to your E-Wallet balance.</span>
 				";	
-								
+/*								
 				DB::insert('purchase_item_refund', [
 				  'user_id' => $_SESSION["session_usr_id"],
 				  'str_rand' => $str_rand,
@@ -351,7 +351,7 @@ if $httpReturnCode = 200 :
 				  'status' => 'Active',
 				  'transaction_time' => $results_purchase_item['transaction_time'],
 				]);
-
+*/
 				$b = DB::query("update purchase_items set purchase_status='Failed', purchase_time=now() where order_id=%s", $your_orderid);
 				
 				$b = DB::query("update users set user_wallet = user_wallet + ".$results_purchase_item['total_amount']." where id=%i", $_SESSION["session_usr_id"]);
@@ -431,8 +431,152 @@ if $httpReturnCode = 200 :
 		<div class="p-3 bg-dark rounded-3 mt-5">
 			<?php echo json_encode(json_decode($result_prepaidProduct), JSON_PRETTY_PRINT); ?>
 		</div>
-
 		
     </section>
+	
+	
+<?
+/*
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+//Load Composer's autoloader
+require 'librarysmtp/autoload.php';
+
+//Create an instance; passing `true` enables exceptions
+$mail = new PHPMailer(true);
+
+try {
+    //Server settings
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.titan.email';                     //hostname/domain yang dipergunakan untuk setting smtp
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'teguh@alterspace.gg';                  //SMTP username
+    $mail->Password   = 'sys.admin3';                           //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+    //Recipients
+    $mail->setFrom('teguh@alterspace.gg', 'ALTER');
+    //$mail->addAddress("".$_POST['email']."", '');     //email tujuan
+	$mail->addAddress("teguh.wijiyanto@gmail.com", '');     //email tujuan
+
+	//$to = "".$results_check['email'].""; 
+	$to = "teguh.wijiyanto@gmail.com";
+	
+	$from = "teguh@alterspace.gg"; 
+	$fromName = 'A.L.T.E.R'; 
+	 	 
+	$htmlContent = " 
+    <section>
+      <div class='container px-4'>
+        <div class='py-3'>
+          <a href='shophub.php'>
+            <i class='bi bi-x-lg fs-5 me-2'></i>
+            <span>Payment Confirmed</span>
+          </a>
+        </div>
+          <div
+            class='d-flex flex-column align-items-center justify-content-center'
+          >
+            <img
+              src='assets/ilustration/ilus__check-success.png'
+              alt=''
+              class='w-50'
+            />
+			";
+			<?php
+			if($httpReturnCode = '200' && $json_decoded['message']=='Success') {
+				echo "
+					<h5 class='text__purple mb-0'>Transaction Succesful</h5>
+					<span class='text-secondary'>Enjoy your purchased items</span>
+				";	
+				
+			} // if($httpReturnCode = '200' && $data_responses['message']=='Success') {			
+			else {
+				echo "
+					<h5 class='text__purple mb-0' style='color:red;'>Transaction Failed!!</h5>
+					<span class='text-danger'>Something wrong with the purchasing process.</span>
+					<span class='text-danger'>We have refund & add IDR ".number_format($results_purchase_item['total_amount'])." to your E-Wallet balance.</span>
+				";
+			} // else {
+			?>
+		  echo "
+          </div>
+          <!-- Summary Start -->
+          <div class='p-3 bg-dark rounded-3 mt-5'>
+            <h5>Summary
+			</h5>
+            <div class='mt-3 d-flex flex-column gap-1'>
+			              					 
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Transaction ID</span>
+                <span class='text-light fs-5'>".$your_orderid."</span>
+              </div>						 
+						 
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Name</span>
+                <span class='text-light fs-5'>".$results_purchase_item['name']."</span>
+              </div>
+
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Description</span>
+                <span class='text-light fs-5'>".$results_purchase_item['description']."</span>
+              </div>
+			  
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Product Code</span>
+                <span class='text-light fs-5'>".$results_purchase_item['product_code']."</span>
+              </div>
+
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Payee Code</span>
+                <span class='text-light fs-5'>".$results_purchase_item['payee_code']."</span>
+              </div>
+			  
+              <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Total Paid</span>
+                <span class='text-light fs-5'>IDR ".$results_purchase_item['total_amount'])."</span>
+              </div>
+              
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Payment Method</span>
+                <span class='text-light fs-5'>ALTER Payment</span>
+              </div>
+			  
+			  <div class='d-flex flex-row align-items-center justify-content-between text-secondary'>
+                <span>Transaction Time</span>
+                <span class='text-light fs-5'>".date('d-m-Y H:i:s')."</span>
+              </div>
+			  
+            </div>
+          </div>
+          <!-- Summary End -->
+      </div>
+		
+    </section>
+	"; 
+
+//$mail->Subject = "[ALTER - Biller] Transaction Success for ".$results_purchase_item['name']."";
+$mail->Subject = "[ALTER - Biller] Transaction Failed & Refunded for ".$results_purchase_item['name']."";	
+
+    $mail->isHTML(true); //Set email format to HTML
+    $mail->Body    = $htmlContent;
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    $mail->send();
+    echo 'Message has been sent';
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}	
+
+*/
+?>	
+	
+	
   </body>
 </html>

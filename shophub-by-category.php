@@ -109,9 +109,9 @@ foreach ($data_responses as $index => $data_response) {
     <section>
       <div class="">
         <div class="py-3 px-4">
-          <a href="#">
-            <!--<i class="bi bi-chevron-left fs-5 me-2"></i>-->
-            <span>ShopHub <!--by Category--></span>
+          <a href="shophub.php">
+            <i class="bi bi-chevron-left fs-5 me-2"></i>
+            <span>ShopHub by Category</span>
           </a>
         </div>
 

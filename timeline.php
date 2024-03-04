@@ -15,8 +15,6 @@ foreach ($results_A as $row_A) {
 //echo $array_users_username[$row_A['id']];
 
 
-$user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $_SESSION["session_usr_id"]);
-
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +82,7 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
           class="d-flex flex-row align-items-center bg-dark rounded-3 p-3 gap-3 mt-3"
         >
           <img
-            src="https://placehold.co/48x48.png"
+            src="".$user_profile_images.""
             alt=""
             height="48"
             width="48"
@@ -164,12 +162,25 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
 				$str_see_more = ""; 
 			 }
 		}
+
+    
+    $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $row_1['posted_by']);
+
+    $user_profile_images = 'https://placehold.co/150x150.png';
+
+      if (!empty($user_profile['user_pp_file'])) {
+        $user_pp_file_path = 'user_pp_files/' . $user_profile['user_pp_file'];
+        
+        if (file_exists($user_pp_file_path)) {
+            $user_profile_images = $user_pp_file_path;
+        }
+      }
 		
 		echo "
         <div class='p-3 bg-dark rounded-3 mt-3'>
-          <div class='d-flex flex-row align-items-center gap-3'>
+          <div class='d-flex flex-row align-items-center gap-3' onclick=\"window.location.href='profile.php?user_id_profile=".$row_1['posted_by']."';\">
             <img
-              src='https://placehold.co/48x48.png'
+              src='".$user_profile_images."'
               alt=''
               height='48'
               width='48'

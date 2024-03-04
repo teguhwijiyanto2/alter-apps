@@ -428,10 +428,8 @@ foreach ($results_A as $row_A) {
 			
           <?php
           $x2=0;
-          //$results_9 = DB::query("SELECT * FROM tournament_teams where tournament_code=%s order by id asc", $results_B['tournament_code']);
-          $results_9 = DB::query("SELECT * FROM tournament_teams WHERE payment_status='Paid' order by id desc limit 0,5");
-          //$results_9 = DB::query("SELECT * FROM tournament_teams where team_logo is not null order by id asc");
 
+          $results_9 = DB::query("SELECT * FROM tournament_teams WHERE payment_status='Paid' order by team_score desc limit 0,5");
           foreach ($results_9 as $row_9) {
           $x2++;
 
@@ -472,7 +470,7 @@ foreach ($results_A as $row_A) {
                     width='24'
                   />
                 </div>
-                <span>2000 pts</span>
+                <span>".$row_9['team_score']." pts</span>
               </div>
             <!--</a>-->
 ";

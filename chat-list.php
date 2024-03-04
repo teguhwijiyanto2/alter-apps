@@ -30,6 +30,78 @@ function getHourMinute($timestamp) {
 	return $result;
 }
 
+function timeAgo($time_ago){
+
+  $time_string = "";
+
+  $cur_time 	= time();
+  $time_elapsed 	= $cur_time - $time_ago;
+  $seconds 	= $time_elapsed ;
+  $minutes 	= round($time_elapsed / 60 );
+  $hours 		= round($time_elapsed / 3600);
+  $days 		= round($time_elapsed / 86400 );
+  $weeks 		= round($time_elapsed / 604800);
+  $months 	= round($time_elapsed / 2600640 );
+  $years 		= round($time_elapsed / 31207680 );
+  // Seconds
+  if($seconds <= 60){
+    $time_string = "$seconds seconds ago";
+  }
+  //Minutes
+  else if($minutes <=60){
+    if($minutes==1){
+      $time_string = "one minute ago";
+    }
+    else{
+      $time_string = "$minutes minutes ago";
+    }
+  }
+  //Hours
+  else if($hours <=24){
+    if($hours==1){
+      $time_string = "an hour ago";
+    }else{
+      $time_string = "$hours hours ago";
+    }
+  }
+  //Days
+  else if($days <= 7){
+    if($days==1){
+      $time_string = "yesterday";
+    }else{
+      $time_string = "$days days ago";
+    }
+  }
+  //Weeks
+  else if($weeks <= 4.3){
+    if($weeks==1){
+      $time_string = "a week ago";
+    }else{
+      $time_string = "$weeks weeks ago";
+    }
+  }
+  //Months
+  else if($months <=12){
+    if($months==1){
+      $time_string = "a month ago";
+    }else{
+      $time_string = "$months months ago";
+    }
+  }
+  //Years
+  else{
+    if($years==1){
+      $time_string = "one year ago";
+    }else{
+      $time_string = "$years years ago";
+    }
+  }
+
+  return $time_string;
+  }
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -169,7 +241,7 @@ function getHourMinute($timestamp) {
           $user_picture = $user_pp_file_path;
       }
     }
-  
+
 		echo "
         <a aria-label='Chat Item' href='#' onclick=\"document.getElementById('formChatOpener_".$row_1['chat_room_uuid']."').submit();\">
           <div
@@ -193,10 +265,10 @@ function getHourMinute($timestamp) {
               class='d-flex flex-column align-items-center justify-content-center gap-1'
             >
               <div class='text-secondary fs__7 text-decoration-none'>
-                <small>".getHourMinute($row_1['last_message_created_on'])."</small>
+                <small>".timeAgo(strtotime($row_1['last_message_created_on']))."</small>
               </div>
 			  ";
-			  
+// 
 
 				$unread_msg = DB::queryFirstField("SELECT count(*) FROM `chat` where chat_room_uuid=%s AND receiver_id=%i AND is_read=0", $row_1['chat_room_uuid'], $_SESSION["session_usr_id"]);
 				if($unread_msg > 0) {

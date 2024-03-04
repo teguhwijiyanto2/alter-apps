@@ -147,12 +147,14 @@ foreach ($results_A as $row_A) {
 
               <div class='p-3 d-flex flex-column gap-2'>
 								<div class='d-flex flex-row align-items-center gap-2'>
+								  <!--
 								  <img
 									src='assets/img/home__tournament-fee.png'
 									height='24'
 									width='24'
 								  />
-								  <span class='fw-light'>IDR ".number_format($row_1['participant_fee'])."</span>
+								  -->
+								  <span class='fw-light'>&nbsp;<b>Fee</b> IDR ".number_format($row_1['participant_fee'])."</span>
 								</div>					  
                 <div class='d-flex flex-row align-items-center gap-2'>
                   <img

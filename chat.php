@@ -43,6 +43,76 @@ function getHourMinute($timestamp) {
 	return $result;
 }
 
+function timeAgo($time_ago){
+
+  $time_string = "";
+
+  $cur_time 	= time();
+  $time_elapsed 	= $cur_time - $time_ago;
+  $seconds 	= $time_elapsed ;
+  $minutes 	= round($time_elapsed / 60 );
+  $hours 		= round($time_elapsed / 3600);
+  $days 		= round($time_elapsed / 86400 );
+  $weeks 		= round($time_elapsed / 604800);
+  $months 	= round($time_elapsed / 2600640 );
+  $years 		= round($time_elapsed / 31207680 );
+  // Seconds
+  if($seconds <= 60){
+    $time_string = "$seconds seconds ago";
+  }
+  //Minutes
+  else if($minutes <=60){
+    if($minutes==1){
+      $time_string = "one minute ago";
+    }
+    else{
+      $time_string = "$minutes minutes ago";
+    }
+  }
+  //Hours
+  else if($hours <=24){
+    if($hours==1){
+      $time_string = "an hour ago";
+    }else{
+      $time_string = "$hours hours ago";
+    }
+  }
+  //Days
+  else if($days <= 7){
+    if($days==1){
+      $time_string = "yesterday";
+    }else{
+      $time_string = "$days days ago";
+    }
+  }
+  //Weeks
+  else if($weeks <= 4.3){
+    if($weeks==1){
+      $time_string = "a week ago";
+    }else{
+      $time_string = "$weeks weeks ago";
+    }
+  }
+  //Months
+  else if($months <=12){
+    if($months==1){
+      $time_string = "a month ago";
+    }else{
+      $time_string = "$months months ago";
+    }
+  }
+  //Years
+  else{
+    if($years==1){
+      $time_string = "one year ago";
+    }else{
+      $time_string = "$years years ago";
+    }
+  }
+
+  return $time_string;
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -154,8 +224,14 @@ function getHourMinute($timestamp) {
 					  <div class='bubble__chat user'>
 					    $str_image_chat
 						<span>".$row_1['message']."</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <div class='time'>&nbsp;</div>
 						<div class='time'>
-						  <span>".getHourMinute($row_1['created_on'])."</span>
+              <span >".timeAgo(strtotime($row_1['created_on']))."</span>
 						  <i
 							class='bi bi-check2-all fs-6 d-inline-flex'
 							style='font-size: 10pt; transform: translateY(4px)'
@@ -173,8 +249,14 @@ function getHourMinute($timestamp) {
 					  <div class='bubble__chat'>
 					    $str_image_chat
 						<span>".$row_1['message']."</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <span>&nbsp;</span>
+            <div class='time'>&nbsp;</div>
 						<div class='time'>
-						  <span>".getHourMinute($row_1['created_on'])."</span>
+						  <span>".timeAgo(strtotime($row_1['created_on']))."</span>
 						</div>
 					  </div>
 					</div>

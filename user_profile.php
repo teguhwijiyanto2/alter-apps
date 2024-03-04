@@ -36,7 +36,23 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
         $user_banner_image = $user_banner_file_path;
     }
   }
-		
+
+  $games = '';
+
+$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i",$_SESSION["session_usr_id"]);
+
+if($option) {
+  $arrayGame = json_decode($option['game']);
+
+  for($i = 0; $i < count($arrayGame); $i++) {
+
+    if($i != count($arrayGame)-1) {
+      $games .= ucfirst($arrayGame[$i]).", ";
+    }else {
+      $games .= ucfirst($arrayGame[$i]);
+    }
+  }
+}
 
 ?>
 
@@ -358,22 +374,45 @@ $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(
           </div>
           <small>Indonesia/English</small>
           <div class="d-flex flex-row align-items-center gap-2 mt-2">
-            <div
-              class="d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill"
-              style="width: fit-content"
-            >
+            <div class="d-block align-items-center gap-2">
               <div
-                class="rounded-circle"
-                style="width: 10px; height: 10px; background-color: green"
-              ></div>
-              <span><small>Online</small></span>
-            </div>
-            <div
-              class="d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill"
-              style="width: fit-content"
-            >
-              <i class="bi bi-gender-<?php echo strtolower($user_profile['gender']); ?>"></i>
-              <span><small><?php echo $user_profile['age']; ?></small></span>
+                class="d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill"
+                style="width: fit-content"
+              >
+                <div
+                    class="rounded-circle"
+                    style="width: 10px; height: 10px; background-color: <?= ($option && $option['available'] == 'available') ? 'green' : 'gray' ?>"
+                  ></div>
+                  <span><small><?= ($option && $option['available'] == 'available') ? 'Online' : 'Offline' ?></small></span>
+                    <div
+                    class="d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill"
+                    style="width: fit-content"
+                    >
+                    <i class="bi bi-gender-<?php echo strtolower($user_profile['gender']); ?>"></i>
+                    <span><small><?php echo $user_profile['age']; ?></small></span>
+                  </div>
+              </div>
+              <?php if($option){ ?>
+                <div
+                  class="d-flex flex-row align-items-center gap-2 bg-dark px-2 mt-2 rounded-pill"
+                  style="width: fit-content"
+                >
+                  <div
+                      class="rounded-circle"
+                    ><i class="bi bi-cash fs-6"></i> </div>
+                    <span><small><?= ($option) ? $option['fee']." / ".$option['time']." Minutes" : '' ?></small></span>
+                </div>
+                <div
+                  class="d-flex flex-row align-items-center gap-2 bg-dark px-2 mt-2 rounded-pill"
+                  style="width: fit-content"
+                >
+                  <div
+                      class="rounded-circle"
+                    ><i class="bi bi-controller fs-6"></i></div>
+                    <span><small><?= ($option) ? $games : '' ?></small></span>
+                </div>
+              <?php } ?>
+            
             </div>
           </div>
         </div>
