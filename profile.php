@@ -61,6 +61,56 @@ $user_profile_images = 'https://placehold.co/150x150.png';
         $user_banner_image = $user_banner_file_path;
     }
   }
+
+  
+
+$follower = DB::queryFirstField("SELECT count(*) FROM followers where user_id = %i", $user_id_profile);			 
+$following = DB::queryFirstField("SELECT count(*) FROM followers where follower_id = %i", $user_id_profile);			 
+
+if($follower > 1000) {
+  $divFollower = $follower / 1000;
+  $follower = number_format($divFollower, 1)."K";
+}
+if($following > 1000) {
+  $divfollowing = $following / 1000;
+  $following = number_format($divfollowing, 1)."K";
+}
+
+$gameStats = DB::queryFirstField("SELECT SUM(num_of_hours) FROM `matchmaking_availability` WHERE requestor_id =  %i OR approver_id =  %i AND request_status NOT IN ('Rejected', '-')", $user_id_profile, $user_id_profile);			 
+$hoursCoPlay = DB::queryFirstField("SELECT SUM(num_of_hours) FROM `matchmaking_availability` WHERE requestor_id =  %i AND request_status NOT IN ('Rejected', '-')", $user_id_profile);			 
+$totalPlay = DB::queryFirstField("SELECT count(*) FROM `matchmaking_availability` WHERE requestor_id =  %i AND request_status NOT IN ('Rejected', '-')", $user_id_profile);			 
+
+
+$arrayfavGames = [];
+
+($user_profile['dota_2'] != '-' ) ? $arrayfavGames[] .= "Dota 2" : '';
+($user_profile['pubg'] != '-' ) ? $arrayfavGames[] .= "PUBG" : '';
+($user_profile['free_fire'] != '-' ) ? $arrayfavGames[] .= "Free Fire" : '';
+($user_profile['mobile_legends'] != '-' ) ? $arrayfavGames[] .= "Mobile Legends" : '';
+($user_profile['aov'] != '-' ) ? $arrayfavGames[] .= "AOV" : '';
+($user_profile['apex_legends'] != '-' ) ? $arrayfavGames[] .= "Apex Legends" : '';
+($user_profile['call_of_duty'] != '-' ) ? $arrayfavGames[] .= "Call Of Duty" : '';
+($user_profile['cs_go'] != '-' ) ? $arrayfavGames[] .= "CS GO" : '';
+($user_profile['point_blank'] != '-' ) ? $arrayfavGames[] .= "Point Blank" : '';
+($user_profile['fifa'] != '-' ) ? $arrayfavGames[] .= "FIFA" : '';
+($user_profile['nba'] != '-' ) ? $arrayfavGames[] .= "NBA" : '';
+($user_profile['league_of_legends'] != '-' ) ? $arrayfavGames[] .= "League Of Legends" : '';
+($user_profile['valorant'] != '-' ) ? $arrayfavGames[] .= "Valorant" : '';
+($user_profile['pokemon'] != '-' ) ? $arrayfavGames[] .= "Pokemon" : '';
+($user_profile['pes'] != '-' ) ? $arrayfavGames[] .= "PES" : '';
+($user_profile['magic_chess'] != '-' ) ? $arrayfavGames[] .= "Magic Chess" : '';
+($user_profile['genshin_impact'] != '-' ) ? $arrayfavGames[] .= "Genshin Impact" : '';
+
+$favGames = '';
+
+for($i = 0; $i < count($arrayfavGames); $i++) {
+
+  if($i != count($arrayfavGames)-1) {
+    $favGames .= ucfirst($arrayfavGames[$i]).", ";
+  }else {
+    $favGames .= ucfirst($arrayfavGames[$i]);
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -580,23 +630,21 @@ $user_profile_images = 'https://placehold.co/150x150.png';
           <div class="row mt-3">
             <div class="col-4">
               <span class="text-secondary fs-small">Followers</span>
-              <h6>4.2K</h6>
+              <h6><?= $follower ?></h6>
             </div>
             <div class="col-4">
               <span class="text-secondary fs-small">Following</span>
-              <h6>890</h6>
+              <h6><?= $following ?></h6>
             </div>
             <div class="col-4">
               <span class="text-secondary fs-small">Profile Views</span>
-              <h6>89.2K</h6>
+              <h6>0</h6>
             </div>
           </div>
           <div class="border-top border-bottom border-secondary pt-3 pb-1 my-3">
             <h6>Bio</h6>
             <p class="text-secondary">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Delectus, sit fugit blanditiis repellendus autem saepe iusto
-              repellat provident eius minus.
+              -
             </p>
           </div>
           <div>
@@ -626,6 +674,14 @@ $user_profile_images = 'https://placehold.co/150x150.png';
                   <i class="bi bi-twitch fs-5"></i>
                 </a>
               </div>
+              <div class="col">
+                <a
+                  href="#"
+                  class="social__media-icon rounded-circle bg-secondary"
+                >
+                  <i class="bi bi-whatsapp fs-5"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -637,27 +693,26 @@ $user_profile_images = 'https://placehold.co/150x150.png';
           <div class="row mt-3">
             <div class="col-4">
               <span class="text-secondary fs-small">Game Stats</span>
-              <h6>2000 hr</h6>
+              <h6><?= ($gameStats) ? $gameStats : '0' ?> hr</h6>
             </div>
             <div class="col-4">
               <span class="text-secondary fs-small">Total Wins</span>
-              <h6>211</h6>
+              <h6>-</h6>
             </div>
             <div class="col-4">
               <span class="text-secondary fs-small">Hours Co-Play</span>
-              <h6>300hr</h6>
+              <h6><?= ($hoursCoPlay) ? $hoursCoPlay : '0' ?> hr</h6>
             </div>
           </div>
           <div class="border-top border-bottom border-secondary pt-3 pb-1 my-3">
             <h6>Favorite Games</h6>
             <p class="text-secondary">
-              League of Legends, Genshin Impact, Valorant, Arena of Valor,
-              Minecraft
+              <?= ($favGames) ? $favGames : '-';?>
             </p>
           </div>
           <div>
             <h6>Total Successful Co-Play</h6>
-            <p class="text-secondary">600 plays</p>
+            <p class="text-secondary"><?= $totalPlay ?> plays</p>
           </div>
         </div>
         <!-- Game Stats End -->
