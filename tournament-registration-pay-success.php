@@ -77,8 +77,18 @@ http://localhost:8001/tournament-registration-pay-success.php
 
 $orderID_ori = "".$_POST['team_codex']."-".$_POST['xpayment_method']."-".rand()."-".$_POST['session_usr_id']."";
 orderID ori :: 783u56ejUn-e2Pay_DANA-423541866
- 
+
+URL FIX:
+https://beta.alterspace.gg/tournament-registration-pay-success.php?sid=18&tmcode=16BLhqiIrGb&trncode=18EdSLAtUqB
 */
+
+
+$results_UPDATE = DB::query("UPDATE tournament_teams set 
+payment_status='Paid',
+payment_timestamp=now()
+where team_code=%s", 
+$_GET['tmcode']
+);
 
 
 $orderid_expl = explode("-",$_POST['orderid']);

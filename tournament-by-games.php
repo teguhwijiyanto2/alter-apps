@@ -68,7 +68,7 @@ foreach ($results_A as $row_A) {
 				}
 				else {
 									  echo "
-									  <div class='col-4'>
+									  <div class='col-4' onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer;'>
 										<img
 										src='".$filename."'
 										class='game__item w-100 ratio-1x1 object-fit-cover rounded-3'
@@ -86,6 +86,7 @@ foreach ($results_A as $row_A) {
     </section>
 
     <script>
+	 /*
       $(document).ready(function () {
         $('.game__item').click(function () {
           if ($(this).hasClass('border')) {
@@ -95,6 +96,7 @@ foreach ($results_A as $row_A) {
           }
         });
       });
+	 */
     </script>
   </body>
 </html>

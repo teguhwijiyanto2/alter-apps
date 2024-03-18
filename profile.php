@@ -41,7 +41,7 @@ if($option) {
     }
   }
 }
-$user_profile_images = 'https://placehold.co/150x150.png';
+$user_profile_images = 'user_pp_files/default_user_pp.jpg';
 
   if (!empty($user_profile['user_pp_file'])) {
     $user_pp_file_path = 'user_pp_files/' . $user_profile['user_pp_file'];
@@ -52,7 +52,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
   }
 
 
-  $user_banner_image = 'https://placehold.co/600x300.png';
+  $user_banner_image = 'user_banner_files/default_user_banner.jpg';
 
   if (!empty($user_profile['user_banner_file'])) {
     $user_banner_file_path = 'user_banner_files/' . $user_profile['user_banner_file'];
@@ -108,6 +108,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
     <!-- Header End -->
 
     <!-- Navbar Top Start -->
+	<form action="profile-search.php" method="POST" id="formSearch">
     <div
       id="navbar-top"
       class="fixed-top max-w-sm d-flex p-3 flex-row align-items-center gap-2"
@@ -123,8 +124,8 @@ $user_profile_images = 'https://placehold.co/150x150.png';
       <div
         class="d-flex flex-fill flex-row align-items-center border border-secondary rounded-pill px-3 py-1 gap-3 bg-dark bg-opacity-50"
       >
-        <i class="bi bi-search fs-5 text-secondary"></i>
-        <input
+        <i class="bi bi-search fs-5 text-secondary" onclick="document.getElementById('formSearch').submit();"></i>
+        <input name="keyword" value="<?php echo $_POST['keyword']; ?>"
           placeholder="Search in Alter Member"
           class="bg-transparent border-0 w-100 text-light"
         />
@@ -177,6 +178,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
       </div>
 
     </div>
+	</form>
     <!-- Navbar Top End -->
 
     <!-- User Profile Start -->
@@ -251,7 +253,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
                     class="rounded-circle"
                     style="width: 10px; height: 10px; background-color: <?= ($option && $option['available'] == 'available') ? 'green' : 'gray' ?>"
                   ></div>
-                  <span><small><?= ($option && $option['available'] == 'available') ? 'Online' : 'Offline' ?></small></span>
+                  <span><small><?= ($option && $option['available'] == 'available') ? 'Available To Play' : 'Offline' ?></small></span>
                     <div
                     class="d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill"
                     style="width: fit-content"
@@ -283,7 +285,10 @@ $user_profile_images = 'https://placehold.co/150x150.png';
             
             </div>
           </div>
-        </div>
+        
+		
+		
+		</div>
       </div>
     </section>
     <!-- User Profile End -->
@@ -410,7 +415,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
 		$liked_count = DB::queryFirstField("SELECT count(*) FROM post_likes where post_id=%i", $row_1["id"]);
 		$liked = DB::queryFirstField("SELECT count(*) FROM post_likes where post_id=%i and liked_by = %i", $row_1["id"], $_SESSION["session_usr_id"]);
 
-    $user_images = 'https://placehold.co/150x150.png';
+    $user_images = 'user_pp_files/default_user_pp.jpg';
 
     if (!empty($user_pp_file)) {
       $user_pp_file_path = 'user_pp_files/' . $user_pp_file;

@@ -64,13 +64,13 @@ foreach ($results_A as $row_A) {
     <div class="container">
       <div class="w-100 pt-4">
         <!-- Top Bar Start -->
-		<form action="home-search.php" method="POST">
+		<form action="home-search.php" method="POST" id="formSearch">
         <div class="d-flex flex-row align-items-center w-100 gap-1">
           <div
             class="d-flex flex-fill flex-row align-items-center border border-secondary rounded-pill px-3 py-1 gap-3"
           >
-            <i class="bi bi-search fs-4 text-secondary"></i>
-            <input
+            <i class="bi bi-search fs-4 text-secondary" onclick="document.getElementById('formSearch').submit();"></i>
+            <input name="keyword"
               placeholder="Search for games or friends"
               class="bg-transparent border-0 w-100 text-light"
             />
@@ -220,37 +220,34 @@ foreach ($results_A as $row_A) {
 
         <!-- Favorite Games Start -->
         <section id="favorite-games__section" class="mt-5">
-          <div
+          <div onclick="window.location.href='tournament-by-games.php';" style='cursor:pointer;'
             class="d-flex flex-row align-items-center justify-content-between"
           >
-            <h4>Favorites Games</h4>
-            <a href="#" class="text-decoration-none">
+            <h4 onclick="window.location.href='tournament-by-games.php';" style='cursor:pointer;'>Favorites Games</h4>
+            <a href="tournament-by-games.php" class="text-decoration-none">
               <i class="bi bi-chevron-right fs-4"></i>
             </a>
           </div>
 
           <div class="row g-3 pt-2">
-            <div class="col-4">
-              <img
-                src="assets/img/temp/mobile-legend.png"
-                alt=""
-                class="w-100 h-100 ratio-1x1 object-fit-cover rounded-3"
-              />
-            </div>
-            <div class="col-4">
-              <img
-                src="assets/img/temp/game-8.png"
-                alt=""
-                class="w-100 ratio-1x1 object-fit-cover rounded-3"
-              />
-            </div>
-            <div class="col-4">
-              <img
-                src="assets/img/temp/game-13.png"
-                alt=""
-                class="w-100 ratio-1x1 object-fit-cover rounded-3"
-              />
-            </div>
+		  
+		  <?php
+		    //$results_1 = DB::query("select distinct game_name_id from tournament order by game_name_id desc limit 0,3");
+			$results_1 = DB::query("select * from games order by id asc limit 0,3");
+			foreach ($results_1 as $row_1) {
+				echo "
+					<div class='col-4' onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'>
+					  <img onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'
+						src='assets/img/temp/".$row_1['game_name_id'].".png'
+						alt=''
+						class='w-100 h-100 ratio-1x1 object-fit-cover rounded-3'
+					  />
+					</div>
+				";				
+			} // foreach ($results_1 as $row_1) {
+			//echo $array_users_username[$row_1['id']];
+		  ?>		  
+
           </div>
         </section>
         <!-- Favorite Games End -->
@@ -425,6 +422,16 @@ foreach ($results_A as $row_A) {
 
 							  <div class='p-3 d-flex flex-column gap-2'>
 								<div class='d-flex flex-row align-items-center gap-2'>
+								  <!--
+								  <img
+									src='assets/img/home__tournament-fee.png'
+									height='24'
+									width='24'
+								  />
+								  -->
+								  <span class='fw-light'>&nbsp;<b>Fee</b> IDR ".number_format($row_2['participant_fee'])."</span>
+								</div>							  
+								<div class='d-flex flex-row align-items-center gap-2'>
 								  <img
 									src='assets/img/home__tournament-trophy.png'
 									height='24'
@@ -481,7 +488,7 @@ foreach ($results_1 as $row_1) {
 	$array_users_username[$row_1['id']] = "".$row_1['username']."";
 
   //validasi user picture tersedia atau tidak
-  $user_images = 'https://placehold.co/150x150.png';
+  $user_images = 'user_pp_files/default_user_pp.jpg';
 
   if (!empty($row_1['user_pp_file'])) {
     $user_pp_file_path = 'user_pp_files/' . $row_1['user_pp_file'];
@@ -490,6 +497,46 @@ foreach ($results_1 as $row_1) {
         $user_images = $user_pp_file_path;
     }
   }
+	
+	
+	
+$user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $row_1['id']);
+$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i", $row_1['id']);
+
+$games = '';
+
+/*
+if($option) {
+  $arrayGame = json_decode($option['game']);
+
+  for($i = 0; $i < count($arrayGame); $i++) {
+
+    if($i != count($arrayGame)-1) {
+      $games .= ucfirst($arrayGame[$i]).", ";
+    }else {
+      $games .= ucfirst($arrayGame[$i]);
+    }
+  }
+}	
+*/
+	
+	if(isset($option) && $option['available'] == 'available') { 
+		$online_offline = "Available To Play";
+		$circle_color = "green";
+		$user_fee = "".$option['fee']." / ".$option['time']." Minutes";
+		$user_games = "Mobile Legends, Pubg";	
+		// $user_games = $games;
+	} 
+	else 
+	{ 
+		$online_offline = "Offline"; 
+		$circle_color = "grey";
+		$user_fee = "";
+		$user_games = "";			
+	}
+	
+
+	
 	
 	echo "
               <div style='cursor:pointer;' onclick=\"window.location.href='profile.php?user_id_profile=".$row_1['id']."';\"
@@ -513,13 +560,64 @@ foreach ($results_1 as $row_1) {
                       width='24'
                     />
                   </div>
-                  <div class='text-secondary'>
-                    <!--<small>Valorant, Genshin Impact</small>-->
-                  </div>
+				  
+			     <div class='text-secondary'>
+				    
+						  <div class='d-flex flex-row align-items-center gap-2 mt-2'>
+							<div class='d-block align-items-center gap-2'>
+							  <div
+								class='d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill'
+								style='width: fit-content'
+							  >
+								<div
+									class='rounded-circle'
+									style='width: 10px; height: 10px; background-color: ".$circle_color."'
+								  ></div>
+								  <span><small>".$online_offline."</small></span>
+									<div
+									class='d-flex flex-row align-items-center gap-2 bg-dark px-2 rounded-pill'
+									style='width: fit-content'
+									>
+									<i class='bi bi-gender-".strtolower($user_profile['gender'])."'></i>
+									<span><small>".$user_profile['age']."</small></span>
+								  </div>
+							  </div>
+	";						  
+							  
+							  if(isset($option) && $option['available'] == 'available') {
+								  echo "
+									  <div
+										class='d-flex flex-row align-items-center gap-2 bg-dark px-2 mt-2 rounded-pill'
+										style='width: fit-content'
+									  >
+										<div
+											class='rounded-circle'
+										  ><i class='bi bi-cash fs-6'></i> </div>
+										  <span><small>".$user_fee."</small></span>
+									  </div>
+									  <div
+										class='d-flex flex-row align-items-center gap-2 bg-dark px-2 mt-2 rounded-pill'
+										style='width: fit-content'
+									  >
+										<div
+											class='rounded-circle'
+										  ><i class='bi bi-controller fs-6'></i></div>
+										  <span><small>".$user_games."</small></span>
+									  </div>
+									";
+							  }
+
+	echo "					
+							</div>
+						  </div>					  
+				  				  
+				   </div>
+				  				  
                 </div>
               </div>	
 	";
 	
+
 	
 } // foreach ($results_1 as $row_1) {
 //echo $array_users_username[$row_1['id']];

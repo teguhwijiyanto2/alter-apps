@@ -55,6 +55,17 @@ require_once 'db.class.php';
           $phoneFormActive = isset($_GET['s']) && $_GET['s'] == 'phone';
       ?>
 
+<script>
+function switchPswd_login_password() {
+  var x = document.getElementById("login_password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
       <form
         action="login-process.php"
         id="form-email"
@@ -96,7 +107,7 @@ require_once 'db.class.php';
               required
             />
             <i
-              id="form-eyes"
+              id="form-eyes" onclick="switchPswd_login_password()"
               class="bi bi-eye-slash text-secondary position-absolute"
               style="top: 12px; right: 12px"
             ></i>
@@ -125,6 +136,17 @@ require_once 'db.class.php';
 		
         <input type="submit" class="btn btn-primary rounded-pill w-100 my-5" value="Login">
       </form>
+
+<script>
+function switchPswd_login_password_2() {
+  var x = document.getElementById("login_password_2");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 
       <form
         action="login-byphone-process.php"
@@ -157,7 +179,7 @@ require_once 'db.class.php';
           </div>
           <div class="invalid__text mt-2">Must be 8 characters minimum</div> -->
           <div class="position-relative">
-            <input
+            <input id="login_password_2"
               class="text-input-auth invalid__form"
               type="password"
               name="login_password"
@@ -165,7 +187,7 @@ require_once 'db.class.php';
               required
             />
             <i
-              id="form-eyes"
+              id="form-eyes" onclick="switchPswd_login_password_2()"
               class="bi bi-eye-slash text-secondary position-absolute"
               style="top: 12px; right: 12px"
             ></i>

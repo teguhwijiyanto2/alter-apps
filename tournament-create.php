@@ -99,8 +99,79 @@ foreach ($results_A as $row_A) {
   </head>
 
   <body>
-    <form action="tournament-create-process.php" method="POST" enctype="multipart/form-data">
-      <!-- Step 1 Start -->
+    <form action="tournament-create-process.php" method="POST" enctype="multipart/form-data" id="myForm">
+      
+	  <!-- Step 1 Start -->
+<script>
+
+function validate_1() {
+	
+	var is_error_exist = "N";
+
+	if(document.getElementById("input-avatar").value == "") {
+		document.getElementById("input-avatarError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("input-avatarError").style.display = "none";
+	}
+
+	if(document.getElementById("input-banner").value == "") {
+		document.getElementById("input-bannerError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("input-bannerError").style.display = "none";
+	}
+	
+	if(document.getElementById("name").value == "") {
+		document.getElementById("nameError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("nameError").style.display = "none";
+	}
+	
+	if(document.getElementById("description").value == "") {
+		document.getElementById("descriptionError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("descriptionError").style.display = "none";
+	}	
+	
+	if(document.getElementById("selCity").value == "") {
+		document.getElementById("selCityError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("selCityError").style.display = "none";
+	}
+
+	if(document.getElementById("date_from").value == "") {
+		document.getElementById("date_fromError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("date_fromError").style.display = "none";
+	}
+	
+	if(document.getElementById("date_to").value == "") {
+		document.getElementById("date_toError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("date_toError").style.display = "none";
+	}
+
+	if(is_error_exist == "N") {
+		onNext();
+	}
+	
+} // function validate_1() {
+
+</script>
+
       <section
         id="step1"
         aria-label="Create Tournament"
@@ -140,6 +211,7 @@ foreach ($results_A as $row_A) {
                 >
               </label>
             </div>
+			<div class="text-error" id="input-avatarError" style="display: none; color: red;">Tournament Thumbnail image is required!</div>
             <!-- Add Tournament Thumbnail End -->
 
             <!-- Modal View Image Profile Start -->
@@ -247,6 +319,7 @@ foreach ($results_A as $row_A) {
                 >
               </label>
             </div>
+			<div class="text-error" id="input-bannerError" style="display: none; color: red;">Tournament Banner image is required!</div>
             <!-- Add Banner End -->
 
             <!-- Modal View Banner Start -->
@@ -342,9 +415,11 @@ foreach ($results_A as $row_A) {
                   <input
                     type="text"
                     name="name"
+					id="name"
                     placeholder="Enter your tournament name"
                   />
                 </div>
+				<div class="text-error" id="nameError" style="display: none; color: red;">Tournament name is required!</div>
               </div>
               <div class="form__group mt-3">
                 <label>Descriptions (optional)</label>
@@ -352,9 +427,11 @@ foreach ($results_A as $row_A) {
                   <input
                     type="text"
                     name="description"
+					id="description"
                     placeholder="Write your descriptions here"
-                  />
+                  />				  
                 </div>
+				<div class="text-error" id="descriptionError" style="display: none; color: red;">Tournament description is required!</div>
               </div>
             </div>
             <div class="border-bottom border-secondary border-opacity-50 pb-4">
@@ -364,37 +441,41 @@ foreach ($results_A as $row_A) {
                   class="form-select form__group-select"
                   aria-label="Default select example"
                 >
-                  <option selected>Select</option>
+                  <option selected value="">Select</option>
 				  <?php
 					foreach($array_cities as $key_1 => $val_1) {
 						echo "<option value='$key_1'>$val_1</option>";
 					} // foreach($array_cities as $key_1 => $val_1) {
 				  ?>
-                </select>
+                </select>				
               </div>
+			  <div class="text-error" id="selCityError" style="display: none; color: red;">Tournament City/Region is required!</div>
             </div>
             <div class="mt-3">
               <h6>Time Period</h6>
               <div class="form__group">
                 <label class="text-secondary">From</label>
                 <div class="form__group-input">
-                  <input type="date" name="date_from" id="date_from" min="<?php echo date('Y-m-d'); ?>"/>
+                  <input type="date" name="date_from" id="date_from" min="<?php echo date('Y-m-d'); ?>"/>				  
                 </div>
+				<div class="text-error" id="date_fromError" style="display: none; color: red;">Tournament Date From is required!</div>
               </div>
               <div class="form__group mt-3">
                 <label class="text-secondary">To</label>
                 <div class="form__group-input">
-                  <input type="date" name="date_to" id="date_to" min="<?php echo date('Y-m-d'); ?>"/>
+                  <input type="date" name="date_to" id="date_to" min="<?php echo date('Y-m-d'); ?>"/>				  
                 </div>
+				<div class="text-error" id="date_toError" style="display: none; color: red;">Tournament Date To is required!</div>
               </div>
             </div>
             <!-- Form Input End -->
           </div>
 
           <!-- Button Next Start -->
+		  <!-- onclick="onNext();" -->
           <button
             id="next"
-            onclick="onNext()"
+            onclick="validate_1();"
             data-next="2"
             type="button"
             class="btn btn-outline-light rounded-pill my-4 w-100"
@@ -408,6 +489,29 @@ foreach ($results_A as $row_A) {
       <!-- Step 1 End -->
 
       <!-- Step 2 Start -->
+	  
+<script>
+
+function validate_2() {
+	
+	var is_error_exist = "N";
+	
+	if(document.getElementById("selGameNameId").value == "") {
+		document.getElementById("selGameNameIdError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("selGameNameIdError").style.display = "none";
+	}
+
+	if(is_error_exist == "N") {
+		onNext();
+	}
+	
+} // function validate_2() {
+
+</script>
+	  
       <section id="step2" aria-label="Choose Game" class="form__section">
         <div class="container px-4">
           <div class="py-3">
@@ -418,11 +522,11 @@ foreach ($results_A as $row_A) {
           </div>
 
           <!-- All Games Box Start -->
-		  <input type="hidden" name="selGameNameId" id="selGameNameId">
+		  <input type="hidden" name="selGameNameId" id="selGameNameId" value="">
 		  
           <div class="row g-3 pt-2">
-            <div class="col-4">
-              <input onclick="document.getElementById('selGameNameId').value='dota_2';"
+		    <div class="col-4">
+              <input onclick="document.getElementById('selGameNameId').value='mobile_legends';"
                 type="radio"
                 class="btn-check"
                 name="options-base"
@@ -431,7 +535,7 @@ foreach ($results_A as $row_A) {
               />
               <label class="btn p-1" for="option1">
                 <img
-                  src="assets/img/temp/dota_2.png"
+                  src="assets/img/temp/mobile_legends.png"
                   alt=""
                   class="w-100 h-100 ratio-1x1 object-fit-cover rounded-3"
                 />
@@ -453,6 +557,22 @@ foreach ($results_A as $row_A) {
                 />
               </label>
             </div>
+            <div class="col-4">
+              <input onclick="document.getElementById('selGameNameId').value='dota_2';"
+                type="radio"
+                class="btn-check"
+                name="options-base"
+                id="option1"
+                autocomplete="off"
+              />
+              <label class="btn p-1" for="option1">
+                <img
+                  src="assets/img/temp/dota_2.png"
+                  alt=""
+                  class="w-100 h-100 ratio-1x1 object-fit-cover rounded-3"
+                />
+              </label>
+            </div>			
             <div class="col-4">
               <input onclick="document.getElementById('selGameNameId').value='free_fire';"
                 type="radio"
@@ -662,12 +782,14 @@ foreach ($results_A as $row_A) {
               </label>
             </div>
           </div>
+		  
+		  <div class="text-error" id="selGameNameIdError" style="display: none; color: red;">Tournament Game is required!</div>
           <!-- All Games Box End -->
 
           <!-- Button Next Start -->
           <button
             id="next"
-            onclick="onNext()"
+            onclick="validate_2();"
             data-next="3"
             type="button"
             class="btn btn-outline-light rounded-pill my-4 w-100"
@@ -680,6 +802,53 @@ foreach ($results_A as $row_A) {
       <!-- Step 2 End -->
 
       <!-- Step 3 Start -->
+	  
+<script>
+
+function validate_3() {
+	
+	var is_error_exist = "N";
+ 
+	if(document.getElementById("stage_type_value").value == "") {
+		document.getElementById("stage_typeError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("stage_typeError").style.display = "none";
+	}
+ 
+	if(document.getElementById("format_type_value").value == "") {
+		document.getElementById("format_typeError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("format_typeError").style.display = "none";
+	}
+ 
+	if(document.getElementById("participant_type_value").value == "") {
+		document.getElementById("participant_typeError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("participant_typeError").style.display = "none";
+	}
+
+	if(document.getElementById("participant_number").value == "") {
+		document.getElementById("participant_numberError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("participant_numberError").style.display = "none";
+	}
+	
+	if(is_error_exist == "N") {
+		onNext();
+	}
+	
+} // function validate_3() {
+
+</script>
+	  
       <section id="step3" aria-label="Game Formata" class="form__section">
         <div class="container px-4">
           <div class="py-3">
@@ -692,7 +861,7 @@ foreach ($results_A as $row_A) {
           <!-- Tournament Stage Start -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Tournament Stage</h5>
-            <label
+            <label onclick="document.getElementById('stage_type_value').value='Single Stage Tournament';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="stage1"
@@ -708,7 +877,7 @@ foreach ($results_A as $row_A) {
                 autocomplete="off"
               />
             </label>
-            <label
+            <label onclick="document.getElementById('stage_type_value').value='Double Stage Tournament';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="stage2"
@@ -725,12 +894,14 @@ foreach ($results_A as $row_A) {
               />
             </label>
           </div>
+		  <input type="hidden" id="stage_type_value" value="">
+		  <div class="text-error" id="stage_typeError" style="display: none; color: red;">Tournament Stage is required!</div>		  
           <!-- Tournament Stage End -->
 
           <!-- Format Star -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Tournament Format</h5>
-            <label
+            <label onclick="document.getElementById('format_type_value').value='Single Elimination';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="format1"
@@ -738,7 +909,7 @@ foreach ($results_A as $row_A) {
               <div class="flex-fill">
                 <h6 class="mb-0">Single Elimination</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </div>
               <input value="Single Elimination"
@@ -749,7 +920,7 @@ foreach ($results_A as $row_A) {
                 autocomplete="off"
               />
             </label>
-            <label
+            <label onclick="document.getElementById('format_type_value').value='Double Elimination';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="format2"
@@ -757,7 +928,7 @@ foreach ($results_A as $row_A) {
               <div class="flex-fill">
                 <h6 class="mb-0">Double Elimination</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </div>
               <input value="Double Elimination"
@@ -768,7 +939,7 @@ foreach ($results_A as $row_A) {
                 autocomplete="off"
               />
             </label>
-            <label
+            <label onclick="document.getElementById('format_type_value').value='Battle Royale';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="format3"
@@ -776,7 +947,7 @@ foreach ($results_A as $row_A) {
               <div class="flex-fill">
                 <h6 class="mb-0">Battle Royale</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </div>
               <input value="Battle Royale"
@@ -788,12 +959,14 @@ foreach ($results_A as $row_A) {
               />
             </label>
           </div>
+		  <input type="hidden" id="format_type_value" value="">
+		  <div class="text-error" id="format_typeError" style="display: none; color: red;">Tournament Format is required!</div>	
           <!-- Format End -->
 
           <!-- Tournament Stage Start -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Participant Type</h5>
-            <label onclick="document.getElementById('divNumOfPlayers').style.display='none';"
+            <label onclick="document.getElementById('divNumOfPlayers').style.display='none'; document.getElementById('players_per_team').value='1'; document.getElementById('participant_type_value').value='Individual';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="participant1"
@@ -809,7 +982,7 @@ foreach ($results_A as $row_A) {
                 autocomplete="off"
               />
             </label>
-            <label onclick="document.getElementById('divNumOfPlayers').style.display='block';"
+            <label onclick="document.getElementById('divNumOfPlayers').style.display='block'; document.getElementById('players_per_team').value='5'; document.getElementById('participant_type_value').value='Team';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="participant2"
@@ -836,14 +1009,16 @@ foreach ($results_A as $row_A) {
 				  # Players per Team &nbsp; <input
                     type="text"
                     name="players_per_team"
+					id="players_per_team"
 					size="3"
-                    placeholder="5"
+                    value="5"
                   />
               </span>
-
 			</span>				  
             </label>			
           </div>
+		  <input type="hidden" id="participant_type_value" value="">
+		  <div class="text-error" id="participant_typeError" style="display: none; color: red;">Participant Type is required!</div>	
           <!-- Tournament Stage End -->
 
           <!-- Participant Number Start -->
@@ -855,17 +1030,19 @@ foreach ($results_A as $row_A) {
                   <input
                     type="text"
                     name="participant_number"
+					id="participant_number"
                     placeholder="Enter Participant Number"
                   />
-                </div>
+                </div>					
               </div>
           </div>
+		  <div class="text-error" id="participant_numberError" style="display: none; color: red;">Participant Number is required!</div>
           <!-- Participant Number End -->
 
           <!-- Button Next Start -->
           <button
             id="next"
-            onclick="onNext()"
+            onclick="validate_3();"
             data-next="4"
             type="button"
             class="btn btn-outline-light rounded-pill my-4 w-100"
@@ -878,6 +1055,44 @@ foreach ($results_A as $row_A) {
       <!-- Step 3 End -->
 
       <!-- Step 4 Start -->
+<script>
+
+function validate_4() {
+	
+	var is_error_exist = "N";
+ 
+	if(document.getElementById("reward_1st").value == "") {
+		document.getElementById("reward_1stError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("reward_1stError").style.display = "none";
+	}
+ 
+	if(document.getElementById("reward_2nd").value == "") {
+		document.getElementById("reward_2ndError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("reward_2ndError").style.display = "none";
+	}
+ 
+	if(document.getElementById("reward_3rd").value == "") {
+		document.getElementById("reward_3rdError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("reward_3rdError").style.display = "none";
+	}
+	
+	if(is_error_exist == "N") {
+		onNext();
+	}
+	
+} // function validate_4() {
+
+</script>	  
+
       <section id="step4" aria-label="Tournament Reward" class="form__section">
         <div class="container px-4">
           <div class="py-3">
@@ -899,33 +1114,36 @@ foreach ($results_A as $row_A) {
                 class="d-flex flex-row align-items-center justify-content-between"
               >
                 <label for="">1st</label>
-                <i class="bi bi-x-lg fs-5"></i>
+                <!-- <i class="bi bi-x-lg fs-5"></i> -->
               </div>
               <div class="form__group-input mt-2">
-                <input type="text" name="reward_1st" placeholder="Rp 300.000" onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);' />
+                <input type="text" name="reward_1st" id="reward_1st" placeholder="Rp 300.000" onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);' />
               </div>
+			  <div class="text-error" id="reward_1stError" style="display: none; color: red;">1st Reward is required!</div>
             </div>
             <div class="mt-3">
               <div
                 class="d-flex flex-row align-items-center justify-content-between"
               >
                 <label for="">2nd</label>
-                <i class="bi bi-x-lg fs-5"></i>
+                <!-- <i class="bi bi-x-lg fs-5"></i> -->
               </div>
               <div class="form__group-input mt-2">
-                <input type="text" name="reward_2nd" placeholder="Rp 200.000"  onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);' />
+                <input type="text" name="reward_2nd" id="reward_2nd" placeholder="Rp 200.000"  onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);' />
               </div>
+			  <div class="text-error" id="reward_2ndError" style="display: none; color: red;">2nd Reward is required!</div>
             </div>
             <div class="mt-3">
               <div
                 class="d-flex flex-row align-items-center justify-content-between"
               >
                 <label for="">3rd</label>
-                <i class="bi bi-x-lg fs-5"></i>
+                <!-- <i class="bi bi-x-lg fs-5"></i> -->
               </div>
               <div class="form__group-input mt-2">
-                <input type="text" name="reward_3rd" placeholder="Rp 100.000"  onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);' />
+                <input type="text" name="reward_3rd" id="reward_3rd" placeholder="Rp 100.000"  onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);' />
               </div>
+			  <div class="text-error" id="reward_3rdError" style="display: none; color: red;">3rd Reward is required!</div>
             </div>
             <div class="mt-3">
               <div class="d-flex flex-row align-items-center gap-2">
@@ -941,7 +1159,7 @@ foreach ($results_A as $row_A) {
           <!-- Button Next Start -->
           <button
             id="next"
-            onclick="onNext()"
+            onclick="validate_4();"
             data-next="5"
             type="button"
             class="btn btn-outline-light rounded-pill my-4 w-100"
@@ -954,6 +1172,43 @@ foreach ($results_A as $row_A) {
       <!-- Step 4 End -->
 
       <!-- Step 5 Start -->
+<script>
+
+function validate_5() {
+	
+	var is_error_exist = "N";
+ 
+	if(document.getElementById("tournament_type_value").value == "") {
+		document.getElementById("tournament_typeError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("tournament_typeError").style.display = "none";
+	}
+ 
+	if(document.getElementById("registration_type_value").value == "") {
+		document.getElementById("registration_typeError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("registration_typeError").style.display = "none";
+	}
+ 
+	if(document.getElementById("participant_fee").value == "") {
+		document.getElementById("participant_feeError").style.display = "block";
+		is_error_exist = "Y";
+	}
+	else {
+		document.getElementById("participant_fee").style.display = "none";
+	}
+	
+	if(is_error_exist == "N") {
+		document.getElementById('myForm').submit();
+	}
+	
+} // function validate_5() {
+
+</script>	  	  
       <section id="step5" aria-label="Details" class="form__section">
         <div class="container px-4">
           <div class="py-3">
@@ -966,7 +1221,7 @@ foreach ($results_A as $row_A) {
           <!-- Tournament Type Start -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Tournament Type</h5>
-            <label
+            <label onclick="document.getElementById('tournament_type_value').value='Online';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="tourtype1"
@@ -974,7 +1229,7 @@ foreach ($results_A as $row_A) {
               <div class="flex-fill">
                 <h6 class="mb-0">Online</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </div>
               <input
@@ -986,7 +1241,7 @@ foreach ($results_A as $row_A) {
 				value="Online"
               />
             </label>
-            <label
+            <label onclick="document.getElementById('tournament_type_value').value='Offline';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="tourtype2"
@@ -994,7 +1249,7 @@ foreach ($results_A as $row_A) {
               <div class="flex-fill">
                 <h6 class="mb-0">Offline</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </div>
               <input
@@ -1006,7 +1261,7 @@ foreach ($results_A as $row_A) {
 				value="Offline"
               />
             </label>
-            <label
+            <label onclick="document.getElementById('tournament_type_value').value='Hybrid';"
               aria-label="tour-type"
               class="position-relative text-start d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50 cursor__pointer"
               for="tourtype3"
@@ -1014,7 +1269,7 @@ foreach ($results_A as $row_A) {
               <div class="flex-fill">
                 <h6 class="mb-0">Hybrid</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </div>
               <input
@@ -1027,13 +1282,15 @@ foreach ($results_A as $row_A) {
               />
             </label>
           </div>
+		  <input type="hidden" id="tournament_type_value" value="">
+		  <div class="text-error" id="tournament_typeError" style="display: none; color: red;">Tournament Type is required!</div>			  
           <!-- Tournament Type End -->
 
           <!-- Registration Setting Start -->
           <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Registration Settings</h5>
 			
-			<div class="mt-3">
+			<div class="mt-3" onclick="document.getElementById('divCharged').style.display='none'; document.getElementById('participant_fee').value='0'; document.getElementById('registration_type_value').value='Free';">
               <input
                 type="radio"
                 class="btn-check"
@@ -1043,18 +1300,18 @@ foreach ($results_A as $row_A) {
 				value="Free"
 				checked
               />
-              <label onclick="document.getElementById('divCharged').style.display='none';"
+              <label onclick="document.getElementById('divCharged').style.display='none'; document.getElementById('participant_fee').value='0'; document.getElementById('registration_type_value').value='Free';"
                 class="btn btn-dark text-start w-100 border border-secondary"
                 for="regis2"
               >
                 <h6 class="mb-0">Free</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </label>
             </div>
 			
-            <div class="mt-3">
+            <div class="mt-3" onclick="document.getElementById('divCharged').style.display='block'; document.getElementById('participant_fee').value=''; document.getElementById('registration_type_value').value='Paid';">
               <input
                 type="radio"
                 class="btn-check"
@@ -1063,18 +1320,19 @@ foreach ($results_A as $row_A) {
                 autocomplete="off"
 				value="Paid"
               />
-              <label onclick="document.getElementById('divCharged').style.display='block';"
+              <label onclick="document.getElementById('divCharged').style.display='block'; document.getElementById('participant_fee').value=''; document.getElementById('registration_type_value').value='Paid';"
                 class="btn btn-dark text-start w-100 border border-secondary"
                 for="regis1"
               >
                 <h6 class="mb-0">Paid</h6>
                 <small class="text-secondary"
-                  >You could put the explanations here
+                  ><!-- You could put the explanations here -->
                 </small>
               </label>
             </div>
-
           </div>
+		  <input type="hidden" id="registration_type_value" value="">
+		  <div class="text-error" id="registration_typeError" style="display: none; color: red;">Registration Type is required!</div>	
           <!-- Registration Setting End -->
 
           <!-- Charge Start -->
@@ -1088,21 +1346,26 @@ foreach ($results_A as $row_A) {
                 <input onkeyup="noAlpha(this); formatNum(this);" onKeyPress='noAlpha(this);'
                   type="text"
                   name="participant_fee"
-				  placeholder="0"
+				  id="participant_fee"
+				  value="0"
                 />
               </div>
             </div>
           </div>
+		  <div class="text-error" id="participant_feeError" style="display: none; color: red;">Participant Fee is required!</div>
           <!-- Charge End -->
-
+		  
           <!-- Button Next Start -->
-          <input
+          <button
             id="next"
-            type="submit"
+            onclick="validate_5();"
+            type="button"
             class="btn btn-outline-light rounded-pill my-4 w-100"
-			value="Submit"
           >
-          <!-- Button Next End -->
+            Submit
+          </button>
+          <!-- Button Next End -->		  		  
+		  
         </div>
       </section>
       <!-- Step 5 End -->

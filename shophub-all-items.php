@@ -1,5 +1,4 @@
 <?php
-session_start();
 date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 
@@ -124,9 +123,14 @@ $data_responses = $json_decoded["data"];
 						<th style='border:1px solid white;'>NAME</th>
 						<th style='border:1px solid white;'>DESCRIPTION</th>
 						<th style='border:1px solid white;'>NOMINAL</th>
+            <th style='border:1px solid white;'>CLIENT PRICE</th>
 <?php
 $item_no = 0;
 
+$ada = 0;
+$nggak_ada = 0;
+
+$str_nggak_ada = "";
 
 foreach ($data_responses as $index => $data_response) {
 
@@ -180,6 +184,8 @@ foreach ($data_responses as $index => $data_response) {
 	";		
 */
 
+	$results_Check = DB::queryFirstField("SELECT count(*) FROM billing_items_excel_rev2 where payee_code='".$data_response['payeeCode']."' AND product_code='".$data_response['productCode']."'");
+
 	echo "
               
 					<tr>
@@ -190,13 +196,72 @@ foreach ($data_responses as $index => $data_response) {
 						<td style='border:1px solid white;'>".$data_response['name']."</td>
 						<td style='border:1px solid white;'>".$data_response['description']."</td>
 						<td style='border:1px solid white;'>".$data_response['nominal']."</td>
-				  </tr>
+						<td style='border:1px solid white;'>".$data_response['clientPrice']."</td>
+					";
 
+					if($results_Check==0) {
+$nggak_ada++;
+						echo "
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						";
+						
+$str_nggak_ada .= "<tr>
+						<td style='border:1px solid white;'>".$nggak_ada."</td>
+						<td style='border:1px solid white;'>".$data_response['type']."</td>						
+						<td style='border:1px solid white;'>".$data_response['payeeCode']."</td>
+						<td style='border:1px solid white;'>".$data_response['productCode']."</td>
+						<td style='border:1px solid white;'>".$data_response['name']."</td>
+						<td style='border:1px solid white;'>".$data_response['description']."</td>
+						<td style='border:1px solid white;'>".$data_response['nominal']."</td>
+						<td style='border:1px solid white;'>".$data_response['clientPrice']."</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						<td style='border:1px solid white; background-color:red;'>&nbsp;</td>
+						</tr>";					
+			
+					}
+					else {
+$ada++;	
+
+	$results_B = DB::queryFirstRow("SELECT * FROM billing_items_excel_rev2 where payee_code='".$data_response['payeeCode']."' AND product_code='".$data_response['productCode']."'");
+	
+	$results_UPDATE = DB::queryFirstRow("UPDATE billing_items_excel SET client_price = ".$results_B['suggested_price']." where payee_code='".$data_response['payeeCode']."' AND product_code='".$data_response['productCode']."'");
+	
+
+						echo "
+						<td style='border:1px solid white;'>".$results_B['payee_code']."</td>
+						<td style='border:1px solid white;'>".$results_B['product_code']."</td>
+						<td style='border:1px solid white;'>".$results_B['product_name_rev2']."</td>
+						<td style='border:1px solid white;'>".$results_B['harga_mitra']."</td>
+						<td style='border:1px solid white;'>".$results_B['suggested_price']."</td>
+						";						
+					}
+					
+	echo "			  
+				  </tr>
 	";	
 		
 } // foreach ($data_responses as $index => $data_response) {
+	
+	echo "<tr><td colspan='13'>&nbsp;</td></tr><tr><td colspan='13'>&nbsp;</td></tr><tr><td colspan='13'>YANG NGGAK ADA PRODUCT CODENYA DI EXCEL :</td></tr>".$str_nggak_ada;
 ?>
-	</table>
+	</table>	
+	
+	<?php
+	
+	
+	echo "<br>";	
+	echo "Exist : $ada";
+	echo "<br>";
+	echo "NOT Exist : $nggak_ada";
+	?>
+	
 </div>
 
 			  

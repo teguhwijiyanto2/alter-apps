@@ -144,6 +144,15 @@ $tournamen_banner = 'assets/img/home__tournement-bg-header.png';
             aria-label="Tournament Event"
             class="d-flex flex-column gap-2 mt-4"
           >
+		  
+								<div class='d-flex flex-row align-items-center gap-2'>
+								  <img
+									src='assets/img/home__tournament-fee.png'
+									height='24'
+									width='24'
+								  />
+								  <span class='fw-light'>IDR <?php echo number_format($row_1['participant_fee']); ?></span>
+								</div>				  
             <div class="d-flex flex-row align-items-center gap-2 z-3">
               <img
                 src="assets/img/home__tournament-trophy.png"
@@ -288,7 +297,7 @@ $x=1;
 $results_9 = DB::query("SELECT * FROM tournament_teams where tournament_code=%s AND payment_status='Paid' order by id asc", $results_B['tournament_code']);
 foreach ($results_9 as $row_9) {
 
-  $team_logo = 'https://placehold.co/150x150.png';
+  $team_logo = 'team_logo/default_team_logo.jpg';
 
   if (!empty($row_9['team_logo'])) {
     $team_logo_path = 'team_logo/' . $row_9['team_logo'];

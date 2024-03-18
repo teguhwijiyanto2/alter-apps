@@ -80,7 +80,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 
 	<script 
 	src="https://pg.e2pay.co.id/RMS/API/seamless/3.28/js/MOLPay_seamless.deco.js"></script>
-	
+
 	<script>
 	$(document).ready( function(){		
 		$('#selector').change(function(){
@@ -135,8 +135,8 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 <input type="hidden" name="tournament_codex" value="<?php echo $_POST['tournament_codex']; ?>" />
 <input type="text" name="xpayment_method" id="xpayment_method" value="" />
 <input type="hidden" name="currency" id="currency" value="IDR" />
-<!--<input type="hidden" name="total_amount" value="<?php //echo $results_tournament['participant_fee']; ?>" />-->
-<input type="hidden" name="total_amount" value="10000" />
+<input type="hidden" name="total_amount" value="<?php echo $results_tournament['participant_fee']; ?>" />
+<!--<input type="hidden" name="total_amount" value="10000" />-->
 <input type="hidden" name="session_usr_id" value="<?php echo $_SESSION["session_usr_id"]; ?>" />
 </div>
 
@@ -181,7 +181,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_PERMATA_VA" value="e2Pay_PERMATA_VA" class="me-4" required/>			  
 			  </label>
-
+<!--
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -198,7 +198,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_ALFAMART" value="payment_options_e2Pay_ALFAMART" class="me-4" required/>			  
 			  </label>
-
+-->
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -250,7 +250,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_CIMB_VA" value="e2Pay_CIMB_VA" class="me-4" required/>			  
 			  </label>	
-
+<!--
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"
@@ -267,7 +267,7 @@ $results_team = DB::queryFirstRow("SELECT * FROM tournament_teams where team_cod
 				</div>
 				<input type="radio" name="payment_options" id="payment_options_e2Pay_BRI_VA" value="e2Pay_BRI_VA" class="me-4" required/>			  
 			  </label>
-			  
+-->			  
               <label
                 aria-label="other-pay"
                 class="position-relative d-flex flex-row align-items-center gap-3 py-3 border-bottom border-secondary border-opacity-50 bg-opacity-50"

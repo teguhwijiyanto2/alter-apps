@@ -166,7 +166,7 @@ foreach ($results_A as $row_A) {
     
     $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $row_1['posted_by']);
 
-    $user_profile_images = 'https://placehold.co/150x150.png';
+    $user_profile_images = 'user_pp_files/default_user_pp.jpg';
 
       if (!empty($user_profile['user_pp_file'])) {
         $user_pp_file_path = 'user_pp_files/' . $user_profile['user_pp_file'];

@@ -17,7 +17,7 @@ foreach ($results_A as $row_A) {
 
 $user_profile = DB::queryFirstRow("SELECT *, DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), birthdate)), '%Y') + 0 AS age FROM users where id=%i", $_SESSION["session_usr_id"]);
 
-  $user_profile_images = 'https://placehold.co/150x150.png';
+  $user_profile_images = 'user_pp_files/default_user_pp.jpg';
 
   if (!empty($user_profile['user_pp_file'])) {
     $user_pp_file_path = 'user_pp_files/' . $user_profile['user_pp_file'];
@@ -185,6 +185,7 @@ if($option) {
     <!-- Header End -->
 
     <!-- Navbar Top Start -->
+	<form action="profile-search.php" method="POST" id="formSearch">
     <div
       id="navbar-top"
       class="fixed-top max-w-sm d-flex p-3 flex-row align-items-center gap-2"
@@ -200,8 +201,8 @@ if($option) {
       <div
         class="d-flex flex-fill flex-row align-items-center border border-secondary rounded-pill px-3 py-1 gap-3 bg-dark bg-opacity-50"
       >
-        <i class="bi bi-search fs-5 text-secondary"></i>
-        <input
+        <i class="bi bi-search fs-5 text-secondary" onclick="document.getElementById('formSearch').submit();"></i>
+        <input name="keyword" value="<?php echo $_POST['keyword']; ?>"
           placeholder="Search in Alter Member"
           class="bg-transparent border-0 w-100 text-light"
         />
@@ -254,6 +255,7 @@ if($option) {
       </div>
 	  
     </div>
+	</form>
     <!-- Navbar Top End -->
 
     <!-- User Profile Start -->
@@ -543,7 +545,7 @@ if($option) {
 		$liked = DB::queryFirstField("SELECT count(*) FROM post_likes where post_id=%i and liked_by = %i", $row_1["id"], $_SESSION["session_usr_id"]);
 		$user_pp_file = DB::queryFirstField("SELECT user_pp_file FROM users where id=%i", $row_1["posted_by"]);
 
-    $user_images = 'https://placehold.co/150x150.png';
+    $user_images = 'user_pp_files/default_user_pp.jpg';
 
     if (!empty($user_pp_file)) {
       $user_pp_file_path = 'user_pp_files/' . $user_pp_file;

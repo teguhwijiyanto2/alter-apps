@@ -48,6 +48,17 @@
         </a>
       </div>
 
+<script>
+function switchPswd_login_password() {
+  var x = document.getElementById("login_password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
       <form
         id="form-email"
         class="w-100 mt-4 needs-validation <?php echo $emailFormActive ? '' : 'd-none'; ?>" novalidate
@@ -83,7 +94,7 @@
           </div>
           <div class="invalid__text mt-2">Must be 8 characters minimum</div> -->
           <div class="position-relative">
-            <input
+            <input id="login_password"
               class="text-input-auth invalid__form"
               type="password"
               name="password"
@@ -92,7 +103,7 @@
               required
             />
             <i
-              id="form-eyes"
+              id="form-eyes" onclick="switchPswd_login_password()"
               class="bi bi-eye-slash text-secondary position-absolute"
               style="top: 12px; right: 12px"
             ></i>
@@ -111,11 +122,24 @@
             id="tncEmail"
           />
           <label class="form-check-label" for="tnc-email">
-            I agree to the terms and conditions
+            <a href="terms-and-conditions.php" target="_blank"><u>I agree to the terms and conditions</u></a>
           </label>
         </div>
         <input type="submit" id="submitEmail" class="btn btn-primary rounded-pill w-100 my-3" value="Sign Up" disabled>
       </form>
+
+
+<script>
+function switchPswd_login_password_2() {
+  var x = document.getElementById("login_password_2");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
 
      <form
         id="form-phone"
@@ -152,7 +176,7 @@
           </div>
           <div class="invalid__text mt-2">Must be 8 characters minimum</div> -->
           <div class="position-relative">
-            <input
+            <input onclick="switchPswd_login_password_2()"
               class="text-input-auth invalid__form"
               type="password"
               name="password"
@@ -181,7 +205,7 @@
             id="tncPhone"
           />
           <label class="form-check-label" for="tncPhone">
-            I agree to the terms and conditions
+            <a href="terms-and-conditions.php" target="_blank"><u>I agree to the terms and conditions</u></a>
           </label>
         </div>
         </div>

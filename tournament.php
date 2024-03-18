@@ -49,12 +49,13 @@ foreach ($results_A as $row_A) {
     <div class="position-relative container">
       <div class="w-100 pt-4">
         <!-- Top Bar Start -->
+		<form action="tournament-search.php" method="POST" id="formSearch">
         <div class="d-flex flex-row align-items-center w-100 gap-1">
           <div
             class="d-flex flex-fill flex-row align-items-center border border-secondary rounded-pill px-3 py-1 gap-3"
           >
-            <i class="bi bi-search fs-4 text-secondary"></i>
-            <input
+            <i class="bi bi-search fs-4 text-secondary" onclick="document.getElementById('formSearch').submit();"></i>
+            <input name='keyword'
               placeholder="Search for tournaments"
               class="bg-transparent border-0 w-100 text-light"
             />
@@ -97,6 +98,7 @@ foreach ($results_A as $row_A) {
           </a>
 		  
         </div>
+		</form>
         <!-- Top Bar End -->
 
         <!-- Banner Carousel Start -->
@@ -244,10 +246,10 @@ foreach ($results_A as $row_A) {
 
         <!-- Tournament By Games Start -->
         <section id="tournament-by-games__section" class="mt-5">
-          <div
+          <div onclick=\"window.location.href='tournament-by-games.php';\" style='cursor:pointer; border:0px solid red;'
             class="d-flex flex-row align-items-center justify-content-between"
           >
-            <h4>Tournaments by Games</h4>
+            <h4 onclick="window.location.href='tournament-by-games.php';" style='cursor:pointer;'>Tournaments by Games</h4>
             <a href="tournament-by-games.php" class="text-decoration-none">
               <i class="bi bi-chevron-right fs-4"></i>
             </a>
@@ -258,8 +260,8 @@ foreach ($results_A as $row_A) {
 			$results_1 = DB::query("select * from games order by id asc limit 0,3");
 			foreach ($results_1 as $row_1) {
 				echo "
-				<div class='col-4'>
-				  <img
+				<div class='col-4' onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'>
+				  <img onclick=\"window.location.href='tournament-by-game-list.php?gid=".$row_1['game_name_id']."';\" style='cursor:pointer; border:0px solid red;'
 					src='assets/img/temp/".$row_1['game_name_id'].".png'
 					alt=''
 					class='w-100 h-100 ratio-1x1 object-fit-cover rounded-3'
@@ -302,10 +304,10 @@ foreach ($results_A as $row_A) {
 			
 		echo "
         <section id='quick-match__section' class='mt-5'>
-          <div
+          <div onclick=\"window.location.href='tournament-trending.php';\" style='cursor:pointer; border:0px solid red;'
             class='d-flex flex-row align-items-center justify-content-between'
           >
-            <h4>Trending Tournament</h4>
+            <h4 onclick=\"window.location.href='tournament-trending.php';\" style='cursor:pointer; border:0px solid red;'>Trending Tournament</h4>
             <a href='tournament-trending.php' class='text-decoration-none'>
               <i class='bi bi-chevron-right fs-4'></i>
             </a>
@@ -369,6 +371,16 @@ foreach ($results_A as $row_A) {
               </div>
 
               <div class='p-3 d-flex flex-column gap-2'>
+								<div class='d-flex flex-row align-items-center gap-2'>
+								  <!--
+								  <img
+									src='assets/img/home__tournament-fee.png'
+									height='24'
+									width='24'
+								  />
+								  -->
+								  <span class='fw-light'>&nbsp;<b>Fee</b> IDR ".number_format($row_2['participant_fee'])."</span>
+								</div>				  
                 <div class='d-flex flex-row align-items-center gap-2'>
                   <img
                     src='assets/img/home__tournament-trophy.png'
@@ -418,14 +430,12 @@ foreach ($results_A as $row_A) {
 			
           <?php
           $x2=0;
-          //$results_9 = DB::query("SELECT * FROM tournament_teams where tournament_code=%s order by id asc", $results_B['tournament_code']);
-          $results_9 = DB::query("SELECT * FROM tournament_teams WHERE payment_status='Paid' order by id desc limit 0,5");
-          //$results_9 = DB::query("SELECT * FROM tournament_teams where team_logo is not null order by id asc");
 
+          $results_9 = DB::query("SELECT * FROM tournament_teams WHERE payment_status='Paid' order by team_score desc limit 0,5");
           foreach ($results_9 as $row_9) {
           $x2++;
 
-          $team_logo = 'https://placehold.co/150x150.png';
+          $team_logo = 'team_logo/default_team_logo.jpg';
 
           if (!empty($row_9['team_logo'])) {
             $team_logo_path = 'team_logo/' . $row_9['team_logo'];
@@ -462,7 +472,7 @@ foreach ($results_A as $row_A) {
                     width='24'
                   />
                 </div>
-                <span>2000 pts</span>
+                <span>".$row_9['team_score']." pts</span>
               </div>
             <!--</a>-->
 ";

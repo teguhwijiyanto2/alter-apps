@@ -30,6 +30,7 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
   }
 } // if(strlen($fileNameCleaned_1) > 3) {
 
+
   DB::insert('tournament_result', [
     'tournament_id' => $_POST['tid'],
     'result_1' => isset($wining[0]) ? $wining[0] : null,
@@ -38,7 +39,13 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
     'result_image' => $fileNameFix_1
   ]);
 
-	DB::query("UPDATE tournament SET status='Finished' WHERE id = '".$_POST['tid']."'");
+  DB::query("UPDATE tournament SET status='Finished' WHERE id = '".$_POST['tid']."'");
+
+
+if(isset($wining[0])) { DB::query("UPDATE tournament_teams set team_score = team_score + 10 where id=%i", $wining[0]); }
+if(isset($wining[1])) { DB::query("UPDATE tournament_teams set team_score = team_score + 5 where id=%i", $wining[1]); }
+if(isset($wining[2])) { DB::query("UPDATE tournament_teams set team_score = team_score + 2 where id=%i", $wining[2]); }
+
 
 
   echo("
@@ -47,5 +54,6 @@ $uploadPath_1 = "tournament_result/" . $fileNameFix_1;
   window.location.href='myorder.php';
   </script>
   ");
+
 
 ?>

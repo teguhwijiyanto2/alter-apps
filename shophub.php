@@ -108,8 +108,16 @@ foreach ($data_responses as $index => $data_response) {
   <body>
     <div class="container">
       <div class="w-100 pt-4">
-	  
+
+        <div class="py-3">
+          <a href="shophub.php">
+            <i class="bi bi-chevron-left fs-5 me-2"></i>
+            <span>Shophub</span>
+          </a>
+        </div>
+		
         <!-- Top Bar Start -->
+		<!--
         <div class="d-flex flex-row align-items-center w-100 gap-1">
           <div
             class="d-flex flex-fill flex-row align-items-center border border-secondary rounded-pill px-3 py-1 gap-3"
@@ -129,6 +137,7 @@ foreach ($data_responses as $index => $data_response) {
           </a>
           <img src="assets//icon/ic__bell.svg" height="36" width="36" />
         </div>
+		-->
         <!-- Top Bar End -->
 
         <!-- Banner Carousel Start -->
@@ -162,21 +171,21 @@ foreach ($data_responses as $index => $data_response) {
           <div class="carousel-inner mt-4">
             <div class="carousel-item active">
               <img
-                src="https://placehold.co/600x400.png"
+                src="banner_files/shophub/Banner-App-09.jpg"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
               <img
-                src="https://placehold.co/600x400.png"
+                src="banner_files/shophub/Banner-App-10.jpg"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
             </div>
             <div class="carousel-item">
               <img
-                src="https://placehold.co/600x400.png"
+                src="banner_files/shophub/Banner-App-12.jpg"
                 class="d-block w-100 rounded-4 p-1"
                 alt="..."
               />
@@ -337,11 +346,11 @@ foreach ($data_responses as $index => $data_response) {
 
     <!-- Popular Start -->
     <section id="popular__section" class="mt-5">
-      <div
+      <div onclick="window.location.href='shophub-promo.php';" style="cursor: pointer;"
         class="d-flex px-3 flex-row align-items-center justify-content-between"
       >
-        <h4>Popular</h4>
-        <a href="#" class="text-decoration-none">
+        <h4>Promo</h4>
+        <a href="shophub-promo.php" class="text-decoration-none">
           <i class="bi bi-chevron-right fs-4"></i>
         </a>
       </div>
@@ -361,59 +370,69 @@ foreach ($data_responses as $index => $data_response) {
           class="flex-fill d-inline overflow-x-scroll overflow-y-hidden"
           style="white-space: nowrap"
         >
-          <a
-            href="purchase-details.php"
-            class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
-            style="width: 200px"
-          >
-            <img
-              src="https://placehold.co/200x150.png"
-              class="object-fit-cover w-100"
-              height="130"
-              alt=""
-            />
-            <div class="p-3">
-              <h5 class="mb-0">3270+400 Gems</h5>
-              <span class="text-secondary fs__7">Rp 360.000</span>
-              <div class="text-primary fs-5">Rp 380.000</div>
-            </div>
-          </a>
-          <a
-            href="#"
-            class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
-            style="width: 200px"
-          >
-            <img
-              src="https://placehold.co/200x150.png"
-              class="object-fit-cover w-100"
-              height="130"
-              alt=""
-            />
-            <div class="p-3">
-              <h5 class="mb-0">3270+400 Gems</h5>
-              <span class="text-secondary fs__7">Rp 360.000</span>
-              <div class="text-primary fs-5">Rp 380.000</div>
-            </div>
-          </a>
-          <div
-            class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
-            style="width: 200px"
-          >
-            <img
-              src="https://placehold.co/200x150.png"
-              class="object-fit-cover w-100"
-              height="130"
-              alt=""
-            />
-            <div class="p-3">
-              <h5 class="mb-0">3270+400 Gems</h5>
-              <span class="text-secondary fs__7">Rp 360.000</span>
-              <div class="text-primary fs-5">Rp 380.000</div>
-            </div>
-          </div>
+				
+<?php
+$results_A2 = DB::query("
+SELECT 
+billing_items_excel.* 
+FROM shophub_promo
+LEFT JOIN billing_items_excel ON billing_items_excel.payee_code=shophub_promo.payee_code AND billing_items_excel.product_code=shophub_promo.product_code
+WHERE billing_items_excel.id IS NOT NULL
+order by billing_items_excel.payee_code asc, billing_items_excel.product_code
+");			
+			foreach ($results_A2 as $row_A2) {	
+			echo "			
+		  
+			  <a
+				href='#' onclick=\"document.getElementById('formPurchase_promo_".$row_A2['id']."').submit();\"
+				class='bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2'
+				style='width: 200px'
+			  >
+				
+				<img
+				  src='assets/img/temp/".str_ireplace(' ','_',strtolower($row_A2['sub_category'])).".png'
+				  class='object-fit-cover w-100'
+				  width='200'
+				  height='150'
+				  alt=''
+				/>
+				
+				<div class='p-3'>
+				  <h5 class='mb-0'>".$row_A2['product_name']."</h5>
+				  <span class='text-secondary fs__7'>".$row_A2['sub_category']."</span>
+				  <div class='text-primary fs-5'>IDR ".number_format($row_A2['client_price'])."</div>
+				</div>
+			  </a>						  
+						  		  
+			  <div style='display:none;'>
+			  <form action='purchase-item.php' method='POST' id='formPurchase_promo_".$row_A2['id']."'>
+				<input type='hidden' name='payeeCode_1' value='".$row_A2['payee_code']."'>
+				<input type='hidden' name='productCode_1' value='".$row_A2['product_code']."'>
+				<input type='hidden' name='name_1' value='".$row_A2['product_name']."'>
+				<input type='hidden' name='description_1' value='".$row_A2['product_description']."'>
+				<input type='hidden' name='type_1' value='".$row_A2['category']."'>
+				<input type='hidden' name='sub_category_1' value='".$row_A2['sub_category']."'>
+				<input type='hidden' name='nominal_1' value='".$row_A2['client_price']."'>
+				<input type='hidden' name='clientPrice_1' value='".$row_A2['client_price']."'>
+			  </form>
+			  </div>			  
+			"; 
+			
+			} // foreach ($results_A2 as $row_A2) {  			
+?>  
+		  
         </div>
       </div>
 
+      <div onclick="window.location.href='shophub-cashback.php';"
+        class="d-flex px-3 flex-row align-items-center justify-content-between" style="padding-top:50px;padding-bottom:20px;cursor: pointer;"
+      >
+        <h4>Cashback</h4>
+        <a href="shophub-cashback.php" class="text-decoration-none">
+          <i class="bi bi-chevron-right fs-4"></i>
+        </a>
+      </div>
+	  
       <div
         class="bg__dark-yellow py-4 d-flex flex-row align-items-cemter gap-3"
       >
@@ -429,57 +448,57 @@ foreach ($data_responses as $index => $data_response) {
           class="flex-fill d-inline overflow-x-scroll overflow-y-hidden"
           style="white-space: nowrap"
         >
-          <a
-            href="#"
-            class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
-            style="width: 200px"
-          >
-            <img
-              src="https://placehold.co/200x150.png"
-              class="object-fit-cover w-100"
-              height="130"
-              alt=""
-            />
-            <div class="p-3">
-              <h5 class="mb-0">2010 Diamonds</h5>
-              <span class="text-secondary fs__7">Rp 360.000</span>
-              <div class="text-primary fs-5">Rp 380.000</div>
-            </div>
-          </a>
-          <a
-            href="#"
-            class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
-            style="width: 200px"
-          >
-            <img
-              src="https://placehold.co/200x150.png"
-              class="object-fit-cover w-100"
-              height="130"
-              alt=""
-            />
-            <div class="p-3">
-              <h5 class="mb-0">2010 Diamonds</h5>
-              <span class="text-secondary fs__7">Rp 360.000</span>
-              <div class="text-primary fs-5">Rp 380.000</div>
-            </div>
-          </a>
-          <a
-            href="#"
-            class="bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2"
-            style="width: 200px"
-          >
-            <img
-              src="https://placehold.co/200x150.png"
-              class="object-fit-cover w-100"
-              height="130"
-              alt=""
-            />
-            <div class="p-3">
-              <h5 class="mb-0">2010 Diamonds</h5>
-              <span class="text-secondary fs__7">Rp 360.000</span>
-              <div class="text-primary fs-5">Rp 380.000</div>
-            </div>
-          </a>
+		
+<?php
+$results_A3 = DB::query("
+SELECT 
+billing_items_excel.* 
+FROM shophub_cashback
+LEFT JOIN billing_items_excel ON billing_items_excel.payee_code=shophub_cashback.payee_code AND billing_items_excel.product_code=shophub_cashback.product_code
+WHERE billing_items_excel.id IS NOT NULL
+order by billing_items_excel.payee_code asc, billing_items_excel.product_code
+");			
+			foreach ($results_A3 as $row_A3) {	
+			echo "			
+		  
+			  <a
+				href='#' onclick=\"document.getElementById('formPurchase_cashback_".$row_A3['id']."').submit();\"
+				class='bg-dark rounded-3 d-inline-block h-100 overflow-hidden me-2'
+				style='width: 200px'
+			  >
+				
+				<img
+				  src='assets/img/temp/".str_ireplace(' ','_',strtolower($row_A3['sub_category'])).".png'
+				  class='object-fit-cover w-100'
+				  width='200'
+				  height='150'
+				  alt=''
+				/>
+				
+				<div class='p-3'>
+				  <h5 class='mb-0'>".$row_A3['product_name']."</h5>
+				  <span class='text-secondary fs__7'>".$row_A3['sub_category']."</span>
+				  <div class='text-primary fs-5'>IDR ".number_format($row_A3['client_price'])."</div>
+				</div>
+			  </a>						  
+						  		  
+			  <div style='display:none;'>
+			  <form action='purchase-item.php' method='POST' id='formPurchase_cashback_".$row_A3['id']."'>
+				<input type='hidden' name='payeeCode_1' value='".$row_A3['payee_code']."'>
+				<input type='hidden' name='productCode_1' value='".$row_A3['product_code']."'>
+				<input type='hidden' name='name_1' value='".$row_A3['product_name']."'>
+				<input type='hidden' name='description_1' value='".$row_A3['product_description']."'>
+				<input type='hidden' name='type_1' value='".$row_A3['category']."'>
+				<input type='hidden' name='sub_category_1' value='".$row_A3['sub_category']."'>
+				<input type='hidden' name='nominal_1' value='".$row_A3['client_price']."'>
+				<input type='hidden' name='clientPrice_1' value='".$row_A3['client_price']."'>
+			  </form>
+			  </div>			  
+			"; 
+			
+			} // foreach ($results_A3 as $row_A3) {  			
+?>
+	  
         </div>
       </div>
     </section>

@@ -42,7 +42,7 @@ $teams = DB::query("SELECT * FROM tournament_teams where tournament_code=%s", $r
     <section>
       <div class="px-4">
         <div class="py-3">
-          <a href="#">
+          <a href="myorder.php">
             <i class="bi bi-x-lg fs-5 me-2"></i>
             <span>Upload Result</span>
           </a>

@@ -1,5 +1,5 @@
 <?php 
-session_start();
+session_start(); 
 date_default_timezone_set('Asia/Jakarta');
 require_once 'db.class.php';
 $id = $_GET['id'];
