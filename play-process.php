@@ -28,16 +28,44 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 */
 
 
-	DB::insert('matchmaking_availability', [
-	  'requestor_id' => $_SESSION["session_usr_id"],
-	  'game_name_id' => $_POST["selGame"],	  
-	  'date_time' => $_POST["datetime_play"],
-	  'num_of_hours' => $_POST["selHours"],
-	  'notes' => $_POST["notes"],  
-	  'approver_id' => $_POST['user_id_profile'],
-	  'is_read' => 0,
-	  'request_status' => '-',
-	]);
+	$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i",$_POST['user_id_profile']);
+
+	// print_r($_POST);
+	// exit;
+
+	if($option && $option['fee'] != null) {
+		DB::insert('matchmaking_availability', [
+			'requestor_id' => $_SESSION["session_usr_id"],
+			'game_name_id' => $_POST["selGame"],	  
+			'date_time' => $_POST["datetime_play"],
+			'num_of_hours' => $_POST["selHours"],
+			'notes' => $_POST["notes"],  
+			'approver_id' => $_POST['user_id_profile'],
+			'is_read' => 0,
+			'request_status' => 'PAYMENT_PENDING',
+		]);
+
+		echo "
+			<form action='play-info-pay.php' method='POST' id='formX'>
+				<input type='text' name='clientPrice_1' value='".$_POST['amount']."'>
+				<input type='text' name='external_id' value='".DB::insertId()."'>
+			</form>
+			<body onload=\"document.getElementById('formX').submit();\">
+			";
+
+	}else {
+
+		DB::insert('matchmaking_availability', [
+			'requestor_id' => $_SESSION["session_usr_id"],
+			'game_name_id' => $_POST["selGame"],	  
+			'date_time' => $_POST["datetime_play"],
+			'num_of_hours' => $_POST["selHours"],
+			'notes' => $_POST["notes"],  
+			'approver_id' => $_POST['user_id_profile'],
+			'is_read' => 0,
+			'request_status' => '-',
+		]);
+	}
 
 	$play =  DB::queryFirstRow("SELECT * FROM `matchmaking_availability` WHERE requestor_id = %i AND approver_id = %i ORDER BY date_time DESC LIMIT 1", $_SESSION["session_usr_id"], $_POST['user_id_profile'] );
 
@@ -48,6 +76,8 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 		'title' => 'Incoming order from '.$_SESSION["session_usr_name"],
 		'data' => $play['id']
 	  ]);
+
+	
 
 
 /*

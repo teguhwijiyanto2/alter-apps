@@ -33,6 +33,9 @@ else {
 
 $user_profile = DB::queryFirstRow("SELECT * FROM users where id=%i", $_POST['user_id_profile']);
 
+$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i",$user_id_profile);
+
+
 $user_profile_images = 'https://placehold.co/150x150.png';
 
   if (!empty($user_profile['user_pp_file'])) {
@@ -103,6 +106,8 @@ $user_profile_images = 'https://placehold.co/150x150.png';
   <body>
     <form action="play-process.php" method="POST">
 	<input type="hidden" name="user_id_profile" value="<?php echo $user_id_profile; ?>">	
+  <input type="hidden" name="fee" id="fee" value="<?= ($option && $option['fee']) ? $option['fee'] : 0 ?>">
+  <input type="hidden" name="amount" id="amount" value="0">
 
       <!-- Step 1 Start -->
       <section
@@ -153,7 +158,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
               class="form__group mt-4 border-bottom border-secondary border-opacity-50 pb-3"
             >
                 <label>Duration of Play (In Session)</label>
-                <select name="selHours" id="selHours" onchange="document.getElementById('div_TxtSelectedHour').innerHTML=this.value; document.getElementById('div_TxtSelectedHour2').innerHTML=this.value;"
+                <select name="selHours" id="selHours" onchange="duration(this.value)"
                   class="form-select form__group-select"
                   aria-label="Default select example"
                 >
@@ -175,12 +180,12 @@ $user_profile_images = 'https://placehold.co/150x150.png';
           <!-- Basic Information End -->
 
           <!-- Summary Start -->
-          <div class="p-3 bg-dark rounded-3 mt-3">
+          <!-- <div class="p-3 bg-dark rounded-3 mt-3">
             <h5>Payment</h5>
             <p class="text-secondary">
               This is a free Play, you wont be charged anything.
             </p>
-          </div>
+          </div> -->
           <!-- Summary End -->
           <!-- Button Next Start -->
           <button
@@ -241,7 +246,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
                 class="d-flex flex-row align-items-center justify-content-between text-secondary"
               >
                 <span>Payment</span>
-                <span class="text-light fs-5">Free</span>
+                <span class="text-light fs-5"><?= ($option && $option['fee']) ? $option['fee'] : 'Free' ?></span>
               </div>
             </div>
           </div>
@@ -352,8 +357,8 @@ $user_profile_images = 'https://placehold.co/150x150.png';
               <div
                 class="d-flex flex-row align-items-center justify-content-between text-secondary"
               >
-                <span>1 x hourly fee</span>
-                <span>Free</span>
+                <span><b id="div_TxtSelectedHour3"></b> x hourly fee</span>
+                <span><?= ($option && $option['fee']) ? $option['fee'] : 'Free' ?></span>
               </div>
               <div
                 class="d-flex flex-row align-items-center justify-content-between text-secondary"
@@ -365,7 +370,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
                 class="d-flex flex-row align-items-center justify-content-between border-top border-secondary border-opacity-50 pt-2"
               >
                 <span>Total</span>
-                <span class="text-light fs-5">Free</span>
+                <span class="text-light fs-5" id="totalPayment"></span>
               </div>
             </div>
           </div>
@@ -479,6 +484,25 @@ $user_profile_images = 'https://placehold.co/150x150.png';
         $('.days li span').removeClass('active');
         $(this).removeClass('d-flex');
       });
+
+      function duration(val) {
+        document.getElementById('div_TxtSelectedHour').innerHTML=val; 
+        document.getElementById('div_TxtSelectedHour2').innerHTML=val;
+        document.getElementById('div_TxtSelectedHour3').innerHTML=val;
+        
+        var fee = $('#fee').val();
+        
+        var total = fee*val
+        var amount = 0
+        
+        if(total.toString().length <= 3) {
+          amount = total+'000'
+          total = total+'.000'
+        }
+        document.getElementById('totalPayment').innerHTML=total;
+        document.getElementById('amount').value=amount;
+
+      }
     </script>
   </body>
 </html>
