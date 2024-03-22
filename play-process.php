@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 date_default_timezone_set('Asia/Jakarta');
@@ -27,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 */
 
+	$play_code = "".$_SESSION["session_usr_id"]."".rand();
 
 	$option = DB::queryFirstRow("SELECT * FROM matchmaking_option WHERE user_id = %i",$_POST['user_id_profile']);
 
@@ -43,12 +43,16 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 			'approver_id' => $_POST['user_id_profile'],
 			'is_read' => 0,
 			'request_status' => 'PAYMENT_PENDING',
+			'unit_price' => $_POST["fee"],
+			'amount' => $_POST["amount"],
+			'play_code' => $play_code,			
 		]);
 
 		echo "
 			<form action='play-info-pay.php' method='POST' id='formX'>
-				<input type='text' name='clientPrice_1' value='".$_POST['amount']."'>
-				<input type='text' name='external_id' value='".DB::insertId()."'>
+				<input type='hidden' name='clientPrice_1' value='".$_POST['amount']."'>
+				<input type='hidden' name='external_id' value='".DB::insertId()."'>
+				<input type='hidden' name='play_code' value='".$play_code."'>
 			</form>
 			<body onload=\"document.getElementById('formX').submit();\">
 			";
@@ -64,18 +68,23 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 			'approver_id' => $_POST['user_id_profile'],
 			'is_read' => 0,
 			'request_status' => '-',
+			'unit_price' => $_POST["fee"],
+			'amount' => $_POST["amount"],		
+			'play_code' => $play_code,				
+		]);
+		
+		$play =  DB::queryFirstRow("SELECT * FROM `matchmaking_availability` WHERE requestor_id = %i AND approver_id = %i AND play_code=%s ORDER BY date_time DESC LIMIT 1", $_SESSION["session_usr_id"], $_POST['user_id_profile'], $play_code );
+
+		DB::insert('notifications', [
+			'category' => 'play-order',
+			'notif_for' => $_POST['user_id_profile'],
+			'notif_from' => $_SESSION["session_usr_id"],
+			'title' => 'Incoming order from '.$_SESSION["session_usr_name"],
+			'data' => $play['id']
 		]);
 	}
 
-	$play =  DB::queryFirstRow("SELECT * FROM `matchmaking_availability` WHERE requestor_id = %i AND approver_id = %i ORDER BY date_time DESC LIMIT 1", $_SESSION["session_usr_id"], $_POST['user_id_profile'] );
-
-	DB::insert('notifications', [
-		'category' => 'play-order',
-		'notif_for' => $_POST['user_id_profile'],
-		'notif_from' => $_SESSION["session_usr_id"],
-		'title' => 'Incoming order from '.$_SESSION["session_usr_name"],
-		'data' => $play['id']
-	  ]);
+	
 
 	
 
@@ -91,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `matchmaking_availability` (
 
 	echo "
 	<form action='profile.php' method='POST' id='formX'>
-		<input type='text' name='user_id_profile' value='".$_POST['user_id_profile']."'>
+		<input type='hidden' name='user_id_profile' value='".$_POST['user_id_profile']."'>
 	</form>
     <body onload=\"document.getElementById('formX').submit();\">
 	";

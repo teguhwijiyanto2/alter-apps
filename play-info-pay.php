@@ -130,9 +130,9 @@ foreach ($results_A as $row_A) {
 -->
 
 <body>
-<form method="POST" action="play-info-pay-proccess.php" role="molpayseamless">
+<form method="POST" action="process_order_play.php" role="molpayseamless">
 <input type='hidden' name='session_usr_id' value='<?php echo $_SESSION["session_usr_id"]; ?>'>
-
+<input type='hidden' name='play_code' value='<?php echo $_POST["play_code"]; ?>'>
 
 <div style="display:none;">
 <span class="cur_span">IDR</span><span class="price_span"> <?php echo $_POST['clientPrice_1']; ?> </span>

@@ -500,7 +500,7 @@ $user_profile_images = 'https://placehold.co/150x150.png';
           total = total+'.000'
         }
         document.getElementById('totalPayment').innerHTML=total;
-        document.getElementById('amount').value=amount;
+        document.getElementById('amount').value=total;
 
       }
     </script>
